@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"io"
 	"log"
 	"time"
 
@@ -28,6 +29,22 @@ func supportedExchanges(client dataPb.DexterDataClient) {
 }
 
 func streamCandles(client dataPb.DexterDataClient, request *dataPb.CandlesRequest) {
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancel()
+	stream, err := client.StreamCandles(ctx, request)
+	if err != nil {
+		log.Fatalln("Could not stream", err)
+	}
+	for {
+		candle, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatalln("Streaming error", err)
+		}
+		log.Println(candle)
+	}
 }
 
 func main() {
@@ -43,4 +60,5 @@ func main() {
 
 	client := dataPb.NewDexterDataClient(conn)
 	supportedExchanges(client)
+	streamCandles(client, &dataPb.CandlesRequest{Exchange: "binance", Market: "BTC/USDT", Timeframe: "5m"})
 }
