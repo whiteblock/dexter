@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+message ExchangesRequest {
+}
+
+message ExchangesResponse {
+  repeated string exchanges = 1;
+}
+
+message MarketsRequest {
+  string exchange = 1;
+}
+
+message MarketsResponse {
+  repeated string markets = 1;
+}
+
+message CandlesRequest {
+  string exchange = 1;
+  string market = 2;
+  string timeframe = 3;
+}
+
+message CandlesResponse {
+  repeated Candle candles = 1;
+}
+
+message Candle {
+  uint64 timestamp = 1;
+  double o = 2;
+  double h = 3;
+  double l = 4;
+  double c = 5;
+  double v = 6;
+}
+
+message TestRequest {
+  string a = 1;
+}
+
+message TestResponse {
+  int64 a = 1;
+  int64 b = 2;
+}
+
+service DexterData {
+  rpc SupportedExchanges (ExchangesRequest) returns (ExchangesResponse) {}
+  rpc SupportedMarkets (MarketsRequest) returns (MarketsResponse) {}
+  rpc GetCandles (CandlesRequest) returns (CandlesResponse) {}
+  rpc StreamCandles (CandlesRequest) returns (stream Candle) {}
+  rpc Test (TestRequest) returns (TestResponse) {}
+}
+
