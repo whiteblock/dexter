@@ -6,6 +6,7 @@ import (
 	"log"
 	"time"
 
+	_ "github.com/whiteblock/dexter"
 	"github.com/spf13/pflag"
 	"google.golang.org/grpc"
 
