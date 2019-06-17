@@ -29,7 +29,7 @@ func supportedExchanges(client dataPb.DexterDataClient) {
 }
 
 func streamCandles(client dataPb.DexterDataClient, request *dataPb.CandlesRequest) {
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	stream, err := client.StreamCandles(ctx, request)
 	if err != nil {
