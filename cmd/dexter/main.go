@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"log"
+	"os"
 	"time"
 
 	_ "github.com/whiteblock/dexter"
@@ -53,6 +55,14 @@ func main() {
 	flags.BoolVarP(&help, "help", "h", false, "Display help message")
 	flags.BoolVarP(&verbose, "verbose", "v", false, "Be verbose")
 	flags.StringVarP(&client, "client", "c", "0.0.0.0:50051", "Bind address of dexter-data service")
+	flags.SortFlags = false
+	flags.Parse(os.Args)
+	if help {
+		fmt.Print("DEXter Technical Analysis Service\n\n")
+		fmt.Print("Usage: dexter [OPTION]...\n\n")
+		flags.PrintDefaults()
+		os.Exit(0)
+	}
 	conn, err := grpc.Dial(client, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalln("Could not connect to client", err)
