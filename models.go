@@ -2,14 +2,23 @@ package dexter
 
 import (
 	"github.com/jinzhu/gorm"
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
-// AlertAction describes how lines can interact with each other.
-type AlertAction int
+// Chart - a context in which analysis happens
+type Chart struct {
+	gorm.Model
+	Exchange string
+	Market string
+	Alerts []Alert
+}
+
+// AlertCondition describes how lines can interact with each other.
+type AlertCondition int
 
 // The different ways lines can interact with each other
 const (
-	Crossing AlertAction = iota + 1
+	Crossing AlertCondition = iota + 1
 	CrossingUp
 	CrossingDown
 	GreaterThan
@@ -38,12 +47,24 @@ const (
 // Alert - describes market condition that should trigger a notification.
 type Alert struct {
 	gorm.Model
+	Timeframe string
 	LineA string
-	Action AlertAction
+	Condition AlertCondition
 	LineB string
 	Frequency NotificationFrequency
 	Message string
 	Webhook Webhook
+}
+
+// Indicator - a technical analysis function
+type Indicator struct {
+	gorm.Model
+	Name string
+	Implementation string
+	Source string
+	Inputs postgres.Jsonb
+	Lines postgres.Jsonb
+	Styles postgres.Jsonb
 }
 
 // Webhook - a URL to request to when an Alert is triggered.
@@ -54,5 +75,3 @@ type Webhook struct {
 	Body string
 }
 
-
-// TODO - Create a model for indicators

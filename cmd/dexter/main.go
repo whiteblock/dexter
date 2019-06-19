@@ -50,6 +50,12 @@ func streamCandles(client dataPb.DexterDataClient, request *dataPb.CandlesReques
 	}
 }
 
+func demo(conn *grpc.ClientConn) {
+	client := dataPb.NewDexterDataClient(conn)
+	supportedExchanges(client)
+	streamCandles(client, &dataPb.CandlesRequest{Exchange: "binance", Market: "BTC/USDT", Timeframe: "5m"})
+}
+
 func main() {
 	flags := pflag.NewFlagSet("dexter", pflag.ExitOnError)
 	flags.BoolVarP(&help, "help", "h", false, "Display help message")
@@ -68,8 +74,7 @@ func main() {
 		log.Fatalln("Could not connect to client", err)
 	}
 	defer conn.Close()
+	demo(conn)
 
-	client := dataPb.NewDexterDataClient(conn)
-	supportedExchanges(client)
-	streamCandles(client, &dataPb.CandlesRequest{Exchange: "binance", Market: "BTC/USDT", Timeframe: "5m"})
+	// TODO Start gRPC Service
 }
