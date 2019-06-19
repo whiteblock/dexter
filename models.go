@@ -10,7 +10,7 @@ type Chart struct {
 	gorm.Model
 	Exchange string
 	Market string
-	Alerts []Alert
+	Alerts []Alert `gorm:"foreignkey:AlertID"`
 }
 
 // AlertCondition describes how lines can interact with each other.
@@ -47,13 +47,14 @@ const (
 // Alert - describes market condition that should trigger a notification.
 type Alert struct {
 	gorm.Model
+	ChartID uint
 	Timeframe string
 	LineA string
 	Condition AlertCondition
 	LineB string
 	Frequency NotificationFrequency
 	Message string
-	Webhook Webhook
+	Webhooks []Webhook
 }
 
 // Indicator - a technical analysis function
@@ -70,6 +71,7 @@ type Indicator struct {
 // Webhook - a URL to request to when an Alert is triggered.
 type Webhook struct {
 	gorm.Model
+	AlertID uint
 	Method string
 	URL string
 	Body string
