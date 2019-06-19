@@ -13,3 +13,6 @@
 
 # Main executable
 dexter
+
+# Environment
+.env
