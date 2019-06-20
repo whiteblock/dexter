@@ -11,6 +11,32 @@ type Chart struct {
 	Exchange string
 	Market string
 	Alerts []Alert `gorm:"foreignkey:AlertID"`
+	Indicators []Indicator `gorm:foreignkey:ChartID`
+}
+
+// IndicatorSpec - metadata for a technical analysis function
+type IndicatorSpec struct {
+	gorm.Model
+	Name string
+	Implementation string
+	Source string
+	Inputs postgres.Jsonb
+	Lines postgres.Jsonb
+	Styles postgres.Jsonb
+}
+
+// Indicator - an instance of IndicatorSpec
+type Indicator struct {
+	gorm.Model
+	IndicatorID uint
+	ChartID uint
+	Parameters postgres.Jsonb // values for IndicatorSpec.Inputs
+}
+
+// IndicatorPart - what line in the indicator is being compared?
+type IndicatorPart struct {
+	IndicatorID int    `json:"indicator_id"`
+	Part        string `json:"part"`
 }
 
 // AlertCondition describes how lines can interact with each other.
@@ -49,40 +75,13 @@ type Alert struct {
 	gorm.Model
 	ChartID uint
 	Timeframe string
-	LineA postgres.Jsonb
+	LineA postgres.Jsonb // IndicatorPart
 	Condition AlertCondition
-	LineB postgres.Jsonb
+	LineB postgres.Jsonb // IndicatorPart
 	Frequency NotificationFrequency
 	Message string
 	Webhooks []Webhook
 }
-
-// IndicatorLine - the part of the indicator we're using for comparisons
-type IndicatorLine struct {
-	Indicator string `json:"indicator`
-	Inputs []struct {
-		Name int `json:"name"`
-	}
-	Part string `json:"name"`
-}
-
-// IndicatorSpec - metadata for a technical analysis function
-type IndicatorSpec struct {
-	gorm.Model
-	Name string
-	Implementation string
-	Source string
-	Inputs postgres.Jsonb
-	Lines postgres.Jsonb
-	Styles postgres.Jsonb
-}
-
-/*
- * In the future, there may also be an Indicator model which would be an instance
- * of an IndicatorSpec with its inputs set.  A Chart would have-many Indicators.
- * This would mimic TradingView's model more closely, but for the first iteration,
- * I don't feel I need to go there.
- */
 
 // Webhook - a URL to request to when an Alert is triggered.
 type Webhook struct {
