@@ -24,5 +24,5 @@ func main() {
 	db.AutoMigrate(&dexter.Chart{})
 	db.AutoMigrate(&dexter.Alert{})
 	db.AutoMigrate(&dexter.Webhook{})
-	db.AutoMigrate(&dexter.Indicator{})
+	db.AutoMigrate(&dexter.IndicatorSpec{})
 }

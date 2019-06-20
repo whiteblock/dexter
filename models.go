@@ -49,16 +49,25 @@ type Alert struct {
 	gorm.Model
 	ChartID uint
 	Timeframe string
-	LineA string
+	LineA postgres.Jsonb
 	Condition AlertCondition
-	LineB string
+	LineB postgres.Jsonb
 	Frequency NotificationFrequency
 	Message string
 	Webhooks []Webhook
 }
 
-// Indicator - a technical analysis function
-type Indicator struct {
+// IndicatorLine - the part of the indicator we're using for comparisons
+type IndicatorLine struct {
+	Indicator string `json:"indicator`
+	Inputs []struct {
+		Name int `json:"name"`
+	}
+	Part string `json:"name"`
+}
+
+// IndicatorSpec - metadata for a technical analysis function
+type IndicatorSpec struct {
 	gorm.Model
 	Name string
 	Implementation string
@@ -67,6 +76,13 @@ type Indicator struct {
 	Lines postgres.Jsonb
 	Styles postgres.Jsonb
 }
+
+/*
+ * In the future, there may also be an Indicator model which would be an instance
+ * of an IndicatorSpec with its inputs set.  A Chart would have-many Indicators.
+ * This would mimic TradingView's model more closely, but for the first iteration,
+ * I don't feel I need to go there.
+ */
 
 // Webhook - a URL to request to when an Alert is triggered.
 type Webhook struct {
