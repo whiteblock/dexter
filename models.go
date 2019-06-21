@@ -8,6 +8,7 @@ import (
 // Chart - a context in which analysis happens
 type Chart struct {
 	gorm.Model
+	ExternalID uint
 	Exchange string
 	Market string
 	Alerts []Alert `gorm:"foreignkey:AlertID"`
@@ -75,11 +76,12 @@ type Alert struct {
 	gorm.Model
 	ChartID uint
 	Timeframe string
+	ExternalID uint
 	LineA postgres.Jsonb // IndicatorPart
 	Condition AlertCondition
 	LineB postgres.Jsonb // IndicatorPart
 	Frequency NotificationFrequency
-	Message string
+	MessageBody string
 	Webhooks []Webhook
 }
 
@@ -92,3 +94,10 @@ type Webhook struct {
 	Body string
 }
 
+/*
+drop table webhooks;
+drop table indicators;
+drop table indicator_specs;
+drop table alerts;
+drop table charts;
+*/
