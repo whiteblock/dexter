@@ -22,25 +22,25 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type CreateAlertRequest_Condition int32
+type Condition int32
 
 const (
-	CreateAlertRequest_Crossing          CreateAlertRequest_Condition = 0
-	CreateAlertRequest_CrossingUp        CreateAlertRequest_Condition = 1
-	CreateAlertRequest_CrossingDown      CreateAlertRequest_Condition = 2
-	CreateAlertRequest_GreaterThan       CreateAlertRequest_Condition = 3
-	CreateAlertRequest_LessThan          CreateAlertRequest_Condition = 4
-	CreateAlertRequest_EnteringChannel   CreateAlertRequest_Condition = 5
-	CreateAlertRequest_ExitingChannel    CreateAlertRequest_Condition = 6
-	CreateAlertRequest_InsideChannel     CreateAlertRequest_Condition = 7
-	CreateAlertRequest_OutsideChannel    CreateAlertRequest_Condition = 8
-	CreateAlertRequest_MovingUp          CreateAlertRequest_Condition = 9
-	CreateAlertRequest_MovingDown        CreateAlertRequest_Condition = 10
-	CreateAlertRequest_MovingUpPercent   CreateAlertRequest_Condition = 11
-	CreateAlertRequest_MovingDownPercent CreateAlertRequest_Condition = 12
+	Condition_Crossing          Condition = 0
+	Condition_CrossingUp        Condition = 1
+	Condition_CrossingDown      Condition = 2
+	Condition_GreaterThan       Condition = 3
+	Condition_LessThan          Condition = 4
+	Condition_EnteringChannel   Condition = 5
+	Condition_ExitingChannel    Condition = 6
+	Condition_InsideChannel     Condition = 7
+	Condition_OutsideChannel    Condition = 8
+	Condition_MovingUp          Condition = 9
+	Condition_MovingDown        Condition = 10
+	Condition_MovingUpPercent   Condition = 11
+	Condition_MovingDownPercent Condition = 12
 )
 
-var CreateAlertRequest_Condition_name = map[int32]string{
+var Condition_name = map[int32]string{
 	0:  "Crossing",
 	1:  "CrossingUp",
 	2:  "CrossingDown",
@@ -56,7 +56,7 @@ var CreateAlertRequest_Condition_name = map[int32]string{
 	12: "MovingDownPercent",
 }
 
-var CreateAlertRequest_Condition_value = map[string]int32{
+var Condition_value = map[string]int32{
 	"Crossing":          0,
 	"CrossingUp":        1,
 	"CrossingDown":      2,
@@ -72,132 +72,106 @@ var CreateAlertRequest_Condition_value = map[string]int32{
 	"MovingDownPercent": 12,
 }
 
-func (x CreateAlertRequest_Condition) String() string {
-	return proto.EnumName(CreateAlertRequest_Condition_name, int32(x))
+func (x Condition) String() string {
+	return proto.EnumName(Condition_name, int32(x))
 }
 
-func (CreateAlertRequest_Condition) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{1, 0}
+func (Condition) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_20493709c38b81dc, []int{0}
 }
 
-type CreateAlertRequest_Frequency int32
+type Frequency int32
 
 const (
-	CreateAlertRequest_OnlyOnce        CreateAlertRequest_Frequency = 0
-	CreateAlertRequest_OncePerBar      CreateAlertRequest_Frequency = 1
-	CreateAlertRequest_OncePerBarClose CreateAlertRequest_Frequency = 2
-	CreateAlertRequest_OncePerMinute   CreateAlertRequest_Frequency = 3
+	Frequency_OnlyOnce        Frequency = 0
+	Frequency_OncePerBar      Frequency = 1
+	Frequency_OncePerBarClose Frequency = 2
+	Frequency_OncePerMinute   Frequency = 3
 )
 
-var CreateAlertRequest_Frequency_name = map[int32]string{
+var Frequency_name = map[int32]string{
 	0: "OnlyOnce",
 	1: "OncePerBar",
 	2: "OncePerBarClose",
 	3: "OncePerMinute",
 }
 
-var CreateAlertRequest_Frequency_value = map[string]int32{
+var Frequency_value = map[string]int32{
 	"OnlyOnce":        0,
 	"OncePerBar":      1,
 	"OncePerBarClose": 2,
 	"OncePerMinute":   3,
 }
 
-func (x CreateAlertRequest_Frequency) String() string {
-	return proto.EnumName(CreateAlertRequest_Frequency_name, int32(x))
+func (x Frequency) String() string {
+	return proto.EnumName(Frequency_name, int32(x))
 }
 
-func (CreateAlertRequest_Frequency) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{1, 1}
+func (Frequency) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_20493709c38b81dc, []int{1}
 }
 
-type UpdateAlertRequest_Condition int32
-
-const (
-	UpdateAlertRequest_Crossing          UpdateAlertRequest_Condition = 0
-	UpdateAlertRequest_CrossingUp        UpdateAlertRequest_Condition = 1
-	UpdateAlertRequest_CrossingDown      UpdateAlertRequest_Condition = 2
-	UpdateAlertRequest_GreaterThan       UpdateAlertRequest_Condition = 3
-	UpdateAlertRequest_LessThan          UpdateAlertRequest_Condition = 4
-	UpdateAlertRequest_EnteringChannel   UpdateAlertRequest_Condition = 5
-	UpdateAlertRequest_ExitingChannel    UpdateAlertRequest_Condition = 6
-	UpdateAlertRequest_InsideChannel     UpdateAlertRequest_Condition = 7
-	UpdateAlertRequest_OutsideChannel    UpdateAlertRequest_Condition = 8
-	UpdateAlertRequest_MovingUp          UpdateAlertRequest_Condition = 9
-	UpdateAlertRequest_MovingDown        UpdateAlertRequest_Condition = 10
-	UpdateAlertRequest_MovingUpPercent   UpdateAlertRequest_Condition = 11
-	UpdateAlertRequest_MovingDownPercent UpdateAlertRequest_Condition = 12
-)
-
-var UpdateAlertRequest_Condition_name = map[int32]string{
-	0:  "Crossing",
-	1:  "CrossingUp",
-	2:  "CrossingDown",
-	3:  "GreaterThan",
-	4:  "LessThan",
-	5:  "EnteringChannel",
-	6:  "ExitingChannel",
-	7:  "InsideChannel",
-	8:  "OutsideChannel",
-	9:  "MovingUp",
-	10: "MovingDown",
-	11: "MovingUpPercent",
-	12: "MovingDownPercent",
+type Chart struct {
+	ChartId              uint64   `protobuf:"varint,1,opt,name=chart_id,json=chartId,proto3" json:"chart_id,omitempty"`
+	ExternalId           string   `protobuf:"bytes,2,opt,name=external_id,json=externalId,proto3" json:"external_id,omitempty"`
+	Exchange             string   `protobuf:"bytes,3,opt,name=exchange,proto3" json:"exchange,omitempty"`
+	Market               string   `protobuf:"bytes,4,opt,name=market,proto3" json:"market,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-var UpdateAlertRequest_Condition_value = map[string]int32{
-	"Crossing":          0,
-	"CrossingUp":        1,
-	"CrossingDown":      2,
-	"GreaterThan":       3,
-	"LessThan":          4,
-	"EnteringChannel":   5,
-	"ExitingChannel":    6,
-	"InsideChannel":     7,
-	"OutsideChannel":    8,
-	"MovingUp":          9,
-	"MovingDown":        10,
-	"MovingUpPercent":   11,
-	"MovingDownPercent": 12,
+func (m *Chart) Reset()         { *m = Chart{} }
+func (m *Chart) String() string { return proto.CompactTextString(m) }
+func (*Chart) ProtoMessage()    {}
+func (*Chart) Descriptor() ([]byte, []int) {
+	return fileDescriptor_20493709c38b81dc, []int{0}
 }
 
-func (x UpdateAlertRequest_Condition) String() string {
-	return proto.EnumName(UpdateAlertRequest_Condition_name, int32(x))
+func (m *Chart) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Chart.Unmarshal(m, b)
+}
+func (m *Chart) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Chart.Marshal(b, m, deterministic)
+}
+func (m *Chart) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Chart.Merge(m, src)
+}
+func (m *Chart) XXX_Size() int {
+	return xxx_messageInfo_Chart.Size(m)
+}
+func (m *Chart) XXX_DiscardUnknown() {
+	xxx_messageInfo_Chart.DiscardUnknown(m)
 }
 
-func (UpdateAlertRequest_Condition) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{6, 0}
+var xxx_messageInfo_Chart proto.InternalMessageInfo
+
+func (m *Chart) GetChartId() uint64 {
+	if m != nil {
+		return m.ChartId
+	}
+	return 0
 }
 
-type UpdateAlertRequest_Frequency int32
-
-const (
-	UpdateAlertRequest_OnlyOnce        UpdateAlertRequest_Frequency = 0
-	UpdateAlertRequest_OncePerBar      UpdateAlertRequest_Frequency = 1
-	UpdateAlertRequest_OncePerBarClose UpdateAlertRequest_Frequency = 2
-	UpdateAlertRequest_OncePerMinute   UpdateAlertRequest_Frequency = 3
-)
-
-var UpdateAlertRequest_Frequency_name = map[int32]string{
-	0: "OnlyOnce",
-	1: "OncePerBar",
-	2: "OncePerBarClose",
-	3: "OncePerMinute",
+func (m *Chart) GetExternalId() string {
+	if m != nil {
+		return m.ExternalId
+	}
+	return ""
 }
 
-var UpdateAlertRequest_Frequency_value = map[string]int32{
-	"OnlyOnce":        0,
-	"OncePerBar":      1,
-	"OncePerBarClose": 2,
-	"OncePerMinute":   3,
+func (m *Chart) GetExchange() string {
+	if m != nil {
+		return m.Exchange
+	}
+	return ""
 }
 
-func (x UpdateAlertRequest_Frequency) String() string {
-	return proto.EnumName(UpdateAlertRequest_Frequency_name, int32(x))
-}
-
-func (UpdateAlertRequest_Frequency) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{6, 1}
+func (m *Chart) GetMarket() string {
+	if m != nil {
+		return m.Market
+	}
+	return ""
 }
 
 type Webhook struct {
@@ -213,7 +187,7 @@ func (m *Webhook) Reset()         { *m = Webhook{} }
 func (m *Webhook) String() string { return proto.CompactTextString(m) }
 func (*Webhook) ProtoMessage()    {}
 func (*Webhook) Descriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{0}
+	return fileDescriptor_20493709c38b81dc, []int{1}
 }
 
 func (m *Webhook) XXX_Unmarshal(b []byte) error {
@@ -255,172 +229,27 @@ func (m *Webhook) GetBody() string {
 	return ""
 }
 
-type CreateAlertRequest struct {
-	Exchange             string                       `protobuf:"bytes,1,opt,name=exchange,proto3" json:"exchange,omitempty"`
-	Market               string                       `protobuf:"bytes,2,opt,name=market,proto3" json:"market,omitempty"`
-	Timeframe            string                       `protobuf:"bytes,3,opt,name=timeframe,proto3" json:"timeframe,omitempty"`
-	ExternalId           uint64                       `protobuf:"varint,4,opt,name=external_id,json=externalId,proto3" json:"external_id,omitempty"`
-	LineA                string                       `protobuf:"bytes,5,opt,name=line_a,json=lineA,proto3" json:"line_a,omitempty"`
-	Condition            CreateAlertRequest_Condition `protobuf:"varint,6,opt,name=condition,proto3,enum=alerts.CreateAlertRequest_Condition" json:"condition,omitempty"`
-	LineB                string                       `protobuf:"bytes,7,opt,name=line_b,json=lineB,proto3" json:"line_b,omitempty"`
-	Frequency            CreateAlertRequest_Frequency `protobuf:"varint,8,opt,name=frequency,proto3,enum=alerts.CreateAlertRequest_Frequency" json:"frequency,omitempty"`
-	MessageBody          string                       `protobuf:"bytes,9,opt,name=message_body,json=messageBody,proto3" json:"message_body,omitempty"`
-	Webhook              *Webhook                     `protobuf:"bytes,10,opt,name=webhook,proto3" json:"webhook,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                     `json:"-"`
-	XXX_unrecognized     []byte                       `json:"-"`
-	XXX_sizecache        int32                        `json:"-"`
-}
-
-func (m *CreateAlertRequest) Reset()         { *m = CreateAlertRequest{} }
-func (m *CreateAlertRequest) String() string { return proto.CompactTextString(m) }
-func (*CreateAlertRequest) ProtoMessage()    {}
-func (*CreateAlertRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{1}
-}
-
-func (m *CreateAlertRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CreateAlertRequest.Unmarshal(m, b)
-}
-func (m *CreateAlertRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CreateAlertRequest.Marshal(b, m, deterministic)
-}
-func (m *CreateAlertRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateAlertRequest.Merge(m, src)
-}
-func (m *CreateAlertRequest) XXX_Size() int {
-	return xxx_messageInfo_CreateAlertRequest.Size(m)
-}
-func (m *CreateAlertRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_CreateAlertRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CreateAlertRequest proto.InternalMessageInfo
-
-func (m *CreateAlertRequest) GetExchange() string {
-	if m != nil {
-		return m.Exchange
-	}
-	return ""
-}
-
-func (m *CreateAlertRequest) GetMarket() string {
-	if m != nil {
-		return m.Market
-	}
-	return ""
-}
-
-func (m *CreateAlertRequest) GetTimeframe() string {
-	if m != nil {
-		return m.Timeframe
-	}
-	return ""
-}
-
-func (m *CreateAlertRequest) GetExternalId() uint64 {
-	if m != nil {
-		return m.ExternalId
-	}
-	return 0
-}
-
-func (m *CreateAlertRequest) GetLineA() string {
-	if m != nil {
-		return m.LineA
-	}
-	return ""
-}
-
-func (m *CreateAlertRequest) GetCondition() CreateAlertRequest_Condition {
-	if m != nil {
-		return m.Condition
-	}
-	return CreateAlertRequest_Crossing
-}
-
-func (m *CreateAlertRequest) GetLineB() string {
-	if m != nil {
-		return m.LineB
-	}
-	return ""
-}
-
-func (m *CreateAlertRequest) GetFrequency() CreateAlertRequest_Frequency {
-	if m != nil {
-		return m.Frequency
-	}
-	return CreateAlertRequest_OnlyOnce
-}
-
-func (m *CreateAlertRequest) GetMessageBody() string {
-	if m != nil {
-		return m.MessageBody
-	}
-	return ""
-}
-
-func (m *CreateAlertRequest) GetWebhook() *Webhook {
-	if m != nil {
-		return m.Webhook
-	}
-	return nil
-}
-
-type CreateAlertResponse struct {
-	AlertId              uint64   `protobuf:"varint,1,opt,name=alert_id,json=alertId,proto3" json:"alert_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *CreateAlertResponse) Reset()         { *m = CreateAlertResponse{} }
-func (m *CreateAlertResponse) String() string { return proto.CompactTextString(m) }
-func (*CreateAlertResponse) ProtoMessage()    {}
-func (*CreateAlertResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{2}
-}
-
-func (m *CreateAlertResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CreateAlertResponse.Unmarshal(m, b)
-}
-func (m *CreateAlertResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CreateAlertResponse.Marshal(b, m, deterministic)
-}
-func (m *CreateAlertResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateAlertResponse.Merge(m, src)
-}
-func (m *CreateAlertResponse) XXX_Size() int {
-	return xxx_messageInfo_CreateAlertResponse.Size(m)
-}
-func (m *CreateAlertResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_CreateAlertResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CreateAlertResponse proto.InternalMessageInfo
-
-func (m *CreateAlertResponse) GetAlertId() uint64 {
-	if m != nil {
-		return m.AlertId
-	}
-	return 0
-}
-
 type Alert struct {
-	AlertId              uint64   `protobuf:"varint,1,opt,name=alert_id,json=alertId,proto3" json:"alert_id,omitempty"`
-	ExternalId           uint64   `protobuf:"varint,2,opt,name=external_id,json=externalId,proto3" json:"external_id,omitempty"`
-	Exchange             string   `protobuf:"bytes,3,opt,name=exchange,proto3" json:"exchange,omitempty"`
-	Market               string   `protobuf:"bytes,4,opt,name=market,proto3" json:"market,omitempty"`
-	Timeframe            string   `protobuf:"bytes,5,opt,name=timeframe,proto3" json:"timeframe,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	AlertId              uint64    `protobuf:"varint,1,opt,name=alert_id,json=alertId,proto3" json:"alert_id,omitempty"`
+	ExternalId           uint64    `protobuf:"varint,2,opt,name=external_id,json=externalId,proto3" json:"external_id,omitempty"`
+	Chart                *Chart    `protobuf:"bytes,3,opt,name=chart,proto3" json:"chart,omitempty"`
+	Timeframe            string    `protobuf:"bytes,4,opt,name=timeframe,proto3" json:"timeframe,omitempty"`
+	LineA                string    `protobuf:"bytes,5,opt,name=line_a,json=lineA,proto3" json:"line_a,omitempty"`
+	Condition            Condition `protobuf:"varint,6,opt,name=condition,proto3,enum=alerts.Condition" json:"condition,omitempty"`
+	LineB                string    `protobuf:"bytes,7,opt,name=line_b,json=lineB,proto3" json:"line_b,omitempty"`
+	Frequency            Frequency `protobuf:"varint,8,opt,name=frequency,proto3,enum=alerts.Frequency" json:"frequency,omitempty"`
+	MessageBody          string    `protobuf:"bytes,9,opt,name=message_body,json=messageBody,proto3" json:"message_body,omitempty"`
+	Webhook              *Webhook  `protobuf:"bytes,10,opt,name=webhook,proto3" json:"webhook,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
 }
 
 func (m *Alert) Reset()         { *m = Alert{} }
 func (m *Alert) String() string { return proto.CompactTextString(m) }
 func (*Alert) ProtoMessage()    {}
 func (*Alert) Descriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{3}
+	return fileDescriptor_20493709c38b81dc, []int{2}
 }
 
 func (m *Alert) XXX_Unmarshal(b []byte) error {
@@ -455,23 +284,137 @@ func (m *Alert) GetExternalId() uint64 {
 	return 0
 }
 
-func (m *Alert) GetExchange() string {
+func (m *Alert) GetChart() *Chart {
 	if m != nil {
-		return m.Exchange
+		return m.Chart
 	}
-	return ""
-}
-
-func (m *Alert) GetMarket() string {
-	if m != nil {
-		return m.Market
-	}
-	return ""
+	return nil
 }
 
 func (m *Alert) GetTimeframe() string {
 	if m != nil {
 		return m.Timeframe
+	}
+	return ""
+}
+
+func (m *Alert) GetLineA() string {
+	if m != nil {
+		return m.LineA
+	}
+	return ""
+}
+
+func (m *Alert) GetCondition() Condition {
+	if m != nil {
+		return m.Condition
+	}
+	return Condition_Crossing
+}
+
+func (m *Alert) GetLineB() string {
+	if m != nil {
+		return m.LineB
+	}
+	return ""
+}
+
+func (m *Alert) GetFrequency() Frequency {
+	if m != nil {
+		return m.Frequency
+	}
+	return Frequency_OnlyOnce
+}
+
+func (m *Alert) GetMessageBody() string {
+	if m != nil {
+		return m.MessageBody
+	}
+	return ""
+}
+
+func (m *Alert) GetWebhook() *Webhook {
+	if m != nil {
+		return m.Webhook
+	}
+	return nil
+}
+
+type Indicator struct {
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Implementation       string   `protobuf:"bytes,2,opt,name=implementation,proto3" json:"implementation,omitempty"`
+	Source               string   `protobuf:"bytes,3,opt,name=source,proto3" json:"source,omitempty"`
+	Inputs               string   `protobuf:"bytes,4,opt,name=inputs,proto3" json:"inputs,omitempty"`
+	Lines                string   `protobuf:"bytes,5,opt,name=lines,proto3" json:"lines,omitempty"`
+	Styles               string   `protobuf:"bytes,6,opt,name=styles,proto3" json:"styles,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Indicator) Reset()         { *m = Indicator{} }
+func (m *Indicator) String() string { return proto.CompactTextString(m) }
+func (*Indicator) ProtoMessage()    {}
+func (*Indicator) Descriptor() ([]byte, []int) {
+	return fileDescriptor_20493709c38b81dc, []int{3}
+}
+
+func (m *Indicator) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Indicator.Unmarshal(m, b)
+}
+func (m *Indicator) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Indicator.Marshal(b, m, deterministic)
+}
+func (m *Indicator) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Indicator.Merge(m, src)
+}
+func (m *Indicator) XXX_Size() int {
+	return xxx_messageInfo_Indicator.Size(m)
+}
+func (m *Indicator) XXX_DiscardUnknown() {
+	xxx_messageInfo_Indicator.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Indicator proto.InternalMessageInfo
+
+func (m *Indicator) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *Indicator) GetImplementation() string {
+	if m != nil {
+		return m.Implementation
+	}
+	return ""
+}
+
+func (m *Indicator) GetSource() string {
+	if m != nil {
+		return m.Source
+	}
+	return ""
+}
+
+func (m *Indicator) GetInputs() string {
+	if m != nil {
+		return m.Inputs
+	}
+	return ""
+}
+
+func (m *Indicator) GetLines() string {
+	if m != nil {
+		return m.Lines
+	}
+	return ""
+}
+
+func (m *Indicator) GetStyles() string {
+	if m != nil {
+		return m.Styles
 	}
 	return ""
 }
@@ -554,160 +497,41 @@ func (m *ListAlertsResponse) GetAlerts() []*Alert {
 	return nil
 }
 
-type UpdateAlertRequest struct {
-	AlertId              uint64                       `protobuf:"varint,1,opt,name=alert_id,json=alertId,proto3" json:"alert_id,omitempty"`
-	Exchange             string                       `protobuf:"bytes,2,opt,name=exchange,proto3" json:"exchange,omitempty"`
-	Market               string                       `protobuf:"bytes,3,opt,name=market,proto3" json:"market,omitempty"`
-	Timeframe            string                       `protobuf:"bytes,4,opt,name=timeframe,proto3" json:"timeframe,omitempty"`
-	ExternalId           uint64                       `protobuf:"varint,5,opt,name=external_id,json=externalId,proto3" json:"external_id,omitempty"`
-	LineA                string                       `protobuf:"bytes,6,opt,name=line_a,json=lineA,proto3" json:"line_a,omitempty"`
-	Condition            UpdateAlertRequest_Condition `protobuf:"varint,7,opt,name=condition,proto3,enum=alerts.UpdateAlertRequest_Condition" json:"condition,omitempty"`
-	LineB                string                       `protobuf:"bytes,8,opt,name=line_b,json=lineB,proto3" json:"line_b,omitempty"`
-	Frequency            UpdateAlertRequest_Frequency `protobuf:"varint,9,opt,name=frequency,proto3,enum=alerts.UpdateAlertRequest_Frequency" json:"frequency,omitempty"`
-	MessageBody          string                       `protobuf:"bytes,10,opt,name=message_body,json=messageBody,proto3" json:"message_body,omitempty"`
-	Webhook              *Webhook                     `protobuf:"bytes,11,opt,name=webhook,proto3" json:"webhook,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                     `json:"-"`
-	XXX_unrecognized     []byte                       `json:"-"`
-	XXX_sizecache        int32                        `json:"-"`
-}
-
-func (m *UpdateAlertRequest) Reset()         { *m = UpdateAlertRequest{} }
-func (m *UpdateAlertRequest) String() string { return proto.CompactTextString(m) }
-func (*UpdateAlertRequest) ProtoMessage()    {}
-func (*UpdateAlertRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{6}
-}
-
-func (m *UpdateAlertRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UpdateAlertRequest.Unmarshal(m, b)
-}
-func (m *UpdateAlertRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UpdateAlertRequest.Marshal(b, m, deterministic)
-}
-func (m *UpdateAlertRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateAlertRequest.Merge(m, src)
-}
-func (m *UpdateAlertRequest) XXX_Size() int {
-	return xxx_messageInfo_UpdateAlertRequest.Size(m)
-}
-func (m *UpdateAlertRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateAlertRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_UpdateAlertRequest proto.InternalMessageInfo
-
-func (m *UpdateAlertRequest) GetAlertId() uint64 {
-	if m != nil {
-		return m.AlertId
-	}
-	return 0
-}
-
-func (m *UpdateAlertRequest) GetExchange() string {
-	if m != nil {
-		return m.Exchange
-	}
-	return ""
-}
-
-func (m *UpdateAlertRequest) GetMarket() string {
-	if m != nil {
-		return m.Market
-	}
-	return ""
-}
-
-func (m *UpdateAlertRequest) GetTimeframe() string {
-	if m != nil {
-		return m.Timeframe
-	}
-	return ""
-}
-
-func (m *UpdateAlertRequest) GetExternalId() uint64 {
-	if m != nil {
-		return m.ExternalId
-	}
-	return 0
-}
-
-func (m *UpdateAlertRequest) GetLineA() string {
-	if m != nil {
-		return m.LineA
-	}
-	return ""
-}
-
-func (m *UpdateAlertRequest) GetCondition() UpdateAlertRequest_Condition {
-	if m != nil {
-		return m.Condition
-	}
-	return UpdateAlertRequest_Crossing
-}
-
-func (m *UpdateAlertRequest) GetLineB() string {
-	if m != nil {
-		return m.LineB
-	}
-	return ""
-}
-
-func (m *UpdateAlertRequest) GetFrequency() UpdateAlertRequest_Frequency {
-	if m != nil {
-		return m.Frequency
-	}
-	return UpdateAlertRequest_OnlyOnce
-}
-
-func (m *UpdateAlertRequest) GetMessageBody() string {
-	if m != nil {
-		return m.MessageBody
-	}
-	return ""
-}
-
-func (m *UpdateAlertRequest) GetWebhook() *Webhook {
-	if m != nil {
-		return m.Webhook
-	}
-	return nil
-}
-
-type UpdateAlertResponse struct {
-	AlertId              uint64   `protobuf:"varint,1,opt,name=alert_id,json=alertId,proto3" json:"alert_id,omitempty"`
+type GetAlertRequest struct {
+	ExternalId           uint64   `protobuf:"varint,1,opt,name=external_id,json=externalId,proto3" json:"external_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *UpdateAlertResponse) Reset()         { *m = UpdateAlertResponse{} }
-func (m *UpdateAlertResponse) String() string { return proto.CompactTextString(m) }
-func (*UpdateAlertResponse) ProtoMessage()    {}
-func (*UpdateAlertResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{7}
+func (m *GetAlertRequest) Reset()         { *m = GetAlertRequest{} }
+func (m *GetAlertRequest) String() string { return proto.CompactTextString(m) }
+func (*GetAlertRequest) ProtoMessage()    {}
+func (*GetAlertRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_20493709c38b81dc, []int{6}
 }
 
-func (m *UpdateAlertResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UpdateAlertResponse.Unmarshal(m, b)
+func (m *GetAlertRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetAlertRequest.Unmarshal(m, b)
 }
-func (m *UpdateAlertResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UpdateAlertResponse.Marshal(b, m, deterministic)
+func (m *GetAlertRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetAlertRequest.Marshal(b, m, deterministic)
 }
-func (m *UpdateAlertResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateAlertResponse.Merge(m, src)
+func (m *GetAlertRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAlertRequest.Merge(m, src)
 }
-func (m *UpdateAlertResponse) XXX_Size() int {
-	return xxx_messageInfo_UpdateAlertResponse.Size(m)
+func (m *GetAlertRequest) XXX_Size() int {
+	return xxx_messageInfo_GetAlertRequest.Size(m)
 }
-func (m *UpdateAlertResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateAlertResponse.DiscardUnknown(m)
+func (m *GetAlertRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetAlertRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_UpdateAlertResponse proto.InternalMessageInfo
+var xxx_messageInfo_GetAlertRequest proto.InternalMessageInfo
 
-func (m *UpdateAlertResponse) GetAlertId() uint64 {
+func (m *GetAlertRequest) GetExternalId() uint64 {
 	if m != nil {
-		return m.AlertId
+		return m.ExternalId
 	}
 	return 0
 }
@@ -723,7 +547,7 @@ func (m *DeleteAlertRequest) Reset()         { *m = DeleteAlertRequest{} }
 func (m *DeleteAlertRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteAlertRequest) ProtoMessage()    {}
 func (*DeleteAlertRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{8}
+	return fileDescriptor_20493709c38b81dc, []int{7}
 }
 
 func (m *DeleteAlertRequest) XXX_Unmarshal(b []byte) error {
@@ -762,7 +586,7 @@ func (m *DeleteAlertResponse) Reset()         { *m = DeleteAlertResponse{} }
 func (m *DeleteAlertResponse) String() string { return proto.CompactTextString(m) }
 func (*DeleteAlertResponse) ProtoMessage()    {}
 func (*DeleteAlertResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{9}
+	return fileDescriptor_20493709c38b81dc, []int{8}
 }
 
 func (m *DeleteAlertResponse) XXX_Unmarshal(b []byte) error {
@@ -790,85 +614,6 @@ func (m *DeleteAlertResponse) GetAlertId() uint64 {
 	return 0
 }
 
-type Indicator struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Implementation       string   `protobuf:"bytes,2,opt,name=implementation,proto3" json:"implementation,omitempty"`
-	Source               string   `protobuf:"bytes,3,opt,name=source,proto3" json:"source,omitempty"`
-	Inputs               string   `protobuf:"bytes,4,opt,name=inputs,proto3" json:"inputs,omitempty"`
-	Lines                string   `protobuf:"bytes,5,opt,name=lines,proto3" json:"lines,omitempty"`
-	Styles               string   `protobuf:"bytes,6,opt,name=styles,proto3" json:"styles,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *Indicator) Reset()         { *m = Indicator{} }
-func (m *Indicator) String() string { return proto.CompactTextString(m) }
-func (*Indicator) ProtoMessage()    {}
-func (*Indicator) Descriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{10}
-}
-
-func (m *Indicator) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Indicator.Unmarshal(m, b)
-}
-func (m *Indicator) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Indicator.Marshal(b, m, deterministic)
-}
-func (m *Indicator) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Indicator.Merge(m, src)
-}
-func (m *Indicator) XXX_Size() int {
-	return xxx_messageInfo_Indicator.Size(m)
-}
-func (m *Indicator) XXX_DiscardUnknown() {
-	xxx_messageInfo_Indicator.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Indicator proto.InternalMessageInfo
-
-func (m *Indicator) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *Indicator) GetImplementation() string {
-	if m != nil {
-		return m.Implementation
-	}
-	return ""
-}
-
-func (m *Indicator) GetSource() string {
-	if m != nil {
-		return m.Source
-	}
-	return ""
-}
-
-func (m *Indicator) GetInputs() string {
-	if m != nil {
-		return m.Inputs
-	}
-	return ""
-}
-
-func (m *Indicator) GetLines() string {
-	if m != nil {
-		return m.Lines
-	}
-	return ""
-}
-
-func (m *Indicator) GetStyles() string {
-	if m != nil {
-		return m.Styles
-	}
-	return ""
-}
-
 type ListIndicatorsRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -879,7 +624,7 @@ func (m *ListIndicatorsRequest) Reset()         { *m = ListIndicatorsRequest{} }
 func (m *ListIndicatorsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListIndicatorsRequest) ProtoMessage()    {}
 func (*ListIndicatorsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{11}
+	return fileDescriptor_20493709c38b81dc, []int{9}
 }
 
 func (m *ListIndicatorsRequest) XXX_Unmarshal(b []byte) error {
@@ -911,7 +656,7 @@ func (m *ListIndicatorsResponse) Reset()         { *m = ListIndicatorsResponse{}
 func (m *ListIndicatorsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListIndicatorsResponse) ProtoMessage()    {}
 func (*ListIndicatorsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_20493709c38b81dc, []int{12}
+	return fileDescriptor_20493709c38b81dc, []int{10}
 }
 
 func (m *ListIndicatorsResponse) XXX_Unmarshal(b []byte) error {
@@ -940,21 +685,17 @@ func (m *ListIndicatorsResponse) GetIndicators() []*Indicator {
 }
 
 func init() {
-	proto.RegisterEnum("alerts.CreateAlertRequest_Condition", CreateAlertRequest_Condition_name, CreateAlertRequest_Condition_value)
-	proto.RegisterEnum("alerts.CreateAlertRequest_Frequency", CreateAlertRequest_Frequency_name, CreateAlertRequest_Frequency_value)
-	proto.RegisterEnum("alerts.UpdateAlertRequest_Condition", UpdateAlertRequest_Condition_name, UpdateAlertRequest_Condition_value)
-	proto.RegisterEnum("alerts.UpdateAlertRequest_Frequency", UpdateAlertRequest_Frequency_name, UpdateAlertRequest_Frequency_value)
+	proto.RegisterEnum("alerts.Condition", Condition_name, Condition_value)
+	proto.RegisterEnum("alerts.Frequency", Frequency_name, Frequency_value)
+	proto.RegisterType((*Chart)(nil), "alerts.Chart")
 	proto.RegisterType((*Webhook)(nil), "alerts.Webhook")
-	proto.RegisterType((*CreateAlertRequest)(nil), "alerts.CreateAlertRequest")
-	proto.RegisterType((*CreateAlertResponse)(nil), "alerts.CreateAlertResponse")
 	proto.RegisterType((*Alert)(nil), "alerts.Alert")
+	proto.RegisterType((*Indicator)(nil), "alerts.Indicator")
 	proto.RegisterType((*ListAlertsRequest)(nil), "alerts.ListAlertsRequest")
 	proto.RegisterType((*ListAlertsResponse)(nil), "alerts.ListAlertsResponse")
-	proto.RegisterType((*UpdateAlertRequest)(nil), "alerts.UpdateAlertRequest")
-	proto.RegisterType((*UpdateAlertResponse)(nil), "alerts.UpdateAlertResponse")
+	proto.RegisterType((*GetAlertRequest)(nil), "alerts.GetAlertRequest")
 	proto.RegisterType((*DeleteAlertRequest)(nil), "alerts.DeleteAlertRequest")
 	proto.RegisterType((*DeleteAlertResponse)(nil), "alerts.DeleteAlertResponse")
-	proto.RegisterType((*Indicator)(nil), "alerts.Indicator")
 	proto.RegisterType((*ListIndicatorsRequest)(nil), "alerts.ListIndicatorsRequest")
 	proto.RegisterType((*ListIndicatorsResponse)(nil), "alerts.ListIndicatorsResponse")
 }
@@ -962,61 +703,57 @@ func init() {
 func init() { proto.RegisterFile("alerts.proto", fileDescriptor_20493709c38b81dc) }
 
 var fileDescriptor_20493709c38b81dc = []byte{
-	// 858 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x56, 0xcd, 0x92, 0xdb, 0x44,
-	0x10, 0x5e, 0xf9, 0x5f, 0x2d, 0xc7, 0xab, 0xed, 0xb0, 0x41, 0x31, 0x7f, 0x46, 0x05, 0x94, 0xb9,
-	0x2c, 0xb0, 0x70, 0xe3, 0x94, 0x75, 0x96, 0x64, 0x8b, 0xa4, 0x36, 0x71, 0x91, 0xe2, 0xb8, 0xa5,
-	0xb5, 0x3a, 0x6b, 0x55, 0xe4, 0x91, 0x99, 0x19, 0x93, 0xf5, 0x8d, 0x97, 0xe0, 0x11, 0x78, 0x24,
-	0xde, 0x83, 0x03, 0x0f, 0x40, 0xcd, 0x68, 0xc6, 0x92, 0xed, 0x95, 0x9d, 0x13, 0xa7, 0xdc, 0xf4,
-	0xf5, 0xf4, 0x7c, 0xd3, 0xdd, 0xd3, 0xfd, 0x8d, 0xa0, 0x1b, 0xa5, 0xc4, 0xa5, 0x38, 0x99, 0xf3,
-	0x4c, 0x66, 0xd8, 0xca, 0x51, 0xf8, 0x04, 0xda, 0xbf, 0xd2, 0xf5, 0x34, 0xcb, 0xde, 0xe0, 0x03,
-	0x68, 0xcd, 0x48, 0x4e, 0xb3, 0x38, 0x70, 0x06, 0xce, 0xd0, 0x1d, 0x1b, 0x84, 0x3e, 0xd4, 0x17,
-	0x3c, 0x0d, 0x6a, 0xda, 0xa8, 0x3e, 0x11, 0xa1, 0x71, 0x9d, 0xc5, 0xcb, 0xa0, 0xae, 0x4d, 0xfa,
-	0x3b, 0xfc, 0xbb, 0x09, 0x38, 0xe2, 0x14, 0x49, 0x7a, 0xa4, 0x98, 0xc7, 0xf4, 0xdb, 0x82, 0x84,
-	0xc4, 0x3e, 0x74, 0xe8, 0x76, 0x32, 0x8d, 0xd8, 0x0d, 0x19, 0xda, 0x15, 0xd6, 0x07, 0x46, 0xfc,
-	0x0d, 0x49, 0xc3, 0x6d, 0x10, 0x7e, 0x0c, 0xae, 0x4c, 0x66, 0xf4, 0x9a, 0x47, 0x33, 0x32, 0x67,
-	0x14, 0x06, 0xfc, 0x0c, 0x3c, 0xba, 0x95, 0xc4, 0x59, 0x94, 0x5e, 0x25, 0x71, 0xd0, 0x18, 0x38,
-	0xc3, 0xc6, 0x18, 0xac, 0xe9, 0x22, 0xc6, 0x63, 0x68, 0xa5, 0x09, 0xa3, 0xab, 0x28, 0x68, 0xea,
-	0xbd, 0x4d, 0x85, 0x1e, 0xe1, 0x19, 0xb8, 0x93, 0x8c, 0xc5, 0x89, 0x4c, 0x32, 0x16, 0xb4, 0x06,
-	0xce, 0xb0, 0x77, 0xfa, 0xc5, 0x89, 0xa9, 0xc9, 0x76, 0xe0, 0x27, 0x23, 0xeb, 0x3b, 0x2e, 0xb6,
-	0xad, 0xa8, 0xaf, 0x83, 0x76, 0x41, 0x7d, 0xa6, 0xa8, 0x5f, 0x73, 0xb5, 0x8f, 0x4d, 0x96, 0x41,
-	0x67, 0x2f, 0xf5, 0x4f, 0xd6, 0x77, 0x5c, 0x6c, 0xc3, 0xcf, 0xa1, 0x3b, 0x23, 0x21, 0xa2, 0x1b,
-	0xba, 0xd2, 0xb5, 0x75, 0xf5, 0x01, 0x9e, 0xb1, 0x9d, 0x65, 0xf1, 0x12, 0xbf, 0x86, 0xf6, 0xdb,
-	0xfc, 0xae, 0x02, 0x18, 0x38, 0x43, 0xef, 0xf4, 0xd0, 0x1e, 0x62, 0xae, 0x70, 0x6c, 0xd7, 0xc3,
-	0x7f, 0x1d, 0x70, 0x57, 0x19, 0x60, 0x17, 0x3a, 0x23, 0x9e, 0x09, 0x91, 0xb0, 0x1b, 0xff, 0x00,
-	0x7b, 0x00, 0x16, 0xbd, 0x9a, 0xfb, 0x0e, 0xfa, 0xd0, 0xb5, 0xf8, 0x71, 0xf6, 0x96, 0xf9, 0x35,
-	0x3c, 0x04, 0xef, 0x89, 0x0e, 0x9b, 0xff, 0x32, 0x8d, 0x98, 0x5f, 0x57, 0x04, 0xcf, 0x48, 0x08,
-	0x8d, 0x1a, 0x78, 0x1f, 0x0e, 0xcf, 0x99, 0x24, 0x9e, 0xb0, 0x9b, 0xd1, 0x34, 0x62, 0x8c, 0x52,
-	0xbf, 0x89, 0x08, 0xbd, 0xf3, 0xdb, 0x44, 0x96, 0x6c, 0x2d, 0x3c, 0x82, 0x7b, 0x17, 0x4c, 0x24,
-	0x31, 0x59, 0x53, 0x5b, 0xb9, 0x5d, 0x2e, 0x64, 0xd9, 0xd6, 0x51, 0xec, 0xcf, 0xb3, 0xdf, 0xf3,
-	0x70, 0x5c, 0x15, 0x5e, 0x8e, 0x74, 0x30, 0xa0, 0x4e, 0xb3, 0xab, 0x2f, 0x88, 0x4f, 0x88, 0x49,
-	0xdf, 0xc3, 0x63, 0x38, 0x2a, 0x9c, 0xac, 0xb9, 0x1b, 0xbe, 0x04, 0x77, 0x55, 0x5c, 0x45, 0x7b,
-	0xc9, 0xd2, 0xe5, 0x25, 0x9b, 0x50, 0x9e, 0xb5, 0xfa, 0x7a, 0x41, 0xfc, 0x2c, 0xe2, 0xbe, 0xa3,
-	0x68, 0x0b, 0x3c, 0x4a, 0x33, 0x41, 0x7e, 0x4d, 0x05, 0x6c, 0x8c, 0xcf, 0x13, 0xb6, 0x90, 0xe4,
-	0xd7, 0xc3, 0x6f, 0xe1, 0xfe, 0xda, 0x15, 0x8a, 0x79, 0xc6, 0x04, 0xe1, 0x43, 0xe8, 0xe8, 0xda,
-	0xab, 0x16, 0x74, 0x74, 0x0b, 0xb6, 0x35, 0xbe, 0x88, 0xc3, 0x3f, 0x1d, 0x68, 0x6a, 0xe7, 0x1d,
-	0x4e, 0x9b, 0x5d, 0x5c, 0xdb, 0xea, 0xe2, 0xf2, 0xe0, 0xd4, 0x2b, 0x07, 0xa7, 0x51, 0x3d, 0x38,
-	0xcd, 0x8d, 0xc1, 0x09, 0x7f, 0x80, 0xa3, 0x67, 0x89, 0x90, 0x3a, 0x34, 0x61, 0xe7, 0x73, 0x23,
-	0x0e, 0x67, 0x33, 0x8e, 0xf0, 0x47, 0xc0, 0xf2, 0x2e, 0x93, 0xfe, 0x97, 0x60, 0x04, 0x24, 0x70,
-	0x06, 0xf5, 0xa1, 0x77, 0x7a, 0xcf, 0x76, 0x62, 0x5e, 0x25, 0xab, 0x2e, 0xff, 0x34, 0x01, 0x5f,
-	0xcd, 0xe3, 0x4d, 0x51, 0xd8, 0x51, 0x97, 0x72, 0xda, 0xb5, 0xca, 0xb4, 0xeb, 0xd5, 0x69, 0x37,
-	0xf6, 0xe8, 0x45, 0x73, 0x87, 0x5e, 0xb4, 0x2a, 0xf5, 0xa2, 0xbd, 0x3e, 0xd4, 0xdb, 0x39, 0xed,
-	0xd3, 0x8b, 0x4e, 0xa5, 0x5e, 0xb8, 0x7b, 0xa9, 0xdf, 0x49, 0x2f, 0x60, 0xa7, 0x5e, 0x78, 0xef,
-	0xf5, 0xe2, 0xff, 0xd3, 0x8b, 0xb5, 0x2b, 0xdc, 0xaf, 0x17, 0xdf, 0x00, 0x3e, 0xa6, 0x94, 0xde,
-	0x79, 0x46, 0xd4, 0x11, 0x6b, 0x1b, 0xf6, 0x1f, 0xf1, 0x97, 0x03, 0xee, 0x05, 0x8b, 0x93, 0x49,
-	0x24, 0x33, 0xae, 0x9e, 0x6f, 0xa6, 0x46, 0x25, 0x7f, 0x8f, 0xf5, 0x37, 0x7e, 0x05, 0xbd, 0x64,
-	0x36, 0x4f, 0x69, 0x46, 0x4c, 0x46, 0xba, 0xe5, 0xf3, 0xe9, 0xdb, 0xb0, 0xaa, 0x19, 0x14, 0xd9,
-	0x82, 0x4f, 0xac, 0x28, 0x19, 0xa4, 0xec, 0x09, 0x9b, 0x2f, 0xa4, 0xb0, 0x92, 0x94, 0x23, 0xfc,
-	0x00, 0x74, 0xcf, 0x8b, 0xf2, 0x5b, 0x2c, 0x34, 0x8b, 0x5c, 0xa6, 0x24, 0xcc, 0xc8, 0x19, 0x14,
-	0x7e, 0x08, 0xc7, 0x4a, 0x6c, 0x56, 0xa1, 0x5a, 0x99, 0x0a, 0x7f, 0x86, 0x07, 0x9b, 0x0b, 0x26,
-	0xeb, 0xef, 0x00, 0x92, 0x95, 0xd5, 0xa8, 0xd1, 0x91, 0xed, 0xf3, 0x95, 0xff, 0xb8, 0xe4, 0x74,
-	0xfa, 0x47, 0x1d, 0x5a, 0xb9, 0x9e, 0xe1, 0x53, 0xf0, 0x4a, 0xea, 0x8e, 0xfd, 0xea, 0x57, 0xbb,
-	0xff, 0xd1, 0x9d, 0x6b, 0x79, 0x14, 0xe1, 0x01, 0x9e, 0x03, 0x14, 0x3a, 0x89, 0x0f, 0xad, 0xf3,
-	0x96, 0xe2, 0xf6, 0xfb, 0x77, 0x2d, 0xad, 0x68, 0x9e, 0x82, 0x57, 0x6a, 0x9f, 0x22, 0xa0, 0x6d,
-	0x59, 0x28, 0x02, 0xba, 0xa3, 0xdf, 0x72, 0xa6, 0x52, 0x97, 0x14, 0x4c, 0xdb, 0xbd, 0x56, 0x30,
-	0xdd, 0xd1, 0x56, 0xe1, 0x01, 0xbe, 0x84, 0xde, 0x7a, 0xf1, 0xf1, 0x93, 0x72, 0x0e, 0x5b, 0xb7,
-	0xd5, 0xff, 0xb4, 0x6a, 0xd9, 0x52, 0x5e, 0xb7, 0xf4, 0x5f, 0xe8, 0xf7, 0xff, 0x05, 0x00, 0x00,
-	0xff, 0xff, 0xa5, 0x86, 0x7c, 0xea, 0x95, 0x0a, 0x00, 0x00,
+	// 792 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x55, 0xdb, 0x6e, 0xdb, 0x46,
+	0x10, 0x35, 0xad, 0x2b, 0x87, 0x8a, 0x4c, 0x4f, 0xea, 0x84, 0x51, 0x6f, 0x2a, 0x8b, 0x16, 0x6e,
+	0x80, 0x24, 0xad, 0x9a, 0xb7, 0x3e, 0xc5, 0x8a, 0xeb, 0x0a, 0x4d, 0xe0, 0x84, 0x68, 0xd0, 0x47,
+	0x83, 0x22, 0x27, 0x12, 0x11, 0x6a, 0x57, 0xdd, 0x5d, 0xd5, 0xd6, 0x5b, 0x7f, 0xa6, 0x7f, 0xd6,
+	0x4f, 0xe8, 0x07, 0x14, 0xbb, 0xe4, 0x52, 0x94, 0xe4, 0x14, 0x7e, 0xe3, 0x99, 0x99, 0x3d, 0x3b,
+	0x67, 0xe6, 0xac, 0x04, 0xbd, 0x38, 0x27, 0xa1, 0xe4, 0xd3, 0xa5, 0xe0, 0x8a, 0x63, 0xbb, 0x40,
+	0xe1, 0x35, 0xb4, 0xc6, 0xf3, 0x58, 0x28, 0x7c, 0x04, 0xdd, 0x44, 0x7f, 0x5c, 0x65, 0x69, 0xe0,
+	0x0c, 0x9d, 0xd3, 0x66, 0xd4, 0x31, 0x78, 0x92, 0xe2, 0x97, 0xe0, 0xd1, 0x8d, 0x22, 0xc1, 0xe2,
+	0x5c, 0x67, 0x0f, 0x87, 0xce, 0xa9, 0x1b, 0x81, 0x0d, 0x4d, 0x52, 0x1c, 0x40, 0x97, 0x6e, 0x92,
+	0x79, 0xcc, 0x66, 0x14, 0x34, 0x4c, 0xb6, 0xc2, 0xf8, 0x00, 0xda, 0x8b, 0x58, 0x7c, 0x20, 0x15,
+	0x34, 0x4d, 0xa6, 0x44, 0xe1, 0x05, 0x74, 0x7e, 0xa7, 0xe9, 0x9c, 0xf3, 0x0f, 0xa6, 0x84, 0xd4,
+	0x9c, 0x17, 0x17, 0xeb, 0x12, 0x83, 0xd0, 0x87, 0xc6, 0x4a, 0xe4, 0xe5, 0x7d, 0xfa, 0x13, 0x11,
+	0x9a, 0x53, 0x9e, 0xae, 0xcb, 0x4b, 0xcc, 0x77, 0xf8, 0xcf, 0x21, 0xb4, 0x5e, 0x68, 0x31, 0x5a,
+	0x82, 0x51, 0x55, 0x93, 0x60, 0xf0, 0xed, 0x12, 0x9a, 0x5b, 0x12, 0xbe, 0x86, 0x96, 0x91, 0x6b,
+	0xa8, 0xbd, 0xd1, 0xbd, 0xa7, 0xe5, 0xb4, 0xcc, 0x70, 0xa2, 0x22, 0x87, 0x9f, 0x81, 0xab, 0xb2,
+	0x05, 0xbd, 0x17, 0xf1, 0x82, 0x4a, 0x39, 0x9b, 0x00, 0x9e, 0x40, 0x3b, 0xcf, 0x18, 0x5d, 0xc5,
+	0x41, 0xcb, 0xa4, 0x5a, 0x1a, 0xbd, 0xc0, 0x67, 0xe0, 0x26, 0x9c, 0xa5, 0x99, 0xca, 0x38, 0x0b,
+	0xda, 0x43, 0xe7, 0xb4, 0x3f, 0x3a, 0xae, 0xd8, 0x6d, 0x22, 0xda, 0xd4, 0x54, 0x3c, 0xd3, 0xa0,
+	0xb3, 0xe1, 0x39, 0xd3, 0x3c, 0xef, 0x05, 0xfd, 0xb1, 0x22, 0x96, 0xac, 0x83, 0xee, 0x36, 0xcf,
+	0xcf, 0x36, 0x11, 0x6d, 0x6a, 0xf0, 0x2b, 0xe8, 0x2d, 0x48, 0xca, 0x78, 0x46, 0x57, 0x66, 0x68,
+	0xae, 0x61, 0xf3, 0xca, 0xd8, 0x19, 0x4f, 0xd7, 0xf8, 0x1d, 0x74, 0xae, 0x8b, 0x25, 0x04, 0x60,
+	0x74, 0x1f, 0x59, 0xc6, 0x72, 0x37, 0x91, 0xcd, 0x87, 0x7f, 0x3b, 0xe0, 0x4e, 0x58, 0x9a, 0x25,
+	0xb1, 0xe2, 0x42, 0x2f, 0x82, 0xe9, 0x21, 0x14, 0x0b, 0x33, 0xdf, 0xf8, 0x2d, 0xf4, 0xb3, 0xc5,
+	0x32, 0xa7, 0x05, 0x31, 0x15, 0x1b, 0xb5, 0xc5, 0xe6, 0x76, 0xa2, 0x7a, 0xdd, 0x92, 0xaf, 0x44,
+	0x62, 0xbd, 0x52, 0x22, 0x1d, 0xcf, 0xd8, 0x72, 0xa5, 0xa4, 0x75, 0x4a, 0x81, 0xf0, 0x13, 0x30,
+	0x13, 0x90, 0xf5, 0xb1, 0x4a, 0xc3, 0xa2, 0xd6, 0x39, 0x49, 0x33, 0x53, 0xcd, 0x62, 0x50, 0xf8,
+	0x1c, 0x8e, 0x5f, 0x65, 0x52, 0x19, 0x47, 0xc8, 0x48, 0xcf, 0x42, 0xaa, 0xdd, 0xf5, 0x3b, 0xbb,
+	0xeb, 0x0f, 0x7f, 0x02, 0xac, 0x9f, 0x92, 0x4b, 0xce, 0x24, 0xe1, 0x37, 0x50, 0x3e, 0x93, 0xc0,
+	0x19, 0x36, 0xea, 0xae, 0x30, 0x75, 0x91, 0x7d, 0x43, 0x23, 0x38, 0xba, 0xa0, 0xe2, 0xec, 0x9d,
+	0x2f, 0x7c, 0x06, 0xf8, 0x92, 0x72, 0x52, 0xb4, 0x75, 0xec, 0xe3, 0x0e, 0x0e, 0xbf, 0x87, 0xfb,
+	0x5b, 0x07, 0xca, 0x16, 0xff, 0xe7, 0xc4, 0x43, 0x38, 0xd1, 0x9a, 0xaa, 0xa5, 0xd9, 0x69, 0x84,
+	0xbf, 0xc2, 0x83, 0xdd, 0x44, 0xc9, 0xf6, 0x03, 0x40, 0x56, 0x45, 0x4b, 0xd1, 0x95, 0xc9, 0xaa,
+	0xfa, 0xa8, 0x56, 0xf4, 0xf8, 0x5f, 0x07, 0xdc, 0xca, 0xc6, 0xd8, 0x83, 0xee, 0x58, 0x70, 0x29,
+	0x33, 0x36, 0xf3, 0x0f, 0xb0, 0x0f, 0x60, 0xd1, 0xbb, 0xa5, 0xef, 0xa0, 0x0f, 0x3d, 0x8b, 0x5f,
+	0xf2, 0x6b, 0xe6, 0x1f, 0xe2, 0x11, 0x78, 0x17, 0x82, 0x62, 0x45, 0xe2, 0xb7, 0x79, 0xcc, 0xfc,
+	0x86, 0x26, 0x78, 0x45, 0x52, 0x1a, 0xd4, 0xc4, 0xfb, 0x70, 0x74, 0xce, 0x14, 0x89, 0x8c, 0xcd,
+	0xc6, 0xf3, 0x98, 0x31, 0xca, 0xfd, 0x16, 0x22, 0xf4, 0xcf, 0x6f, 0x32, 0x55, 0x8b, 0xb5, 0xf1,
+	0x18, 0xee, 0x4d, 0x98, 0xcc, 0x52, 0xb2, 0xa1, 0x8e, 0x2e, 0xbb, 0x5c, 0xa9, 0x7a, 0xac, 0xab,
+	0xd9, 0x5f, 0xf3, 0x3f, 0x8b, 0x76, 0x5c, 0xdd, 0x5e, 0x81, 0x4c, 0x33, 0xa0, 0x6f, 0xb3, 0xd9,
+	0x37, 0x24, 0x12, 0x62, 0xca, 0xf7, 0xf0, 0x04, 0x8e, 0x37, 0x45, 0x36, 0xdc, 0x7b, 0xfc, 0x16,
+	0xdc, 0xea, 0xd1, 0x69, 0xda, 0x4b, 0x96, 0xaf, 0x2f, 0x59, 0x42, 0x85, 0x6a, 0xfd, 0xf5, 0x86,
+	0xc4, 0x59, 0x2c, 0x7c, 0x47, 0xd3, 0x6e, 0xf0, 0x38, 0xe7, 0x92, 0xfc, 0x43, 0xdd, 0x70, 0x19,
+	0x7c, 0x9d, 0xb1, 0x95, 0x22, 0xbf, 0x31, 0xfa, 0xab, 0x01, 0xed, 0xc2, 0x80, 0xf8, 0x04, 0xbc,
+	0xb1, 0x19, 0x4b, 0xf1, 0xc3, 0xb6, 0xed, 0xbb, 0xc1, 0x36, 0x0c, 0x0f, 0xf0, 0x1c, 0x60, 0xe3,
+	0x5e, 0x7c, 0x64, 0xd3, 0x7b, 0xef, 0x60, 0x30, 0xb8, 0x2d, 0x55, 0xec, 0x3e, 0x3c, 0xc0, 0xe7,
+	0xd0, 0xb5, 0x3e, 0xc6, 0x87, 0xb6, 0x72, 0xc7, 0xd9, 0xfb, 0x97, 0x3f, 0x01, 0xef, 0xdd, 0x32,
+	0xbd, 0x73, 0xaf, 0xbf, 0x80, 0x57, 0xf3, 0x31, 0x56, 0x1d, 0xed, 0xbf, 0x86, 0xc1, 0xa7, 0xb7,
+	0xe6, 0xaa, 0x76, 0xdf, 0x42, 0x7f, 0xdb, 0xc6, 0xf8, 0x79, 0x5d, 0xde, 0x9e, 0xef, 0x07, 0x5f,
+	0x7c, 0x2c, 0x6d, 0x29, 0xa7, 0x6d, 0xf3, 0xe7, 0xf8, 0xe3, 0x7f, 0x01, 0x00, 0x00, 0xff, 0xff,
+	0xef, 0x11, 0x8b, 0x72, 0x2c, 0x07, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1031,9 +768,10 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type AlertsClient interface {
-	CreateAlert(ctx context.Context, in *CreateAlertRequest, opts ...grpc.CallOption) (*CreateAlertResponse, error)
+	CreateAlert(ctx context.Context, in *Alert, opts ...grpc.CallOption) (*Alert, error)
 	ListAlerts(ctx context.Context, in *ListAlertsRequest, opts ...grpc.CallOption) (*ListAlertsResponse, error)
-	UpdateAlert(ctx context.Context, in *UpdateAlertRequest, opts ...grpc.CallOption) (*UpdateAlertResponse, error)
+	GetAlert(ctx context.Context, in *GetAlertRequest, opts ...grpc.CallOption) (*Alert, error)
+	UpdateAlert(ctx context.Context, in *Alert, opts ...grpc.CallOption) (*Alert, error)
 	DeleteAlert(ctx context.Context, in *DeleteAlertRequest, opts ...grpc.CallOption) (*DeleteAlertResponse, error)
 	ListIndicators(ctx context.Context, in *ListIndicatorsRequest, opts ...grpc.CallOption) (*ListIndicatorsResponse, error)
 }
@@ -1046,8 +784,8 @@ func NewAlertsClient(cc *grpc.ClientConn) AlertsClient {
 	return &alertsClient{cc}
 }
 
-func (c *alertsClient) CreateAlert(ctx context.Context, in *CreateAlertRequest, opts ...grpc.CallOption) (*CreateAlertResponse, error) {
-	out := new(CreateAlertResponse)
+func (c *alertsClient) CreateAlert(ctx context.Context, in *Alert, opts ...grpc.CallOption) (*Alert, error) {
+	out := new(Alert)
 	err := c.cc.Invoke(ctx, "/alerts.Alerts/CreateAlert", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1064,8 +802,17 @@ func (c *alertsClient) ListAlerts(ctx context.Context, in *ListAlertsRequest, op
 	return out, nil
 }
 
-func (c *alertsClient) UpdateAlert(ctx context.Context, in *UpdateAlertRequest, opts ...grpc.CallOption) (*UpdateAlertResponse, error) {
-	out := new(UpdateAlertResponse)
+func (c *alertsClient) GetAlert(ctx context.Context, in *GetAlertRequest, opts ...grpc.CallOption) (*Alert, error) {
+	out := new(Alert)
+	err := c.cc.Invoke(ctx, "/alerts.Alerts/GetAlert", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *alertsClient) UpdateAlert(ctx context.Context, in *Alert, opts ...grpc.CallOption) (*Alert, error) {
+	out := new(Alert)
 	err := c.cc.Invoke(ctx, "/alerts.Alerts/UpdateAlert", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1093,9 +840,10 @@ func (c *alertsClient) ListIndicators(ctx context.Context, in *ListIndicatorsReq
 
 // AlertsServer is the server API for Alerts service.
 type AlertsServer interface {
-	CreateAlert(context.Context, *CreateAlertRequest) (*CreateAlertResponse, error)
+	CreateAlert(context.Context, *Alert) (*Alert, error)
 	ListAlerts(context.Context, *ListAlertsRequest) (*ListAlertsResponse, error)
-	UpdateAlert(context.Context, *UpdateAlertRequest) (*UpdateAlertResponse, error)
+	GetAlert(context.Context, *GetAlertRequest) (*Alert, error)
+	UpdateAlert(context.Context, *Alert) (*Alert, error)
 	DeleteAlert(context.Context, *DeleteAlertRequest) (*DeleteAlertResponse, error)
 	ListIndicators(context.Context, *ListIndicatorsRequest) (*ListIndicatorsResponse, error)
 }
@@ -1105,7 +853,7 @@ func RegisterAlertsServer(s *grpc.Server, srv AlertsServer) {
 }
 
 func _Alerts_CreateAlert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateAlertRequest)
+	in := new(Alert)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1117,7 +865,7 @@ func _Alerts_CreateAlert_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/alerts.Alerts/CreateAlert",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AlertsServer).CreateAlert(ctx, req.(*CreateAlertRequest))
+		return srv.(AlertsServer).CreateAlert(ctx, req.(*Alert))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1140,8 +888,26 @@ func _Alerts_ListAlerts_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Alerts_GetAlert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAlertRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AlertsServer).GetAlert(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/alerts.Alerts/GetAlert",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AlertsServer).GetAlert(ctx, req.(*GetAlertRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Alerts_UpdateAlert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateAlertRequest)
+	in := new(Alert)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1153,7 +919,7 @@ func _Alerts_UpdateAlert_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/alerts.Alerts/UpdateAlert",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AlertsServer).UpdateAlert(ctx, req.(*UpdateAlertRequest))
+		return srv.(AlertsServer).UpdateAlert(ctx, req.(*Alert))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1205,6 +971,10 @@ var _Alerts_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAlerts",
 			Handler:    _Alerts_ListAlerts_Handler,
+		},
+		{
+			MethodName: "GetAlert",
+			Handler:    _Alerts_GetAlert_Handler,
 		},
 		{
 			MethodName: "UpdateAlert",

@@ -3,9 +3,10 @@ syntax = "proto3";
 package alerts;
 
 service Alerts {
-  rpc CreateAlert(CreateAlertRequest) returns (CreateAlertResponse) {}
+  rpc CreateAlert(Alert) returns (Alert) {}
   rpc ListAlerts(ListAlertsRequest) returns (ListAlertsResponse) {}
-  rpc UpdateAlert(UpdateAlertRequest) returns (UpdateAlertResponse) {}
+  rpc GetAlert(GetAlertRequest) returns (Alert) {}
+  rpc UpdateAlert(Alert) returns (Alert) {}
   rpc DeleteAlert(DeleteAlertRequest) returns (DeleteAlertResponse) {}
   rpc ListIndicators(ListIndicatorsRequest) returns (ListIndicatorsResponse) {}
   /*
@@ -75,14 +76,6 @@ message Indicator {
   string styles = 6;
 }
 
-message CreateAlertRequest {
-  Alert alert = 1
-}
-
-message CreateAlertResponse {
-  Alert alert = 1
-}
-
 message ListAlertsRequest {
   uint64 external_id = 1;
 }
@@ -91,12 +84,8 @@ message ListAlertsResponse {
   repeated Alert alerts = 1;
 }
 
-message UpdateAlertRequest {
-  Alert alert = 1;
-}
-
-message UpdateAlertResponse {
-  Alert alert = 1;
+message GetAlertRequest {
+  uint64 external_id = 1;
 }
 
 message DeleteAlertRequest {
