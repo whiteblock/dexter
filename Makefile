@@ -7,10 +7,10 @@ migrate : *.go cmd/migrate/main.go
 	go build -o migrate cmd/migrate/main.go
 
 api/alerts/alerts.pb.go : api/alerts/alerts.proto
-	protoc -I alerts/ alerts/alerts.proto --go_out=plugins=grpc:alerts
+	cd api; protoc -I alerts/ alerts/alerts.proto --go_out=plugins=grpc:alerts
 
 api/data/data.pb.go : api/data/data.proto
-	protoc -I data/ data/data.proto --go_out=plugins=grpc:data
+	cd api; protoc -I data/ data/data.proto --go_out=plugins=grpc:data
 
 clean :
 	rm -f dexter migrate
