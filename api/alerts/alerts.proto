@@ -17,56 +17,70 @@ service Alerts {
   */
 }
 
+enum Condition {
+  Crossing = 0;
+  CrossingUp = 1;
+  CrossingDown = 2;
+  GreaterThan = 3;
+  LessThan = 4;
+  EnteringChannel = 5;
+  ExitingChannel = 6;
+  InsideChannel = 7;
+  OutsideChannel = 8;
+  MovingUp = 9;
+  MovingDown = 10;
+  MovingUpPercent = 11;
+  MovingDownPercent = 12;
+}
+
+enum Frequency {
+  OnlyOnce  = 0;
+  OncePerBar = 1;
+  OncePerBarClose = 2;
+  OncePerMinute = 3;
+}
+
+message Chart {
+  uint64 chart_id = 1;
+  string external_id = 2;
+  string exchange = 3;
+  string market = 4;
+}
+
 message Webhook {
   string method = 1;
   string url = 2;
   string body = 3;
 }
 
-message CreateAlertRequest {
-  string exchange = 1;
-  string market = 2;
-  string timeframe = 3;
-  uint64 external_id = 4;
+message Alert {
+  uint64 alert_id = 1;
+  uint64 external_id = 2;
+  Chart chart = 3;
+  string timeframe = 4;
   string line_a = 5;
-  enum Condition {
-    Crossing = 0;
-    CrossingUp = 1;
-    CrossingDown = 2;
-    GreaterThan = 3;
-    LessThan = 4;
-    EnteringChannel = 5;
-    ExitingChannel = 6;
-    InsideChannel = 7;
-    OutsideChannel = 8;
-    MovingUp = 9;
-    MovingDown = 10;
-    MovingUpPercent = 11;
-    MovingDownPercent = 12;
-  }
   Condition condition = 6;
   string line_b = 7;
-  enum Frequency {
-    OnlyOnce  = 0;
-    OncePerBar = 1;
-    OncePerBarClose = 2;
-    OncePerMinute = 3;
-  }
   Frequency frequency = 8;
   string message_body = 9;
   Webhook webhook = 10;
 }
 
-message CreateAlertResponse {
-  uint64 alert_id = 1;
+message Indicator {
+  string name = 1;
+  string implementation = 2;
+  string source = 3;
+  string inputs = 4;
+  string lines = 5;
+  string styles = 6;
 }
 
-message Alert {
-  uint64 alert_id = 1;
-  uint64 external_id = 2;
-  string exchange = 3;
-  string market = 4;
-  string timeframe = 5;
+message CreateAlertRequest {
+  Alert alert = 1
+}
+
+message CreateAlertResponse {
+  Alert alert = 1
 }
 
 message ListAlertsRequest {
@@ -78,42 +92,11 @@ message ListAlertsResponse {
 }
 
 message UpdateAlertRequest {
-  uint64 alert_id = 1;
-  string exchange = 2;
-  string market = 3;
-  string timeframe = 4;
-  uint64 external_id = 5;
-  string line_a = 6;
-  enum Condition {
-    Crossing = 0;
-    CrossingUp = 1;
-    CrossingDown = 2;
-    GreaterThan = 3;
-    LessThan = 4;
-    EnteringChannel = 5;
-    ExitingChannel = 6;
-    InsideChannel = 7;
-    OutsideChannel = 8;
-    MovingUp = 9;
-    MovingDown = 10;
-    MovingUpPercent = 11;
-    MovingDownPercent = 12;
-  }
-  Condition condition = 7;
-  string line_b = 8;
-  Frequency frequency = 9;
-  enum Frequency {
-    OnlyOnce  = 0;
-    OncePerBar = 1;
-    OncePerBarClose = 2;
-    OncePerMinute = 3;
-  }
-  string message_body = 10;
-  Webhook webhook = 11;
+  Alert alert = 1;
 }
 
 message UpdateAlertResponse {
-  uint64 alert_id = 1;
+  Alert alert = 1;
 }
 
 message DeleteAlertRequest {
@@ -122,15 +105,6 @@ message DeleteAlertRequest {
 
 message DeleteAlertResponse {
   uint64 alert_id = 1;
-}
-
-message Indicator {
-  string name = 1;
-  string implementation = 2;
-  string source = 3;
-  string inputs = 4;
-  string lines = 5;
-  string styles = 6;
 }
 
 message ListIndicatorsRequest {
