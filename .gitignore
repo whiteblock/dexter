@@ -13,6 +13,7 @@
 
 # Main executable
 dexter
+migrate
 
 # Environment
 .env
