@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package dexter;
+
 message ExchangesRequest {
 }
 
@@ -43,11 +45,10 @@ message TestResponse {
   int64 b = 2;
 }
 
-service DexterData {
+service Data {
   rpc SupportedExchanges (ExchangesRequest) returns (ExchangesResponse) {}
   rpc SupportedMarkets (MarketsRequest) returns (MarketsResponse) {}
   rpc GetCandles (CandlesRequest) returns (CandlesResponse) {}
   rpc StreamCandles (CandlesRequest) returns (stream Candle) {}
-  rpc Test (TestRequest) returns (TestResponse) {}
 }
 

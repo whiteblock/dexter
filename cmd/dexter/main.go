@@ -21,7 +21,7 @@ var (
 	client  = ""
 )
 
-func supportedExchanges(client dataPb.DexterDataClient) {
+func supportedExchanges(client dataPb.DataClient) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	exchanges, err := client.SupportedExchanges(ctx, &dataPb.ExchangesRequest{})
@@ -31,7 +31,7 @@ func supportedExchanges(client dataPb.DexterDataClient) {
 	log.Println(exchanges)
 }
 
-func streamCandles(client dataPb.DexterDataClient, request *dataPb.CandlesRequest) {
+func streamCandles(client dataPb.DataClient, request *dataPb.CandlesRequest) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	stream, err := client.StreamCandles(ctx, request)
@@ -51,10 +51,12 @@ func streamCandles(client dataPb.DexterDataClient, request *dataPb.CandlesReques
 }
 
 func demo(conn *grpc.ClientConn) {
-	client := dataPb.NewDexterDataClient(conn)
+	client := dataPb.NewDataClient(conn)
 	supportedExchanges(client)
 	streamCandles(client, &dataPb.CandlesRequest{Exchange: "binance", Market: "BTC/USDT", Timeframe: "5m"})
 }
+
+// dexter [OPTION]
 
 func main() {
 	flags := pflag.NewFlagSet("dexter", pflag.ExitOnError)
