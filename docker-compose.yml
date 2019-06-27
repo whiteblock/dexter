@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+    dexter:
+        image: gcr.io/whiteblock/binance/dexter
+        ports:
+            - "50052:50052"
+        environment:
+            PG_URL: "postgres://pg:5432"
+            DEXTER_DATA_ENDPOINT: "dexter-data:50051"
+    dexter-data:
+        image: gcr.io/whiteblock/binance/dexter-data
+    pg:
+        image: postgres:11.4-alpine
+        volumes:
+            - './pgdata:/var/lib/postgresql'
+        environment:
+            POSTGRES_PASSWORD: "b1nanc3"
+            POSTGRES_USER: "dexter"
+            POSTGRES_DB: "dexter"
+
