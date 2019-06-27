@@ -8,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	_ "github.com/whiteblock/dexter"
+	"github.com/whiteblock/dexter"
 	"github.com/spf13/pflag"
 	"google.golang.org/grpc"
 
@@ -19,6 +19,7 @@ var (
 	help    = false
 	verbose = false
 	client  = ""
+	listen  = ""
 )
 
 func supportedExchanges(client dataPb.DataClient) {
@@ -63,6 +64,7 @@ func main() {
 	flags.BoolVarP(&help, "help", "h", false, "Display help message")
 	flags.BoolVarP(&verbose, "verbose", "v", false, "Be verbose")
 	flags.StringVarP(&client, "client", "c", "0.0.0.0:50051", "Bind address of dexter-data service")
+	flags.StringVarP(&listen, "listen", "l", "0.0.0.0:50052", "IP and port for dexter-alerts service to listen on")
 	flags.SortFlags = false
 	flags.Parse(os.Args)
 	if help {
@@ -76,7 +78,8 @@ func main() {
 		log.Fatalln("Could not connect to client", err)
 	}
 	defer conn.Close()
-	demo(conn)
+	//demo(conn)
 
-	// TODO Start gRPC Service
+	// Start gRPC Service
+	dexter.StartServer(listen)
 }
