@@ -3,22 +3,20 @@ FROM golang:1.12.6-alpine
 WORKDIR /dexter
 
 # sys dependency phase
-RUN apk add --no-cache git
+RUN apk add --no-cache git make
 
 # app dependency phase
 COPY go.mod go.sum ./
 RUN go get
 
 # app build phase
-#COPY knexfile.js tsconfig.json tslint.json ./
-#COPY src/ src/
-#RUN yarn build-dist
-#
-## copy application artifacts
-#COPY proto/ proto/
-#
-#COPY bin/ bin/
-#
-#EXPOSE 50052
-#
-#CMD [ "bin/dexter-data" ]
+COPY *.go Makefile ./
+COPY api/ api/
+COPY cmd/ cmd/
+
+RUN make
+
+EXPOSE 50052
+CMD [ "./dexter" ]
+
+
