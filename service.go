@@ -4,11 +4,14 @@ import (
 	"context"
 	"log"
 	"net"
+	"github.com/jinzhu/gorm"
+	"github.com/davecgh/go-spew/spew"
 	grpc "google.golang.org/grpc"
 	pb "github.com/whiteblock/dexter/api/alerts"
 )
 
 type dexterAlertsServer struct {
+	db *gorm.DB
 }
 
 func (s *dexterAlertsServer) CreateAlert(ctx context.Context, alert *pb.Alert) (*pb.Alert, error) {
@@ -38,16 +41,15 @@ func (s *dexterAlertsServer) DeleteAlert(ctx context.Context, opts *pb.DeleteAle
 
 func (s *dexterAlertsServer) ListIndicators(ctx context.Context, opts *pb.ListIndicatorsRequest) (*pb.ListIndicatorsResponse, error) {
 	response := &pb.ListIndicatorsResponse{}
+	log.Printf("ListIndicators")
+	var indicators []IndicatorSpec
+	s.db.Find(&indicators)
+	spew.Dump(&indicators)
 	return response, nil
 }
 
-func newServer() *dexterAlertsServer {
-	s := &dexterAlertsServer{}
-	return s
-}
-
 // StartServer starts the gRPC service for alert management
-func StartServer(listen string) {
+func StartServer(listen string, db *gorm.DB) {
 	var opts []grpc.ServerOption
 	listener, err := net.Listen("tcp", listen)
 	if err != nil {
@@ -55,7 +57,10 @@ func StartServer(listen string) {
 	} else {
 		log.Printf("Listening on %s\n", listen)
 	}
+	server := &dexterAlertsServer{
+		db: db,
+	}
 	grpcServer := grpc.NewServer(opts...)
-	pb.RegisterAlertsServer(grpcServer, newServer())
+	pb.RegisterAlertsServer(grpcServer, server)
 	grpcServer.Serve(listener)
 }

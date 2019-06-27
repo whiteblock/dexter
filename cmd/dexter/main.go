@@ -11,6 +11,9 @@ import (
 	"github.com/whiteblock/dexter"
 	"github.com/spf13/pflag"
 	"google.golang.org/grpc"
+	"github.com/joho/godotenv"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 
 	dataPb "github.com/whiteblock/dexter/api/data"
 )
@@ -73,13 +76,25 @@ func main() {
 		flags.PrintDefaults()
 		os.Exit(0)
 	}
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	connect := fmt.Sprintf("host=%s user=%s dbname=%s password=%s", "localhost", os.Getenv("DB_USER"), os.Getenv("DB_NAME"), os.Getenv("DB_PASSWORD"))
+	db, err := gorm.Open("postgres", connect)
+	if err != nil {
+		log.Fatal("Could not connect to database", err)
+	}
+	defer db.Close()
+	/*
 	conn, err := grpc.Dial(client, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalln("Could not connect to client", err)
 	}
 	defer conn.Close()
+        */
 	//demo(conn)
 
 	// Start gRPC Service
-	dexter.StartServer(listen)
+	dexter.StartServer(listen, db)
 }

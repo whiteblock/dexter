@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package alerts;
+package dexter;
 
 service Alerts {
   rpc CreateAlert(Alert) returns (Alert) {}
