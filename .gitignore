@@ -17,3 +17,6 @@ migrate
 
 # Environment
 .env
+
+# Postgres Data (Docker)
+pgdata
