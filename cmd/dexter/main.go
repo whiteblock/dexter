@@ -67,7 +67,7 @@ func main() {
 	flags.BoolVarP(&help, "help", "h", false, "Display help message")
 	flags.BoolVarP(&verbose, "verbose", "v", false, "Be verbose")
 	flags.StringVarP(&client, "client", "c", "0.0.0.0:50051", "Bind address of dexter-data service")
-	flags.StringVarP(&listen, "listen", "l", "0.0.0.0:50052", "IP and port for dexter-alerts service to listen on")
+	flags.StringVarP(&listen, "listen", "l", "0.0.0.0:50052", "Bind address of dexter-alerts service")
 	flags.SortFlags = false
 	flags.Parse(os.Args)
 	if help {
@@ -77,9 +77,6 @@ func main() {
 		os.Exit(0)
 	}
 	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
 	connect := fmt.Sprintf("host=%s user=%s dbname=%s password=%s", "localhost", os.Getenv("DB_USER"), os.Getenv("DB_NAME"), os.Getenv("DB_PASSWORD"))
 	db, err := gorm.Open("postgres", connect)
 	if err != nil {
