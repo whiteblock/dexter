@@ -77,7 +77,7 @@ func main() {
 		os.Exit(0)
 	}
 	err := godotenv.Load()
-	connect := fmt.Sprintf("host=%s user=%s dbname=%s password=%s", "localhost", os.Getenv("DB_USER"), os.Getenv("DB_NAME"), os.Getenv("DB_PASSWORD"))
+	connect := os.Getenv("PG_URL")
 	db, err := gorm.Open("postgres", connect)
 	if err != nil {
 		log.Fatal("Could not connect to database", err)
