@@ -5,12 +5,14 @@ services:
         ports:
             - "50052:50052"
         environment:
-            PG_URL: "postgres://pg:5432"
+            PG_URL: "postgres://dexter:b1nanc3@pg:5432/dexter"
             DEXTER_DATA_ENDPOINT: "dexter-data:50051"
     dexter-data:
         image: gcr.io/whiteblock/binance/dexter-data
     pg:
         image: postgres:11.4-alpine
+        ports:
+            - "5432:5432"
         volumes:
             - './pgdata:/var/lib/postgresql'
         environment:
