@@ -15,7 +15,17 @@ type dexterAlertsServer struct {
 }
 
 func (s *dexterAlertsServer) CreateAlert(ctx context.Context, alert *pb.Alert) (*pb.Alert, error) {
-	newAlert := &pb.Alert{}
+	a := Alert{
+		ExternalID: uint(alert.ExternalId),
+		Timeframe: alert.Timeframe,
+		Condition: AlertCondition(alert.Condition),
+		Frequency: NotificationFrequency(alert.Frequency),
+		MessageBody: alert.MessageBody,
+	}
+	s.db.Create(&a)
+	newAlert := &pb.Alert{
+		Id: uint64(a.ID),
+	}
 	return newAlert, nil
 }
 
@@ -45,6 +55,15 @@ func (s *dexterAlertsServer) ListIndicators(ctx context.Context, opts *pb.ListIn
 	var indicators []IndicatorSpec
 	s.db.Find(&indicators)
 	spew.Dump(&indicators)
+	for _, v := range indicators {
+		indicatorSpec := &pb.Indicator{
+			Name: v.Name,
+			Implementation: v.Implementation,
+			Source: v.Source,
+			// TODO - Figure out what I should do with the Jsonb fields.
+		}
+		response.Indicators = append(response.Indicators, indicatorSpec)
+	}
 	return response, nil
 }
 
