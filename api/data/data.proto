@@ -21,6 +21,8 @@ message CandlesRequest {
   string exchange = 1;
   string market = 2;
   string timeframe = 3;
+  string since = 4;
+  uint64 limit = 5;
 }
 
 message CandlesResponse {
