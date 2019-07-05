@@ -55,7 +55,7 @@ message Webhook {
 }
 
 message Alert {
-  uint64 alert_id = 1;
+  uint64 id = 1;
   uint64 external_id = 2;
   Chart chart = 3;
   string timeframe = 4;
