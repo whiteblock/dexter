@@ -9,13 +9,6 @@ service Alerts {
   rpc UpdateAlert(Alert) returns (Alert) {}
   rpc DeleteAlert(DeleteAlertRequest) returns (DeleteAlertResponse) {}
   rpc ListIndicators(ListIndicatorsRequest) returns (ListIndicatorsResponse) {}
-  /*
-  rpc CreateChart(CreateChartRequest) returns (CreateChartResponse) {}
-  rpc ListCharts(ListChartsRequest) returns (ListChartsResponse) {}
-  rpc GetChart() {}
-  rpc UpdateChart() {}
-  rpc DeleteChart() {}
-  */
 }
 
 enum Condition {
@@ -41,13 +34,6 @@ enum Frequency {
   OncePerMinute = 3;
 }
 
-message Chart {
-  uint64 chart_id = 1;
-  string external_id = 2;
-  string exchange = 3;
-  string market = 4;
-}
-
 message Webhook {
   string method = 1;
   string url = 2;
@@ -57,14 +43,15 @@ message Webhook {
 message Alert {
   uint64 id = 1;
   uint64 external_id = 2;
-  Chart chart = 3;
-  string timeframe = 4;
-  string line_a = 5;
-  Condition condition = 6;
-  string line_b = 7;
-  Frequency frequency = 8;
-  string message_body = 9;
-  Webhook webhook = 10;
+  string exchange = 3;
+  string market = 4;
+  string timeframe = 5;
+  string line_a = 6;
+  Condition condition = 7;
+  string line_b = 8;
+  Frequency frequency = 9;
+  string message_body = 10;
+  Webhook webhook = 11;
 }
 
 message Indicator {
