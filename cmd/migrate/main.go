@@ -18,7 +18,6 @@ func main() {
 	}
 	defer db.Close()
 	db.AutoMigrate(&dexter.Chart{})
-	db.AutoMigrate(&dexter.IndicatorSpec{})
 	db.AutoMigrate(&dexter.Indicator{})
 	db.AutoMigrate(&dexter.Alert{})
 	db.AutoMigrate(&dexter.Webhook{})
