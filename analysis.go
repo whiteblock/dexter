@@ -7,6 +7,13 @@ import (
 // Candle [timestamp, open, high, low, close, volume]
 type Candle []int
 
+// Chart - a chart is used internally when managing dexter-data candlestick streams
+type Chart struct {
+	Exchange string
+	Market string
+	Timeframe string
+}
+
 // InitializeCandles - set the intial price data for a chart
 func (chart Chart) InitializeCandles(candles []Candle) {
 }

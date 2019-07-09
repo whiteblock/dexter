@@ -52,7 +52,7 @@ func (s *dexterAlertsServer) DeleteAlert(ctx context.Context, opts *pb.DeleteAle
 func (s *dexterAlertsServer) ListIndicators(ctx context.Context, opts *pb.ListIndicatorsRequest) (*pb.ListIndicatorsResponse, error) {
 	response := &pb.ListIndicatorsResponse{}
 	log.Printf("ListIndicators")
-	var indicators []IndicatorSpec
+	var indicators []Indicator
 	s.db.Find(&indicators)
 	spew.Dump(&indicators)
 	for _, v := range indicators {

@@ -5,18 +5,8 @@ import (
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
-// Chart - a context in which analysis happens
-type Chart struct {
-	gorm.Model
-	ExternalID uint
-	Exchange string
-	Market string
-	Alerts []Alert `gorm:"foreignkey:AlertID"`
-	Indicators []Indicator `gorm:foreignkey:ChartID`
-}
-
-// IndicatorSpec - metadata for a technical analysis function
-type IndicatorSpec struct {
+// Indicator - metadata for a technical analysis function
+type Indicator struct {
 	gorm.Model
 	Name string
 	Implementation string
@@ -24,14 +14,6 @@ type IndicatorSpec struct {
 	Inputs postgres.Jsonb
 	Lines postgres.Jsonb
 	Styles postgres.Jsonb
-}
-
-// Indicator - an instance of IndicatorSpec
-type Indicator struct {
-	gorm.Model
-	IndicatorID uint
-	ChartID uint
-	Parameters postgres.Jsonb // values for IndicatorSpec.Inputs
 }
 
 // IndicatorPart - what line in the indicator is being compared?
@@ -74,7 +56,8 @@ const (
 // Alert - describes market condition that should trigger a notification.
 type Alert struct {
 	gorm.Model
-	ChartID uint
+	Exchange string
+	Market string
 	Timeframe string
 	ExternalID uint
 	LineA postgres.Jsonb // IndicatorPart
