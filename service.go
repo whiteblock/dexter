@@ -16,11 +16,13 @@ type dexterAlertsServer struct {
 
 func (s *dexterAlertsServer) CreateAlert(ctx context.Context, alert *pb.Alert) (*pb.Alert, error) {
 	a := Alert{
-		ExternalID: uint(alert.ExternalId),
-		Timeframe: alert.Timeframe,
-		Condition: AlertCondition(alert.Condition),
-		Frequency: NotificationFrequency(alert.Frequency),
-		MessageBody: alert.MessageBody,
+		ExternalID:	alert.ExternalId,
+		Exchange:	alert.Exchange,
+		Market:		alert.Market,
+		Timeframe:	alert.Timeframe,
+		Condition:	AlertCondition(alert.Condition),
+		Frequency:	NotificationFrequency(alert.Frequency),
+		MessageBody:	alert.MessageBody,
 	}
 	s.db.Create(&a)
 	newAlert := &pb.Alert{
@@ -31,21 +33,62 @@ func (s *dexterAlertsServer) CreateAlert(ctx context.Context, alert *pb.Alert) (
 
 func (s *dexterAlertsServer) ListAlerts(ctx context.Context, opts *pb.ListAlertsRequest) (*pb.ListAlertsResponse, error) {
 	response := &pb.ListAlertsResponse{}
+	var alerts []Alert
+	s.db.Where("external_id = ?", opts.ExternalId).Find(&alerts)
+	for _, alert := range alerts {
+		pa := &pb.Alert{
+			Id:             uint64(alert.ID),
+			ExternalId:	alert.ExternalID,
+			Exchange:	alert.Exchange,
+			Market:		alert.Market,
+			Timeframe:	alert.Timeframe,
+			Condition:	pb.Condition(alert.Condition),
+			Frequency:	pb.Frequency(alert.Frequency),
+			MessageBody:	alert.MessageBody,
+		}
+		response.Alerts = append(response.Alerts, pa)
+	}
 	return response, nil
 }
 
 func (s *dexterAlertsServer) GetAlert(ctx context.Context, opts *pb.GetAlertRequest) (*pb.Alert, error) {
-	alert := &pb.Alert{}
-	return alert, nil
+	var alert Alert
+	s.db.First(&alert, opts.AlertId)
+	response := &pb.Alert{
+		Id: uint64(alert.ID),
+		ExternalId:	alert.ExternalID,
+		Exchange:	alert.Exchange,
+		Market:		alert.Market,
+		Timeframe:	alert.Timeframe,
+		Condition:	pb.Condition(alert.Condition),
+		Frequency:	pb.Frequency(alert.Frequency),
+		MessageBody:	alert.MessageBody,
+	}
+	return response, nil
 }
 
 func (s *dexterAlertsServer) UpdateAlert(ctx context.Context, alert *pb.Alert) (*pb.Alert, error) {
-	updatedAlert := &pb.Alert{}
-	return updatedAlert, nil
+	response := &pb.Alert{}
+	var dbAlert Alert
+	s.db.First(&dbAlert, alert.Id)
+	dbAlert.Market = alert.Market
+	dbAlert.Exchange = alert.Exchange
+	dbAlert.Timeframe = alert.Timeframe
+	dbAlert.Condition = AlertCondition(alert.Condition)
+	dbAlert.Frequency = NotificationFrequency(alert.Frequency)
+	dbAlert.MessageBody = alert.MessageBody
+	s.db.Save(&dbAlert)
+	return response, nil
 }
 
 func (s *dexterAlertsServer) DeleteAlert(ctx context.Context, opts *pb.DeleteAlertRequest) (*pb.DeleteAlertResponse, error) {
 	response := &pb.DeleteAlertResponse{}
+	alert := Alert{
+		Model: gorm.Model{
+			ID: uint(opts.AlertId),
+		},
+	}
+	s.db.Delete(&alert)
 	return response, nil
 }
 

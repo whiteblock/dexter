@@ -59,7 +59,7 @@ type Alert struct {
 	Exchange string
 	Market string
 	Timeframe string
-	ExternalID uint
+	ExternalID uint64
 	LineA postgres.Jsonb // IndicatorPart
 	Condition AlertCondition
 	LineB postgres.Jsonb // IndicatorPart

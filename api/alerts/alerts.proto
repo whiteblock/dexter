@@ -72,7 +72,7 @@ message ListAlertsResponse {
 }
 
 message GetAlertRequest {
-  uint64 external_id = 1;
+  uint64 alert_id = 1;
 }
 
 message DeleteAlertRequest {
