@@ -6,6 +6,7 @@ import (
 	"net"
 	"github.com/jinzhu/gorm"
 	"github.com/davecgh/go-spew/spew"
+	"google.golang.org/grpc/reflection"
 	grpc "google.golang.org/grpc"
 	pb "github.com/whiteblock/dexter/api/alerts"
 )
@@ -123,6 +124,7 @@ func StartServer(listen string, db *gorm.DB) {
 		db: db,
 	}
 	grpcServer := grpc.NewServer(opts...)
+	reflection.Register(grpcServer)
 	pb.RegisterAlertsServer(grpcServer, server)
 	grpcServer.Serve(listener)
 }
