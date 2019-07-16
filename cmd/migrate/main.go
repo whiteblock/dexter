@@ -17,7 +17,6 @@ func main() {
 		log.Fatal("Could not connect to database", err)
 	}
 	defer db.Close()
-	db.AutoMigrate(&dexter.Chart{})
 	db.AutoMigrate(&dexter.Indicator{})
 	db.AutoMigrate(&dexter.Alert{})
 	db.AutoMigrate(&dexter.Webhook{})
