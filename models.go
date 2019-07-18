@@ -9,17 +9,38 @@ import (
 type Indicator struct {
 	gorm.Model
 	Name string
-	Implementation string
-	Source string
-	Inputs postgres.Jsonb
-	Lines postgres.Jsonb
-	Styles postgres.Jsonb
+	Implementation string // native or pinescript
+	Source string         // pinescript source code
+	Inputs postgres.Jsonb // the parameters this indicator takes
+	Lines postgres.Jsonb  // the lines this indicator offers
+	Styles postgres.Jsonb // unused for now but anything that's drawn gets to set visual parameters of its own
+}
+
+// Line is a line offered by an Indicator for comparison.
+type Line struct {
+	Name string `json:"name"`
+	// What else?
+}
+
+/*
+Note that indicators that only have one line (like HorizontalLine) don't need to
+list any lines in the UI. Maybe in the database, it'll have a Default line to
+make it so that I don't need to create a special case for Indicators that have
+only one line on the server side.
+*/
+
+// Input is a paremter for an indicator
+type Input struct {
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Default string `json:"default"`
 }
 
 // IndicatorPart - what line in the indicator is being compared?
 type IndicatorPart struct {
-	IndicatorID int    `json:"indicator_id"`
-	Part        string `json:"part"`
+	IndicatorID int    `json:"indicatorId"`
+	Line        string `json:"line"`
+	// InputValues
 }
 
 // AlertCondition describes how lines can interact with each other.

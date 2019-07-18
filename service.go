@@ -16,6 +16,9 @@ type dexterAlertsServer struct {
 }
 
 func (s *dexterAlertsServer) CreateAlert(ctx context.Context, alert *pb.Alert) (*pb.Alert, error) {
+	// Constraints
+	// - Timeframe should be formatted correctly
+	// - LineX
 	a := Alert{
 		ExternalID:	alert.ExternalId,
 		Exchange:	alert.Exchange,
