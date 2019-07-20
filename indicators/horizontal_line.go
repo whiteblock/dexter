@@ -1,7 +1,11 @@
 package indicators
 
-import (
-)
+// HorizontalLine tests against a single constant value.
+type HorizontalLine struct {
+	Level float64
+}
 
-// What does an Indicator need?
-// - a name
+// Name returns the human readable name of an indicator.
+func (*HorizontalLine) Name() string {
+	return "Horizontal Line"
+}
