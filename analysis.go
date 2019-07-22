@@ -1,6 +1,7 @@
 package dexter
 
 import (
+	"fmt"
 //	"github.com/sdcoffey/techan"
 )
 
@@ -12,6 +13,23 @@ type Chart struct {
 	Exchange string
 	Market string
 	Timeframe string
+	Candles []Candle
+	Alerts []Alert
+}
+
+// Charts is a map of Charts keyed by `${exchange},${market},${timeframe}`
+var Charts map[string]Chart
+
+// SetupChart returns a chart instance for the given exchange, market and timeframe.
+func SetupChart(exchange string, market string, timeframe string) Chart {
+	key := fmt.Sprintf("%s,%s,%s", exchange, market, timeframe)
+	var chart Chart
+	chart, ok := Charts[key]
+	if !ok {
+		chart = Chart{}
+		Charts[key] = chart
+	}
+	return chart
 }
 
 // InitializeCandles - set the intial price data for a chart

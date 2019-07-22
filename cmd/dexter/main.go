@@ -60,6 +60,16 @@ func demo(conn *grpc.ClientConn) {
 	streamCandles(client, &dataPb.CandlesRequest{Exchange: "binance", Market: "BTC/USDT", Timeframe: "5m"})
 }
 
+func loadAlerts(db *gorm.DB) {
+	var alerts []dexter.Alert
+	// select * form alerts
+	db.Find(&alerts)
+	// for every alert create a chart if needed
+	for _, alert := range alerts {
+		dexter.SetupChart(alert.Exchange, alert.Market, alert.Timeframe)
+	}
+}
+
 // dexter [OPTION]
 
 func main() {
@@ -83,6 +93,7 @@ func main() {
 		log.Fatal("Could not connect to database", err)
 	}
 	defer db.Close()
+	loadAlerts(db)
 	/*
 	conn, err := grpc.Dial(client, grpc.WithInsecure())
 	if err != nil {
