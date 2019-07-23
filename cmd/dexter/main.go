@@ -60,13 +60,14 @@ func demo(conn *grpc.ClientConn) {
 	streamCandles(client, &dataPb.CandlesRequest{Exchange: "binance", Market: "BTC/USDT", Timeframe: "5m"})
 }
 
-func loadAlerts(db *gorm.DB) {
+func loadAlerts(conn *grpc.ClientConn, db *gorm.DB) {
 	var alerts []dexter.Alert
-	// select * form alerts
-	db.Find(&alerts)
+	client := dataPb.NewDataClient(conn)
+
 	// for every alert create a chart if needed
+	db.Find(&alerts)
 	for _, alert := range alerts {
-		dexter.SetupChart(alert.Exchange, alert.Market, alert.Timeframe)
+		dexter.SetupChart(alert, client)
 	}
 }
 
@@ -86,6 +87,7 @@ func main() {
 		flags.PrintDefaults()
 		os.Exit(0)
 	}
+	// connect to database
 	err := godotenv.Load()
 	connect := os.Getenv("PG_URL")
 	db, err := gorm.Open("postgres", connect)
@@ -93,16 +95,19 @@ func main() {
 		log.Fatal("Could not connect to database", err)
 	}
 	defer db.Close()
-	loadAlerts(db)
-	/*
+
+	// connect to dexter-data gRPC service
 	conn, err := grpc.Dial(client, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalln("Could not connect to client", err)
 	}
 	defer conn.Close()
-        */
+
 	//demo(conn)
 
-	// Start gRPC Service
+	// load alerts from database
+	loadAlerts(conn, db)
+
+	// Start dexter gRPC Service
 	dexter.StartServer(listen, db)
 }
