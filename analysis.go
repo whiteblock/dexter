@@ -9,7 +9,14 @@ import (
 )
 
 // Candle [timestamp, open, high, low, close, volume]
-type Candle []int
+type Candle struct {
+	Timestamp uint64
+	O float64
+	H float64
+	L float64
+	C float64
+	V float64
+}
 
 // Chart - a chart is used internally when managing dexter-data candlestick streams
 type Chart struct {
@@ -55,8 +62,8 @@ func (chart Chart) InitializeCandles(client dataPb.DataClient) {
 	if err != nil {
 		log.Fatalln("Error", err)
 	}
-	for i, c := range res.Candles {
-		chart.Candles = append(chart.Candles, Candle{c.Timestamp, c.O, c.H. c.L, c.C, c.V})
+	for _, c := range res.Candles {
+		chart.Candles = append(chart.Candles, Candle{c.Timestamp, c.O, c.H, c.L, c.C, c.V})
 	}
 }
 
