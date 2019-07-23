@@ -3,6 +3,7 @@ package dexter
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 	"time"
 	dataPb "github.com/whiteblock/dexter/api/data"
@@ -45,13 +46,16 @@ func SetupChart(alert Alert, client dataPb.DataClient) Chart {
 		chart = Chart{}
 		Charts[key] = chart
 		chart.InitializeCandles(client)
-		chart.StreamCandles(client)
+		go chart.StreamCandles(client)
 	}
 	return chart
 }
 
 // InitializeCandles uses a dexter-data client to load an initial set of candles for this chart.
 func (chart Chart) InitializeCandles(client dataPb.DataClient) {
+	if len(chart.Candles) > 0 {
+		return
+	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	res, err := client.GetCandles(ctx, &dataPb.CandlesRequest{
@@ -69,6 +73,29 @@ func (chart Chart) InitializeCandles(client dataPb.DataClient) {
 
 // StreamCandles starts starts 
 func (chart Chart) StreamCandles(client dataPb.DataClient) {
+	if len(chart.Candles) > 0 {
+		return
+	}
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	stream, err := client.StreamCandles(ctx, &dataPb.CandlesRequest{
+		Exchange: chart.Exchange,
+		Market: chart.Market,
+		Timeframe: chart.Timeframe,
+	})
+	if err != nil {
+		log.Fatalln("Error", err)
+	}
+	for {
+		candle, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatalln("Streaming error", err)
+		}
+		chart.UpdateCandle(candle)
+	}
 }
 
 // AddAlert - adds an Alert to a chart
@@ -76,7 +103,7 @@ func (chart Chart) AddAlert(alert Alert) {
 }
 
 // UpdateCandle - Update the price data of a chart.
-func (chart Chart) UpdateCandle(candle Candle) {
+func (chart Chart) UpdateCandle(candle *dataPb.Candle) {
 }
 
 // Analyze - Go through every alert set for the chart and check to see if any conditions have been met
