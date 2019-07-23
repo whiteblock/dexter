@@ -95,6 +95,7 @@ func (chart Chart) StreamCandles(client dataPb.DataClient) {
 			log.Fatalln("Streaming error", err)
 		}
 		chart.UpdateCandle(candle)
+		chart.Analyze()
 	}
 }
 
@@ -104,8 +105,16 @@ func (chart Chart) AddAlert(alert Alert) {
 
 // UpdateCandle - Update the price data of a chart.
 func (chart Chart) UpdateCandle(candle *dataPb.Candle) {
+	last := len(chart.Candles) - 1
+	lastCandle := chart.Candles[last]
+	if lastCandle.Timestamp == candle.Timestamp {
+		chart.Candles[last] = Candle{candle.Timestamp, candle.O, candle.H, candle.L, candle.C, candle.V}
+	} else {
+		chart.Candles = append(chart.Candles, Candle{candle.Timestamp, candle.O, candle.H, candle.L, candle.C, candle.V})
+	}
 }
 
 // Analyze - Go through every alert set for the chart and check to see if any conditions have been met
 func (chart Chart) Analyze() {
+	// iterate through every alert and check conditions
 }
