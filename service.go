@@ -9,10 +9,12 @@ import (
 	"google.golang.org/grpc/reflection"
 	grpc "google.golang.org/grpc"
 	pb "github.com/whiteblock/dexter/api/alerts"
+	dataPb "github.com/whiteblock/dexter/api/data"
 )
 
 type dexterAlertsServer struct {
 	db *gorm.DB
+	dexterData dataPb.DataClient
 }
 
 func (s *dexterAlertsServer) CreateAlert(ctx context.Context, alert *pb.Alert) (*pb.Alert, error) {
@@ -32,6 +34,9 @@ func (s *dexterAlertsServer) CreateAlert(ctx context.Context, alert *pb.Alert) (
 	newAlert := &pb.Alert{
 		Id: uint64(a.ID),
 	}
+	// TODO - dexter.AddAlert to in-memory Chart
+	chart := SetupChart(a, s.dexterData)
+	chart.AddAlert(a)
 	return newAlert, nil
 }
 
@@ -82,6 +87,8 @@ func (s *dexterAlertsServer) UpdateAlert(ctx context.Context, alert *pb.Alert) (
 	dbAlert.Frequency = NotificationFrequency(alert.Frequency)
 	dbAlert.MessageBody = alert.MessageBody
 	s.db.Save(&dbAlert)
+	chart := SetupChart(dbAlert, s.dexterData)
+	chart.UpdateAlert(dbAlert)
 	return response, nil
 }
 
@@ -93,6 +100,9 @@ func (s *dexterAlertsServer) DeleteAlert(ctx context.Context, opts *pb.DeleteAle
 		},
 	}
 	s.db.Delete(&alert)
+	// TODO - Remove Alert from in-memory Chart
+	chart := SetupChart(alert, s.dexterData)
+	chart.RemoveAlert(alert)
 	return response, nil
 }
 
@@ -115,7 +125,7 @@ func (s *dexterAlertsServer) ListIndicators(ctx context.Context, opts *pb.ListIn
 }
 
 // StartServer starts the gRPC service for alert management
-func StartServer(listen string, db *gorm.DB) {
+func StartServer(listen string, db *gorm.DB, conn *grpc.ClientConn) {
 	var opts []grpc.ServerOption
 	listener, err := net.Listen("tcp", listen)
 	if err != nil {
@@ -123,8 +133,10 @@ func StartServer(listen string, db *gorm.DB) {
 	} else {
 		log.Printf("Listening on %s\n", listen)
 	}
+	client := dataPb.NewDataClient(conn)
 	server := &dexterAlertsServer{
 		db: db,
+		dexterData: client,
 	}
 	grpcServer := grpc.NewServer(opts...)
 	reflection.Register(grpcServer)

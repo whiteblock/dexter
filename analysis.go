@@ -2,6 +2,7 @@ package dexter
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -52,7 +53,7 @@ func SetupChart(alert Alert, client dataPb.DataClient) Chart {
 }
 
 // InitializeCandles uses a dexter-data client to load an initial set of candles for this chart.
-func (chart Chart) InitializeCandles(client dataPb.DataClient) {
+func (chart *Chart) InitializeCandles(client dataPb.DataClient) {
 	if len(chart.Candles) > 0 {
 		return
 	}
@@ -71,10 +72,10 @@ func (chart Chart) InitializeCandles(client dataPb.DataClient) {
 	}
 }
 
-// StreamCandles starts starts 
-func (chart Chart) StreamCandles(client dataPb.DataClient) {
+// StreamCandles starts getting realtime candlestick updates and runs analysis on every updated candlestick.
+func (chart *Chart) StreamCandles(client dataPb.DataClient) error {
 	if len(chart.Candles) > 0 {
-		return
+		return nil
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -85,6 +86,7 @@ func (chart Chart) StreamCandles(client dataPb.DataClient) {
 	})
 	if err != nil {
 		log.Fatalln("Error", err)
+		return errors.New("Could not stream candlesticks")
 	}
 	for {
 		candle, err := stream.Recv()
@@ -97,14 +99,46 @@ func (chart Chart) StreamCandles(client dataPb.DataClient) {
 		chart.UpdateCandle(candle)
 		chart.Analyze()
 	}
+	return nil
 }
 
-// AddAlert - adds an Alert to a chart
-func (chart Chart) AddAlert(alert Alert) {
+// FindAlert - find an alert in a Chart by its database id
+func (chart Chart) FindAlert(id uint) (int, error) {
+	for i, alert := range chart.Alerts {
+		if alert.ID == id {
+			return i, nil
+			break
+		}
+	}
+	return -1, errors.New("Alert not found")
+}
+
+// AddAlert - adds an Alert to a Chart
+func (chart *Chart) AddAlert(alert Alert) error {
+	exists, err := chart.FindAlert(alert.ID)
+	if err != nil {
+		return err
+	}
+	if exists >= 0 {
+		chart.Alerts[exists] = alert
+	} else {
+		chart.Alerts = append(chart.Alerts, alert)
+	}
+	return nil
+}
+
+// UpdateAlert - update an Alert in a Chart
+func (chart *Chart) UpdateAlert(alert Alert) error {
+	return nil
+}
+
+// RemoveAlert - remove an Alert from a Chart
+func (chart *Chart) RemoveAlert(alert Alert) error {
+	return nil
 }
 
 // UpdateCandle - Update the price data of a chart.
-func (chart Chart) UpdateCandle(candle *dataPb.Candle) {
+func (chart *Chart) UpdateCandle(candle *dataPb.Candle) error {
 	last := len(chart.Candles) - 1
 	lastCandle := chart.Candles[last]
 	if lastCandle.Timestamp == candle.Timestamp {
@@ -112,6 +146,7 @@ func (chart Chart) UpdateCandle(candle *dataPb.Candle) {
 	} else {
 		chart.Candles = append(chart.Candles, Candle{candle.Timestamp, candle.O, candle.H, candle.L, candle.C, candle.V})
 	}
+	return nil
 }
 
 // Analyze - Go through every alert set for the chart and check to see if any conditions have been met

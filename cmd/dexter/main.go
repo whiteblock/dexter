@@ -60,6 +60,7 @@ func demo(conn *grpc.ClientConn) {
 	streamCandles(client, &dataPb.CandlesRequest{Exchange: "binance", Market: "BTC/USDT", Timeframe: "5m"})
 }
 
+// load alerts from database and start analysis on them
 func loadAlerts(conn *grpc.ClientConn, db *gorm.DB) {
 	var alerts []dexter.Alert
 	client := dataPb.NewDataClient(conn)
@@ -109,5 +110,5 @@ func main() {
 	loadAlerts(conn, db)
 
 	// Start dexter gRPC Service
-	dexter.StartServer(listen, db)
+	dexter.StartServer(listen, db, conn)
 }
