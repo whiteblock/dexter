@@ -129,6 +129,11 @@ func (chart *Chart) AddAlert(alert Alert) error {
 
 // UpdateAlert - update an Alert in a Chart
 func (chart *Chart) UpdateAlert(alert Alert) error {
+	i, err := chart.FindAlertIndex(alert.ID)
+	if err != nil {
+		return err
+	}
+	chart.Alerts[i] = alert
 	return nil
 }
 
