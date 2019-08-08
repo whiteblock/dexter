@@ -102,8 +102,8 @@ func (chart *Chart) StreamCandles(client dataPb.DataClient) error {
 	return nil
 }
 
-// FindAlert - find an alert in a Chart by its database id
-func (chart Chart) FindAlert(id uint) (int, error) {
+// FindAlertIndex - find an alert in a Chart by its database id
+func (chart Chart) FindAlertIndex(id uint) (int, error) {
 	for i, alert := range chart.Alerts {
 		if alert.ID == id {
 			return i, nil
@@ -115,7 +115,7 @@ func (chart Chart) FindAlert(id uint) (int, error) {
 
 // AddAlert - adds an Alert to a Chart
 func (chart *Chart) AddAlert(alert Alert) error {
-	exists, err := chart.FindAlert(alert.ID)
+	exists, err := chart.FindAlertIndex(alert.ID)
 	if err != nil {
 		return err
 	}
@@ -134,6 +134,11 @@ func (chart *Chart) UpdateAlert(alert Alert) error {
 
 // RemoveAlert - remove an Alert from a Chart
 func (chart *Chart) RemoveAlert(alert Alert) error {
+	i, err := chart.FindAlertIndex(alert.ID)
+	if err != nil {
+		return err
+	}
+	chart.Alerts = append(chart.Alerts[:i], chart.Alerts[i+1:]...)
 	return nil
 }
 
