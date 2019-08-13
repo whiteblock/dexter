@@ -30,7 +30,7 @@ type Chart struct {
 }
 
 // Charts is a map of Charts keyed by `${exchange},${market},${timeframe}`
-var Charts map[string]Chart
+var Charts map[string]Chart = make(map[string]Chart)
 
 // Create a key for an exchange,market,timeframe triplet from an alert.
 func makeChartKey(alert Alert) string {
@@ -44,7 +44,11 @@ func SetupChart(alert Alert, client dataPb.DataClient) Chart {
 	var chart Chart
 	chart, ok := Charts[key]
 	if !ok {
-		chart = Chart{}
+		chart = Chart{
+			Exchange: alert.Exchange,
+			Market: alert.Market,
+			Timeframe: alert.Timeframe,
+		}
 		Charts[key] = chart
 		chart.InitializeCandles(client)
 		go chart.StreamCandles(client)
@@ -70,15 +74,18 @@ func (chart *Chart) InitializeCandles(client dataPb.DataClient) {
 	for _, c := range res.Candles {
 		chart.Candles = append(chart.Candles, Candle{c.Timestamp, c.O, c.H, c.L, c.C, c.V})
 	}
+	log.Println("end init")
 }
 
 // StreamCandles starts getting realtime candlestick updates and runs analysis on every updated candlestick.
 func (chart *Chart) StreamCandles(client dataPb.DataClient) error {
+	log.Println("begin streaming")
+	/*
 	if len(chart.Candles) > 0 {
 		return nil
 	}
+*/
 	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
 	stream, err := client.StreamCandles(ctx, &dataPb.CandlesRequest{
 		Exchange: chart.Exchange,
 		Market: chart.Market,
@@ -88,17 +95,22 @@ func (chart *Chart) StreamCandles(client dataPb.DataClient) error {
 		log.Fatalln("Error", err)
 		return errors.New("Could not stream candlesticks")
 	}
-	for {
-		candle, err := stream.Recv()
-		if err == io.EOF {
-			break
+	go func() {
+		log.Println("streaming")
+		for {
+			candle, err := stream.Recv()
+			if err == io.EOF {
+				break
+				cancel()
+			}
+			if err != nil {
+				log.Fatalln("Streaming error", err)
+				cancel()
+			}
+			chart.UpdateCandle(candle)
+			chart.Analyze()
 		}
-		if err != nil {
-			log.Fatalln("Streaming error", err)
-		}
-		chart.UpdateCandle(candle)
-		chart.Analyze()
-	}
+	}()
 	return nil
 }
 
@@ -161,5 +173,11 @@ func (chart *Chart) UpdateCandle(candle *dataPb.Candle) error {
 
 // Analyze - Go through every alert set for the chart and check to see if any conditions have been met
 func (chart Chart) Analyze() {
-	// iterate through every alert and check conditions
+	fmt.Println("analyzing")
+	for _, alert := range chart.Alerts {
+		hit := alert.Compare(chart)
+		if hit {
+			alert.Send()
+		}
+	}
 }

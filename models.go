@@ -98,6 +98,16 @@ type Webhook struct {
 	Body string
 }
 
+// Compare checks an alerts conditions and returns true if the conditions are met.
+func (alert Alert) Compare(chart Chart) bool {
+	return true
+}
+
+// Send an alert which currently means fire a webhook
+func (alert Alert) Send() {
+
+}
+
 /*
 drop table webhooks;
 drop table indicators;
