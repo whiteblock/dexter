@@ -9,6 +9,12 @@ services:
             DEXTER_DATA_ENDPOINT: "dexter-data:50051"
     dexter-data:
         image: gcr.io/whiteblock/binance/dexter-data
+    grpcwebproxy:
+        build:
+            context: .
+            dockerfile: Dockerfile-grpcwebproxy
+        ports:
+            - "8080:8080"
     pg:
         image: postgres:11.4-alpine
         ports:
