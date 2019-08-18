@@ -5,8 +5,9 @@ services:
         ports:
             - "50052:50052"
         environment:
-            PG_URL: "postgres://dexter:b1nanc3@pg:5432/dexter"
+            PG_URL: "postgres://dexter:b1nanc3@pg:5432/dexter?sslmode=disable"
             DEXTER_DATA_ENDPOINT: "dexter-data:50051"
+        depends_on: [ "pg", "dexter-data" ]
     dexter-data:
         image: gcr.io/whiteblock/binance/dexter-data
     grpcwebproxy:
@@ -21,6 +22,7 @@ services:
             - "5432:5432"
         volumes:
             - './pgdata:/var/lib/postgresql'
+            - './docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:cached'
         environment:
             POSTGRES_PASSWORD: "b1nanc3"
             POSTGRES_USER: "dexter"
