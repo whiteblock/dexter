@@ -1,0 +1,12 @@
+FROM debian:10
+
+RUN apt update
+RUN apt install -y --no-install-recommends ca-certificates curl unzip
+
+WORKDIR /tmp
+RUN curl -sLO https://github.com/improbable-eng/grpc-web/releases/download/v0.11.0/grpcwebproxy-v0.11.0-linux-x86_64.zip \
+    && unzip grpcwebproxy-v0.11.0-linux-x86_64.zip \
+    && rm grpcwebproxy-v0.11.0-linux-x86_64.zip \
+    && mv dist/grpcwebproxy-v0.11.0-linux-x86_64 /usr/local/bin/grpcwebproxy
+
+CMD [ "/usr/local/bin/grpcwebproxy", "--backend_addr", "localhost:50051", "--backend_tls_noverify", "--run_http_server", "--allow_all_origins", "--run_tls_server=false" ]
