@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"sync"
 	"time"
 
 	"github.com/whiteblock/dexter"
@@ -90,12 +91,34 @@ func main() {
 	}
 	// connect to database
 	err := godotenv.Load()
+	maxTries := 5
+	tries := 0
 	connect := os.Getenv("PG_URL")
-	db, err := gorm.Open("postgres", connect)
-	if err != nil {
-		log.Fatal("Could not connect to database", err)
-	}
-	defer db.Close()
+	var wg sync.WaitGroup
+	var db *gorm.DB
+	wg.Add(1)
+
+	// Try a few times to connect to the database.
+	func() {
+		for {
+			db, err = gorm.Open("postgres", connect)
+			if err != nil {
+				log.Println("Could not connect to database", err)
+				tries = tries + 1
+				if tries >= maxTries {
+					log.Fatalln("Exceeded max tries")
+				}
+				time.Sleep(3 * time.Second)
+				continue
+			} else {
+				//defer db.Close()
+				wg.Done()
+				break
+			}
+		}
+	}()
+
+	wg.Wait()
 
 	// connect to dexter-data gRPC service
 	conn, err := grpc.Dial(client, grpc.WithInsecure())
