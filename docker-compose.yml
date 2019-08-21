@@ -16,6 +16,7 @@ services:
         build:
             context: dexter-data
             dockerfile: Dockerfile
+        ports: "50051:50051"
     grpcwebproxy:
         build:
             context: .
