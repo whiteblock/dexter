@@ -16,16 +16,18 @@ services:
         build:
             context: dexter-data
             dockerfile: Dockerfile
-        ports: "50051:50051"
+        ports:
+        - "50051:50051"
     grpcwebproxy:
         build:
             context: .
             dockerfile: Dockerfile-grpcwebproxy
         ports:
-            - "8080:8080"
+        - "8080:8080"
     pg:
         image: postgres:11.4-alpine
-        ports: "5432:5432"
+        ports:
+        - "5432:5432"
         volumes:
             - './pgdata:/var/lib/postgresql'
             - './docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:cached'
