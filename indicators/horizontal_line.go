@@ -9,3 +9,10 @@ type HorizontalLine struct {
 func (*HorizontalLine) Name() string {
 	return "Horizontal Line"
 }
+
+
+type IndicatorConfig struct {
+	Name string
+	Inputs map[string]float
+	Outputs array of array of float
+}

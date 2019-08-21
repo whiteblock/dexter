@@ -1,7 +1,10 @@
 version: "3.5"
 services:
     dexter:
-        image: gcr.io/whiteblock/binance/dexter
+        #image: gcr.io/whiteblock/binance/dexter
+        build:
+            context: .
+            dockerfile: Dockerfile
         ports:
             - "50052:50052"
         environment:
@@ -9,7 +12,10 @@ services:
             DEXTER_DATA_ENDPOINT: "dexter-data:50051"
         depends_on: [ "pg", "dexter-data" ]
     dexter-data:
-        image: gcr.io/whiteblock/binance/dexter-data
+        #image: gcr.io/whiteblock/binance/dexter-data
+        build:
+            context: dexter-data
+            dockerfile: Dockerfile
     grpcwebproxy:
         build:
             context: .
