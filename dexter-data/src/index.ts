@@ -214,7 +214,6 @@ function supportedExchanges(): Array<string> {
     .map((name: string) => new ccxt[name]())
     .filter((ex: any) => ex.has['fetchOHLCV'])
     .map((ex: any) => ex.id)
-    .toArray()
 }
 
 /**
