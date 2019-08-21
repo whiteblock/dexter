@@ -1,0 +1,23 @@
+version: '3'
+services:
+  dexter-data:
+    image: gcr.io/whiteblock/binance/dexter-data
+    ports:
+      - "50051:50051"
+  chart-grid:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: chart-grid
+    ports: 
+      - "3000:3000"
+  envoy:
+    build:
+      context: ./
+      dockerfile: ./envoy.Dockerfile
+    image: dexter/envoy
+    ports:
+      - "9090:9090"
+      - "9901:9901"
+    links:
+      - dexter-data

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+[ -e .env ] && eval $(cat .env)
+psql $PG_URL
