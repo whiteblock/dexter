@@ -3,7 +3,7 @@ FROM golang:1.12.6-alpine
 WORKDIR /dexter
 
 # sys dependency phase
-RUN apk add --no-cache git make
+RUN apk add --no-cache git make protobuf
 
 # app dependency phase
 COPY go.mod go.sum ./
