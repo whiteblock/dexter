@@ -13,6 +13,7 @@ RUN go get
 COPY *.go Makefile ./
 COPY api/ api/
 COPY cmd/ cmd/
+COPY demo/ demo/
 
 RUN make
 
