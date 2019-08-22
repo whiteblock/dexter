@@ -21,6 +21,34 @@ class ChartComponent extends React.Component {
       this.setState({ data })
     }).then(() => {
       console.log('try to start a stream next')
+      const req = new CandlesRequest();
+      req.setExchange('binance')
+      req.setMarket('BTC/USDT')
+      req.setTimeframe('1m')
+      const deadline = new Date();
+      deadline.setSeconds(deadline.getSeconds() + 100)
+      const stream = c.streamCandles(req, { deadline: deadline.getTime() })
+      stream.on('data', (response) => {
+        console.log('data', response);
+        const candle = dexterToChartCandle(response.array)
+        const data = this.state.data
+        data.push(candle)
+        this.setState({ data })
+      });
+      stream.on('status', function(status) {
+        console.log(status.code);
+        console.log(status.details);
+        console.log(status.metadata);
+      });
+      stream.on('end', function(end) {
+        // stream end signal
+      });
+      stream.on('error', function(err) {
+        console.error(err)
+      })
+      console.log('stream', stream)
+      window.stream = stream
+
     })
 
     /*
