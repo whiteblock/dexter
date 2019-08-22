@@ -25,9 +25,7 @@ class ChartComponent extends React.Component {
       req.setExchange('binance')
       req.setMarket('BTC/USDT')
       req.setTimeframe('1m')
-      const deadline = new Date();
-      deadline.setSeconds(deadline.getSeconds() + 100)
-      const stream = c.streamCandles(req, { deadline: deadline.getTime() })
+      const stream = c.streamCandles(req, { })
       stream.on('data', (response) => {
         console.log('data', response);
         const candle = dexterToChartCandle(response.array)
