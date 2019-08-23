@@ -36,13 +36,6 @@ type Input struct {
 	Default string `json:"default"`
 }
 
-// IndicatorPart - what line in the indicator is being compared?
-type IndicatorPart struct {
-	IndicatorID int    `json:"indicatorId"`
-	Line        string `json:"line"`
-	// InputValues
-}
-
 // AlertCondition describes how lines can interact with each other.
 type AlertCondition int
 
@@ -81,9 +74,9 @@ type Alert struct {
 	Market string
 	Timeframe string
 	ExternalID uint64
-	LineA postgres.Jsonb // IndicatorPart
+	LineA postgres.Jsonb // Line
 	Condition AlertCondition
-	LineB postgres.Jsonb // IndicatorPart
+	LineB postgres.Jsonb // Line
 	Frequency NotificationFrequency
 	MessageBody string
 	Webhooks []Webhook
