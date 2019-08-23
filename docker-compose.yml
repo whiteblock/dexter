@@ -18,12 +18,20 @@ services:
             dockerfile: Dockerfile
         ports:
         - "50051:50051"
-    grpcwebproxy:
+    grpcwebproxy-dexter:
         build:
             context: .
             dockerfile: Dockerfile-grpcwebproxy
+        command: [ "/usr/local/bin/grpcwebproxy", "--backend_addr", "dexter:50052", "--backend_tls_noverify", "--run_http_server", "--allow_all_origins", "--run_tls_server=false" ]
         ports:
-        - "8080:8080"
+        - "8082:8080"
+    grpcwebproxy-dexter-data:
+        build:
+            context: .
+            dockerfile: Dockerfile-grpcwebproxy
+        command: [ "/usr/local/bin/grpcwebproxy", "--backend_addr", "dexter-data:50051", "--backend_tls_noverify", "--run_http_server", "--allow_all_origins", "--run_tls_server=false" ]
+        ports:
+        - "8081:8080"
     pg:
         image: postgres:11.4-alpine
         ports:
