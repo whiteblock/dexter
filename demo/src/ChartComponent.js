@@ -38,6 +38,7 @@ class ChartComponent extends React.Component {
         } else {
           data.push(candle)
         }
+        window.data = data
         this.setState({ data })
       });
       stream.on('status', function(status) {

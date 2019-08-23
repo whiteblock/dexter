@@ -17,7 +17,7 @@ function parseData(parse) {
 export function dexterToChartCandle(candle) {
   return {
     timestamp: candle[0],
-    date:      new Date(parseInt(candle[0]) * 1000),
+    date:      new Date(parseInt(candle[0])),
     open:      candle[1],
     high:      candle[2],
     low:       candle[3],
