@@ -1,0 +1,4 @@
+- Expand Alert System Indicators
+- Write Pure Tests for Indicators 
+- Write Documention for dexter api
+- Deploy grpcweb in docker-compose for dexter api
