@@ -7,12 +7,18 @@ import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
 
 import { ChartCanvas, Chart } from "react-stockcharts";
-import { CandlestickSeries } from "react-stockcharts/lib/series";
+import { LineSeries, CandlestickSeries } from "react-stockcharts/lib/series";
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
-import { CrossHairCursor, MouseCoordinateX, MouseCoordinateY } from "react-stockcharts/lib/coordinates";
+import { CrossHairCursor, CurrentCoordinate, MouseCoordinateX, MouseCoordinateY } from "react-stockcharts/lib/coordinates";
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
-import { discontinousTimeScaleProvider } from "react-stockcharts/lib/scale";
+import { discontinuousTimeScaleProvider } from "react-stockcharts/lib/scale";
+import { ema, wma, sma, tma } from "react-stockcharts/lib/indicator";
+import {
+	OHLCTooltip,
+	MovingAverageTooltip,
+} from "react-stockcharts/lib/tooltip";
+
 
 window.scaleTime = scaleTime
 
@@ -24,6 +30,24 @@ class CandleStickChart extends React.Component {
 			xAccessor(last(data)),
 			xAccessor(data[data.length - 200])
 		];
+
+    const sma20 = sma()
+			.options({ windowSize: 20 })
+			.merge((d, c) => {d.sma20 = c;})
+			.accessor(d => d.sma20);
+
+    const calculatedData = sma20(data)
+		const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(d => d.date);
+    /*
+		const {
+			data,
+			xScale,
+			xAccessor,
+			displayXAccessor,
+		} = xScaleProvider(calculatedData);
+    */
+
+
 		return (
 			<ChartCanvas height={window.innerHeight - 100}
 					ratio={ratio}
@@ -40,14 +64,18 @@ class CandleStickChart extends React.Component {
 					<XAxis axisAt="bottom" orient="bottom" ticks={10}/>
 					<YAxis axisAt="left" orient="left" ticks={10} />
 					<CandlestickSeries width={timeIntervalBarWidth(utcMinute)}/>
+					<LineSeries yAccessor={sma20.accessor()} stroke={sma20.stroke()}/>
+          <CurrentCoordinate yAccessor={sma20.accessor()} fill={sma20.stroke()} />
+          <OHLCTooltip origin={[-40, 0]}/>
+
           <MouseCoordinateX
-            at="bottom"
+            at="top"
             orient="bottom"
-            displayFormat={timeFormat("%Y-%m-%d")} />
+            displayFormat={timeFormat("%Y-%m-%d %H:%M")} />
           <MouseCoordinateY
-            at="left"
-            orient="left"
-            displayFormat={format(".4s")} />
+            at="right"
+            orient="right"
+            displayFormat={format(".0f")} />
 				</Chart>
         <CrossHairCursor />
 			</ChartCanvas>
