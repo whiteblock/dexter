@@ -16,14 +16,15 @@ function parseData(parse) {
 
 export function dexterToChartCandle(candle) {
   return {
-    date: new Date(parseInt(candle[0]) * 1000),
-    open: candle[1],
-    high: candle[2],
-    low: candle[3],
-    close: candle[4],
-    volume: candle[5]
+    timestamp: candle[0],
+    date:      new Date(parseInt(candle[0]) * 1000),
+    open:      candle[1],
+    high:      candle[2],
+    low:       candle[3],
+    close:     candle[4],
+    volume:    candle[5]
   };
-};
+}
 
 const parseDate = timeParse("%Y-%m-%d");
 
