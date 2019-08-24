@@ -56,6 +56,7 @@ class CandleStickChart extends React.Component {
 					type={type}
 					seriesName="BTC/USDT"
 					data={data}
+					displayXAccessor={xAccessor}
 					xAccessor={xAccessor}
 					xScale={scaleTime()}
 					xExtents={xExtents}>
