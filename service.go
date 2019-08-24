@@ -112,7 +112,8 @@ func (s *dexterAlertsServer) ListIndicators(ctx context.Context, opts *pb.ListIn
 	var indicators []Indicator
 	s.db.Find(&indicators)
 	spew.Dump(&indicators)
-	for _, v := range indicators {
+        /*
+	for _, _ := range indicators {
 		indicatorSpec := &pb.Indicator{
 			Name: v.Name,
 			Implementation: v.Implementation,
@@ -121,6 +122,7 @@ func (s *dexterAlertsServer) ListIndicators(ctx context.Context, opts *pb.ListIn
 		}
 		response.Indicators = append(response.Indicators, indicatorSpec)
 	}
+                */
 	return response, nil
 }
 

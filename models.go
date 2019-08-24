@@ -5,6 +5,7 @@ import (
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
+/*
 // Indicator - metadata for a technical analysis function
 type Indicator struct {
 	gorm.Model
@@ -12,8 +13,76 @@ type Indicator struct {
 	Implementation string // native or pinescript
 	Source string         // pinescript source code
 	Inputs postgres.Jsonb // the parameters this indicator takes
+        /*
+        {
+          value: "integer"
+        }
+
+        ex:
+
+        { value: 3 }
+
+
+        alternatively...
+
+        period
+
+        input [ 1 ]
+        output [ [ 1.34 ] ]
+
+
+        horizontal line
+
+        input [ 1.23 ]
+        output [ [ 1.234 ] ]
+
+        stochastics
+
+        input [ 1, 2, 3 ] (K, D, Smooth)
+        output [
+          [3, 4]
+          [5, 6]
+        ]
+        */
+        /*
 	Lines postgres.Jsonb  // the lines this indicator offers
 	Styles postgres.Jsonb // unused for now but anything that's drawn gets to set visual parameters of its own
+}
+
+type IndicatorInput []float64
+type IndicatorOutput [][]float64
+
+type IndicatorFn func(IndicatorInput) IndicatorOutput
+*/
+
+type Indicator struct {
+  Name string
+  Inputs []string
+  Outputs []string
+  Fn func(inputs []float64) [][]float64
+}
+
+var Indicators = []Indicator{
+
+  Indicator {
+    Name: "Horizontal Line",
+    Inputs: []string{ "value" },
+    Outputs: []string{ "value" },
+    Fn: func(inputs []float64) [][]float64 {
+      return [][]float64{[]float64{}}
+    },
+  },
+  Indicator {
+    Name: "Stochastics",
+    Inputs: []string{ "k", "d", "Smooth"},
+    Outputs: []string{
+      "percentK",
+      "percentD",
+    },
+    Fn: func(inputs []float64) [][]float64 {
+      return [][]float64{[]float64{}}
+    },
+  },
 }
 
 // Line is a line offered by an Indicator for comparison.
@@ -34,13 +103,6 @@ type Input struct {
 	Name string `json:"name"`
 	Type string `json:"type"`
 	Default string `json:"default"`
-}
-
-// IndicatorPart - what line in the indicator is being compared?
-type IndicatorPart struct {
-	IndicatorID int    `json:"indicatorId"`
-	Line        string `json:"line"`
-	// InputValues
 }
 
 // AlertCondition describes how lines can interact with each other.
@@ -81,9 +143,21 @@ type Alert struct {
 	Market string
 	Timeframe string
 	ExternalID uint64
-	LineA postgres.Jsonb // IndicatorPart
+	LineA postgres.Jsonb // Line
+        /*
+        {
+          name: "Horizontal Line",
+          value: 10000
+        }
+
+        {
+          name: "Simple Moving Average",
+          period: 10
+        }
+        */
+
 	Condition AlertCondition
-	LineB postgres.Jsonb // IndicatorPart
+	LineB postgres.Jsonb // Line
 	Frequency NotificationFrequency
 	MessageBody string
 	Webhooks []Webhook
