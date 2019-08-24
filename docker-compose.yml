@@ -22,14 +22,14 @@ services:
         build:
             context: .
             dockerfile: Dockerfile-grpcwebproxy
-        command: [ "/usr/local/bin/grpcwebproxy", "--backend_addr", "dexter:50052", "--backend_tls_noverify", "--run_http_server", "--allow_all_origins", "--run_tls_server=false" ]
+        command: [ "/usr/local/bin/grpcwebproxy", "--backend_addr", "dexter:50052", "--backend_tls_noverify", "--run_http_server", "--allow_all_origins", "--run_tls_server=false", "--server_http_max_read_timeout=1h", "--server_http_max_write_timeout=1h", "--use_websockets" ]
         ports:
         - "8082:8080"
     grpcwebproxy-dexter-data:
         build:
             context: .
             dockerfile: Dockerfile-grpcwebproxy
-        command: [ "/usr/local/bin/grpcwebproxy", "--backend_addr", "dexter-data:50051", "--backend_tls_noverify", "--run_http_server", "--allow_all_origins", "--run_tls_server=false" ]
+        command: [ "/usr/local/bin/grpcwebproxy", "--backend_addr", "dexter-data:50051", "--backend_tls_noverify", "--run_http_server", "--allow_all_origins", "--run_tls_server=false", "--server_http_max_read_timeout=1h", "--server_http_max_write_timeout=1h", "--use_websockets" ]
         ports:
         - "8081:8080"
     pg:
