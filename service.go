@@ -7,6 +7,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/davecgh/go-spew/spew"
 	"google.golang.org/grpc/reflection"
+	"github.com/whiteblock/dexter/indicators"
 	grpc "google.golang.org/grpc"
 	pb "github.com/whiteblock/dexter/api/alerts"
 	dataPb "github.com/whiteblock/dexter/api/data"
@@ -109,20 +110,14 @@ func (s *dexterAlertsServer) DeleteAlert(ctx context.Context, opts *pb.DeleteAle
 func (s *dexterAlertsServer) ListIndicators(ctx context.Context, opts *pb.ListIndicatorsRequest) (*pb.ListIndicatorsResponse, error) {
 	response := &pb.ListIndicatorsResponse{}
 	log.Printf("ListIndicators")
-	var indicators []Indicator
-	s.db.Find(&indicators)
-	spew.Dump(&indicators)
-        /*
-	for _, _ := range indicators {
+	for _, i := range indicators.Index {
 		indicatorSpec := &pb.Indicator{
-			Name: v.Name,
-			Implementation: v.Implementation,
-			Source: v.Source,
-			// TODO - Figure out what I should do with the Jsonb fields.
+			Name: i.Name,
+			Inputs: i.Inputs,
+			Outputs: i.Outputs,
 		}
 		response.Indicators = append(response.Indicators, indicatorSpec)
 	}
-                */
 	return response, nil
 }
 

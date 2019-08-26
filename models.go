@@ -55,36 +55,6 @@ type IndicatorOutput [][]float64
 type IndicatorFn func(IndicatorInput) IndicatorOutput
 */
 
-type Indicator struct {
-  Name string
-  Inputs []string
-  Outputs []string
-  Fn func(inputs []float64) [][]float64
-}
-
-var Indicators = []Indicator{
-
-  Indicator {
-    Name: "Horizontal Line",
-    Inputs: []string{ "value" },
-    Outputs: []string{ "value" },
-    Fn: func(inputs []float64) [][]float64 {
-      return [][]float64{[]float64{}}
-    },
-  },
-  Indicator {
-    Name: "Stochastics",
-    Inputs: []string{ "k", "d", "Smooth"},
-    Outputs: []string{
-      "percentK",
-      "percentD",
-    },
-    Fn: func(inputs []float64) [][]float64 {
-      return [][]float64{[]float64{}}
-    },
-  },
-}
-
 // Line is a line offered by an Indicator for comparison.
 type Line struct {
 	Name string `json:"name"`
