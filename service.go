@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 	"github.com/jinzhu/gorm"
-	"github.com/davecgh/go-spew/spew"
+	//"github.com/davecgh/go-spew/spew"
 	"google.golang.org/grpc/reflection"
 	"github.com/whiteblock/dexter/indicators"
 	grpc "google.golang.org/grpc"
