@@ -80,11 +80,6 @@ func (chart *Chart) InitializeCandles(client dataPb.DataClient) {
 // StreamCandles starts getting realtime candlestick updates and runs analysis on every updated candlestick.
 func (chart *Chart) StreamCandles(client dataPb.DataClient) error {
 	log.Println("begin streaming")
-	/*
-	if len(chart.Candles) > 0 {
-		return nil
-	}
-*/
 	ctx, cancel := context.WithCancel(context.Background())
 	stream, err := client.StreamCandles(ctx, &dataPb.CandlesRequest{
 		Exchange: chart.Exchange,
