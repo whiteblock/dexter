@@ -42,11 +42,27 @@ program
   })
 
 program
+  .command('get <id>')
+  .action((id) => {
+    console.log(`get alert id ${id}`)
+    const client = connect(defaultBind)
+    client.getAlert({ alert_id: id }, console.log)
+  })
+
+program
   .command('rm <id>')
   .action((id) => {
     console.log(`remove alert id ${id}`)
     const client = connect(defaultBind)
     client.deleteAlert({ alert_id: id }, console.log)
+  })
+
+program
+  .command('i')
+  .action((id) => {
+    console.log(`list indicators`)
+    const client = connect(defaultBind)
+    client.listIndicators({ }, console.log)
   })
 
 program
