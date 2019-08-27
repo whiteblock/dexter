@@ -45,7 +45,11 @@ var Indicators = []Indicator{
 			closePrices := techan.NewClosePriceIndicator(series)
 			movingAverage := techan.NewSimpleMovingAverage(closePrices, period)
 			res := movingAverage.Calculate(0)
-			spew.Dump(res)
+			log.Println(res)
+			spew.Dump(movingAverage)
+			if movingAverage != nil {
+				log.Println("hi")
+			}
 			return result
 		},
 	},
