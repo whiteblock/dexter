@@ -1,12 +1,12 @@
-package indicators
+package dexter
 
 import (
 	"fmt"
 	"log"
 	"time"
-	"github.com/whiteblock/dexter"
-	"github.com/sdcoffey/techan"
 	"github.com/sdcoffey/big"
+	//"github.com/davecgh/go-spew/spew"
+	"github.com/sdcoffey/techan"
 )
 
 // Indicator is a struct that describes the inputs and outputs of an Indicator and its calculation function.
@@ -15,17 +15,17 @@ type Indicator struct {
 	Inputs []string // Ideally, this would be a struct with all the params that the Pine Script input() function takes.
 	// https://www.tradingview.com/pine-script-reference/#fun_input
 	Outputs []string
-	Fn func(inputs []float64, chart dexter.Chart) [][]float64
+	Fn func(inputs []float64, chart Chart) [][]float64
 }
 
-// Index is a list of indicator definitions
-var Index = []Indicator{
+// Indicators is a list of indicator definitions
+var Indicators = []Indicator{
 
 	Indicator {
 		Name: "Horizontal Line",
 		Inputs: []string{ "value" },
 		Outputs: []string{ "value" },
-		Fn: func(inputs []float64, chart dexter.Chart) [][]float64 {
+		Fn: func(inputs []float64, chart Chart) [][]float64 {
 			var result [][]float64
 			value := inputs[0]
 			for i := 0; i < len(chart.Candles); i++ {
@@ -39,7 +39,7 @@ var Index = []Indicator{
 		Name: "Moving Average",
 		Inputs: []string { "period" },
 		Outputs: []string { "value" },
-		Fn: func(inputs []float64, chart dexter.Chart) [][]float64 {
+		Fn: func(inputs []float64, chart Chart) [][]float64 {
 			var result [][]float64
 			period := int(inputs[0])
 			series := SeriesFromChart(chart)
@@ -54,7 +54,7 @@ var Index = []Indicator{
 }
 
 // SeriesFromChart will create a techan.TimeSeries from a dexter.Chart
-func SeriesFromChart(chart dexter.Chart) *techan.TimeSeries {
+func SeriesFromChart(chart Chart) *techan.TimeSeries {
 	series := techan.NewTimeSeries()
 	duration, err := time.ParseDuration(chart.Timeframe)
 	if err != nil {

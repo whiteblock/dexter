@@ -5,9 +5,8 @@ import (
 	"log"
 	"net"
 	"github.com/jinzhu/gorm"
-	//"github.com/davecgh/go-spew/spew"
+	"github.com/davecgh/go-spew/spew"
 	"google.golang.org/grpc/reflection"
-	"github.com/whiteblock/dexter/indicators"
 	grpc "google.golang.org/grpc"
 	pb "github.com/whiteblock/dexter/api/alerts"
 	dataPb "github.com/whiteblock/dexter/api/data"
@@ -43,8 +42,13 @@ func (s *dexterAlertsServer) CreateAlert(ctx context.Context, alert *pb.Alert) (
 
 func (s *dexterAlertsServer) ListAlerts(ctx context.Context, opts *pb.ListAlertsRequest) (*pb.ListAlertsResponse, error) {
 	response := &pb.ListAlertsResponse{}
+	log.Printf("ListAlerts %s", spew.Sdump(opts))
 	var alerts []Alert
-	s.db.Where("external_id = ?", opts.ExternalId).Find(&alerts)
+	if opts.ExternalId != 0 {
+		s.db.Where("external_id = ?", opts.ExternalId).Find(&alerts)
+	} else {
+		s.db.Find(&alerts)
+	}
 	for _, alert := range alerts {
 		pa := &pb.Alert{
 			Id:             uint64(alert.ID),
@@ -63,6 +67,7 @@ func (s *dexterAlertsServer) ListAlerts(ctx context.Context, opts *pb.ListAlerts
 
 func (s *dexterAlertsServer) GetAlert(ctx context.Context, opts *pb.GetAlertRequest) (*pb.Alert, error) {
 	var alert Alert
+	log.Printf("GetAlert %s", spew.Sdump(opts))
 	s.db.First(&alert, opts.AlertId)
 	response := &pb.Alert{
 		Id: uint64(alert.ID),
@@ -79,6 +84,7 @@ func (s *dexterAlertsServer) GetAlert(ctx context.Context, opts *pb.GetAlertRequ
 
 func (s *dexterAlertsServer) UpdateAlert(ctx context.Context, alert *pb.Alert) (*pb.Alert, error) {
 	response := &pb.Alert{}
+	log.Printf("UpdateAlert %s", spew.Sdump(alert))
 	var dbAlert Alert
 	s.db.First(&dbAlert, alert.Id)
 	dbAlert.Market = alert.Market
@@ -95,6 +101,7 @@ func (s *dexterAlertsServer) UpdateAlert(ctx context.Context, alert *pb.Alert) (
 
 func (s *dexterAlertsServer) DeleteAlert(ctx context.Context, opts *pb.DeleteAlertRequest) (*pb.DeleteAlertResponse, error) {
 	response := &pb.DeleteAlertResponse{}
+	log.Printf("DeleteAlert %s", spew.Sdump(opts))
 	alert := Alert{
 		Model: gorm.Model{
 			ID: uint(opts.AlertId),
@@ -102,15 +109,15 @@ func (s *dexterAlertsServer) DeleteAlert(ctx context.Context, opts *pb.DeleteAle
 	}
 	s.db.Delete(&alert)
 	// TODO - Remove Alert from in-memory Chart
-	chart := SetupChart(alert, s.dexterData)
-	chart.RemoveAlert(alert)
+	//chart := SetupChart(alert, s.dexterData)
+	//chart.RemoveAlert(alert)
 	return response, nil
 }
 
 func (s *dexterAlertsServer) ListIndicators(ctx context.Context, opts *pb.ListIndicatorsRequest) (*pb.ListIndicatorsResponse, error) {
 	response := &pb.ListIndicatorsResponse{}
-	log.Printf("ListIndicators")
-	for _, i := range indicators.Index {
+	log.Printf("ListIndicators %s", spew.Sdump(opts))
+	for _, i := range Indicators {
 		indicatorSpec := &pb.Indicator{
 			Name: i.Name,
 			Inputs: i.Inputs,
