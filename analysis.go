@@ -30,7 +30,7 @@ type Chart struct {
 }
 
 // Charts is a map of Charts keyed by `${exchange},${market},${timeframe}`
-var Charts map[string]Chart = make(map[string]Chart)
+var Charts = make(map[string]Chart)
 
 // Create a key for an exchange,market,timeframe triplet from an alert.
 func makeChartKey(alert Alert) string {
