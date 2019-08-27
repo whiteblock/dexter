@@ -1,11 +1,10 @@
 package dexter
 
 import (
-	"fmt"
 	"log"
 	"time"
 	"github.com/sdcoffey/big"
-	//"github.com/davecgh/go-spew/spew"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/sdcoffey/techan"
 )
 
@@ -46,7 +45,7 @@ var Indicators = []Indicator{
 			closePrices := techan.NewClosePriceIndicator(series)
 			movingAverage := techan.NewSimpleMovingAverage(closePrices, period)
 			res := movingAverage.Calculate(0)
-			fmt.Println(res)
+			spew.Dump(res)
 			return result
 		},
 	},
