@@ -5,6 +5,8 @@ import (
 	"io/ioutil"
 	"log"
 	"testing"
+	"time"
+	"github.com/davecgh/go-spew/spew"
 	//"github.com/davecgh/go-spew/spew"
 )
 
@@ -49,7 +51,16 @@ func TestMovingAverage(t *testing.T) {
 	}
 	movingAverage := Indicators[1]
 	output := movingAverage.Fn([]float64{ 10 }, chart)
-	if len(output) != 490 {
+	if len(output) != 500 {
 		t.Errorf("There should be 490 values in output")
+	}
+}
+
+func TestTimestamp(t *testing.T) {
+	// ccxt gives me time back in milliseconds
+	ts := time.Unix(1566946800000 / 1000, 0)
+	if ts.Unix() != 1566946800 {
+		spew.Dump(ts, ts.Unix())
+		t.Errorf("No good.")
 	}
 }

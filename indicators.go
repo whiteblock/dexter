@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 	"github.com/sdcoffey/big"
-	"github.com/davecgh/go-spew/spew"
+	//"github.com/davecgh/go-spew/spew"
 	"github.com/sdcoffey/techan"
 )
 
@@ -44,11 +44,11 @@ var Indicators = []Indicator{
 			series := SeriesFromChart(chart)
 			closePrices := techan.NewClosePriceIndicator(series)
 			movingAverage := techan.NewSimpleMovingAverage(closePrices, period)
-			res := movingAverage.Calculate(0)
-			log.Println(res)
-			spew.Dump(movingAverage)
-			if movingAverage != nil {
-				log.Println("hi")
+			for i := 0; i < len(chart.Candles); i++ {
+				ma := movingAverage.Calculate(i)
+				maf := ma.Float()
+				//log.Println(maf)
+				result = append(result, []float64{ maf })
 			}
 			return result
 		},
@@ -64,7 +64,8 @@ func SeriesFromChart(chart Chart) *techan.TimeSeries {
 		log.Fatal(err)
 	}
 	for _, c := range chart.Candles {
-		period := techan.NewTimePeriod(time.Unix(int64(c.Timestamp), 0), duration)
+		period := techan.NewTimePeriod(time.Unix(int64(c.Timestamp) / 1000, 0), duration)
+		//spew.Dump(c.Timestamp, duration, period)
 		candle := techan.NewCandle(period)
 		candle.OpenPrice = big.NewDecimal(c.O)
 		candle.MaxPrice = big.NewDecimal(c.H)
