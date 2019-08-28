@@ -1,9 +1,11 @@
 all : dexter migrate web
 
 dexter : *.go cmd/dexter/main.go api/alerts/alerts.pb.go api/data/data.pb.go
+	go get
 	go build -o dexter cmd/dexter/main.go
 
 migrate : *.go cmd/migrate/main.go
+	go get
 	go build -o migrate cmd/migrate/main.go
 
 api/alerts/alerts.pb.go : api/alerts/alerts.proto
