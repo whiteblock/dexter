@@ -58,7 +58,8 @@ type IndicatorFn func(IndicatorInput) IndicatorOutput
 // Line is a line offered by an Indicator for comparison.
 type Line struct {
 	Name string `json:"name"`
-	// What else?
+	Inputs [][]float64 `json:"inputs"`
+	Output string `json:"output"`
 }
 
 /*
@@ -117,12 +118,14 @@ type Alert struct {
         /*
         {
           name: "Horizontal Line",
-          value: 10000
+          inputs: [ 10000 ],
+          output: "default"
         }
 
         {
           name: "Simple Moving Average",
-          period: 10
+          inputs: [ 10 ], // 10 period MA
+          output: "default" // Some indicators have more than one output, but default is a synonym for the 0th index
         }
         */
 	Condition AlertCondition

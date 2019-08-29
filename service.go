@@ -2,9 +2,11 @@ package dexter
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"net"
 	"github.com/jinzhu/gorm"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/davecgh/go-spew/spew"
 	"google.golang.org/grpc/reflection"
 	grpc "google.golang.org/grpc"
@@ -26,10 +28,13 @@ func (s *dexterAlertsServer) CreateAlert(ctx context.Context, alert *pb.Alert) (
 		Exchange:	alert.Exchange,
 		Market:		alert.Market,
 		Timeframe:	alert.Timeframe,
+		LineA:          postgres.Jsonb{json.RawMessage(alert.LineA)},
 		Condition:	AlertCondition(alert.Condition),
+		LineB:          postgres.Jsonb{json.RawMessage(alert.LineB)},
 		Frequency:	NotificationFrequency(alert.Frequency),
 		MessageBody:	alert.MessageBody,
 	}
+	spew.Dump(a)
 	s.db.Create(&a)
 	newAlert := &pb.Alert{
 		Id: uint64(a.ID),
