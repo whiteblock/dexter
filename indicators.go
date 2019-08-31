@@ -1,6 +1,7 @@
 package dexter
 
 import (
+	"fmt"
 	"log"
 	"time"
 	"github.com/sdcoffey/big"
@@ -74,5 +75,15 @@ func SeriesFromChart(chart Chart) *techan.TimeSeries {
 		series.AddCandle(candle)
 	}
 	return series
+}
+
+// FindIndicatorByName looks up an indicator by its name
+func FindIndicatorByName(name string) (Indicator, error) {
+	for _, indicator := range Indicators {
+		if indicator.Name == name {
+			return indicator, nil
+		}
+	}
+	return Indicator{}, fmt.Errorf("indicator '%s' not found", name)
 }
 
