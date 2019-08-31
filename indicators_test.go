@@ -20,6 +20,27 @@ func LoadFixture(filename string) []Candle {
 	return data
 }
 
+func TestPrice(t *testing.T) {
+	candles := LoadFixture("./fixtures/20190827.binance.btcusdt.1h.json")
+	chart := Chart{
+		Exchange: "binance",
+		Market: "BTC/USDT",
+		Timeframe: "1h",
+		Candles: candles,
+	}
+	price, _ := FindIndicatorByName("Price")
+	output := price.Fn([]float64{ 10000 }, chart)
+	if len(output) != 500 {
+		t.Errorf("There should be 500 values in output")
+	}
+	if output[0][0] != 11674.38  {
+		t.Errorf("The 0th price should be 11674.38 but was %f", output[0][0])
+	}
+	if output[499][0] != 10145.82  {
+		t.Errorf("The last price should be 10145.82 but was %f", output[499][0])
+	}
+}
+
 func TestHorizontalLine(t *testing.T) {
 	candles := LoadFixture("./fixtures/20190827.binance.btcusdt.1h.json")
 	chart := Chart{
@@ -28,7 +49,7 @@ func TestHorizontalLine(t *testing.T) {
 		Timeframe: "1h",
 		Candles: candles,
 	}
-	horizontalLine := Indicators[0]
+	horizontalLine, _ := FindIndicatorByName("Horizontal Line")
 	output := horizontalLine.Fn([]float64{ 10000 }, chart)
 	if len(output) != 500 {
 		t.Errorf("There should be 500 values in output")
@@ -49,7 +70,7 @@ func TestMovingAverage(t *testing.T) {
 		Timeframe: "1h",
 		Candles: candles,
 	}
-	movingAverage := Indicators[1]
+	movingAverage, _ := FindIndicatorByName("Moving Average")
 	output := movingAverage.Fn([]float64{ 10 }, chart)
 	if len(output) != 500 {
 		t.Errorf("There should be 490 values in output")

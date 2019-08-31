@@ -21,6 +21,22 @@ type Indicator struct {
 // Indicators is a list of indicator definitions
 var Indicators = []Indicator{
 
+	// This makes the current close price of a chart comparable.
+	Indicator {
+		Name: "Price",
+		Inputs: []string{},
+		Outputs: []string{ "price" },
+		Fn: func(inputs []float64, chart Chart) [][]float64 {
+			var result [][]float64
+			for i := 0; i < len(chart.Candles); i++ {
+				price := chart.Candles[i].C
+				result = append(result, []float64{ price })
+			}
+			return result
+		},
+	},
+
+	// Did the line (usually price) cross a constant value?
 	Indicator {
 		Name: "Horizontal Line",
 		Inputs: []string{ "value" },
@@ -35,6 +51,7 @@ var Indicators = []Indicator{
 		},
 	},
 
+	// Simple Moving Average
 	Indicator {
 		Name: "Moving Average",
 		Inputs: []string { "period" },
