@@ -5,17 +5,18 @@ import (
 	"encoding/json"
 	"log"
 	"net"
+
+	"github.com/davecgh/go-spew/spew"
 	"github.com/jinzhu/gorm"
 	"github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/davecgh/go-spew/spew"
-	"google.golang.org/grpc/reflection"
-	grpc "google.golang.org/grpc"
 	pb "github.com/whiteblock/dexter/api/alerts"
 	dataPb "github.com/whiteblock/dexter/api/data"
+	grpc "google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type dexterAlertsServer struct {
-	db *gorm.DB
+	db         *gorm.DB
 	dexterData dataPb.DataClient
 }
 
@@ -23,16 +24,24 @@ func (s *dexterAlertsServer) CreateAlert(ctx context.Context, alert *pb.Alert) (
 	// Constraints
 	// - Timeframe should be formatted correctly
 	// - LineX
+	lineA, err := json.Marshal(alert.LineA)
+	if err != nil {
+		log.Fatalf("could not marshal json")
+	}
+	lineB, err := json.Marshal(alert.LineB)
+	if err != nil {
+		log.Fatalf("could not marshal json")
+	}
 	a := Alert{
-		ExternalID:	alert.ExternalId,
-		Exchange:	alert.Exchange,
-		Market:		alert.Market,
-		Timeframe:	alert.Timeframe,
-		LineA:          postgres.Jsonb{json.RawMessage(alert.LineA)},
-		Condition:	AlertCondition(alert.Condition),
-		LineB:          postgres.Jsonb{json.RawMessage(alert.LineB)},
-		Frequency:	NotificationFrequency(alert.Frequency),
-		MessageBody:	alert.MessageBody,
+		ExternalID:  alert.ExternalId,
+		Exchange:    alert.Exchange,
+		Market:      alert.Market,
+		Timeframe:   alert.Timeframe,
+		LineA:       postgres.Jsonb{lineA},
+		Condition:   AlertCondition(alert.Condition),
+		LineB:       postgres.Jsonb{lineB},
+		Frequency:   NotificationFrequency(alert.Frequency),
+		MessageBody: alert.MessageBody,
 	}
 	spew.Dump(a)
 	s.db.Create(&a)
@@ -56,14 +65,14 @@ func (s *dexterAlertsServer) ListAlerts(ctx context.Context, opts *pb.ListAlerts
 	}
 	for _, alert := range alerts {
 		pa := &pb.Alert{
-			Id:             uint64(alert.ID),
-			ExternalId:	alert.ExternalID,
-			Exchange:	alert.Exchange,
-			Market:		alert.Market,
-			Timeframe:	alert.Timeframe,
-			Condition:	pb.Condition(alert.Condition),
-			Frequency:	pb.Frequency(alert.Frequency),
-			MessageBody:	alert.MessageBody,
+			Id:          uint64(alert.ID),
+			ExternalId:  alert.ExternalID,
+			Exchange:    alert.Exchange,
+			Market:      alert.Market,
+			Timeframe:   alert.Timeframe,
+			Condition:   pb.Condition(alert.Condition),
+			Frequency:   pb.Frequency(alert.Frequency),
+			MessageBody: alert.MessageBody,
 		}
 		response.Alerts = append(response.Alerts, pa)
 	}
@@ -75,14 +84,14 @@ func (s *dexterAlertsServer) GetAlert(ctx context.Context, opts *pb.GetAlertRequ
 	log.Printf("GetAlert %s", spew.Sdump(opts))
 	s.db.First(&alert, opts.AlertId)
 	response := &pb.Alert{
-		Id: uint64(alert.ID),
-		ExternalId:	alert.ExternalID,
-		Exchange:	alert.Exchange,
-		Market:		alert.Market,
-		Timeframe:	alert.Timeframe,
-		Condition:	pb.Condition(alert.Condition),
-		Frequency:	pb.Frequency(alert.Frequency),
-		MessageBody:	alert.MessageBody,
+		Id:          uint64(alert.ID),
+		ExternalId:  alert.ExternalID,
+		Exchange:    alert.Exchange,
+		Market:      alert.Market,
+		Timeframe:   alert.Timeframe,
+		Condition:   pb.Condition(alert.Condition),
+		Frequency:   pb.Frequency(alert.Frequency),
+		MessageBody: alert.MessageBody,
 	}
 	return response, nil
 }
@@ -124,8 +133,8 @@ func (s *dexterAlertsServer) ListIndicators(ctx context.Context, opts *pb.ListIn
 	log.Printf("ListIndicators %s", spew.Sdump(opts))
 	for _, i := range Indicators {
 		indicatorSpec := &pb.Indicator{
-			Name: i.Name,
-			Inputs: i.Inputs,
+			Name:    i.Name,
+			Inputs:  i.Inputs,
 			Outputs: i.Outputs,
 		}
 		response.Indicators = append(response.Indicators, indicatorSpec)
@@ -144,7 +153,7 @@ func StartServer(listen string, db *gorm.DB, conn *grpc.ClientConn) {
 	}
 	client := dataPb.NewDataClient(conn)
 	server := &dexterAlertsServer{
-		db: db,
+		db:         db,
 		dexterData: client,
 	}
 	grpcServer := grpc.NewServer(opts...)
