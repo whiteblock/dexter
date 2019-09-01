@@ -2,31 +2,35 @@ package dexter
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
 	"log"
+	"net/http"
+	"strings"
 	"time"
+
 	dataPb "github.com/whiteblock/dexter/api/data"
 )
 
 // Candle [timestamp, open, high, low, close, volume]
 type Candle struct {
 	Timestamp uint64
-	O float64
-	H float64
-	L float64
-	C float64
-	V float64
+	O         float64
+	H         float64
+	L         float64
+	C         float64
+	V         float64
 }
 
 // Chart - a chart is used internally when managing dexter-data candlestick streams
 type Chart struct {
-	Exchange string
-	Market string
+	Exchange  string
+	Market    string
 	Timeframe string
-	Candles []Candle
-	Alerts []Alert
+	Candles   []Candle
+	Alerts    []Alert
 }
 
 // Charts is a map of Charts keyed by `${exchange},${market},${timeframe}`
@@ -45,8 +49,8 @@ func SetupChart(alert Alert, client dataPb.DataClient) Chart {
 	chart, ok := Charts[key]
 	if !ok {
 		chart = Chart{
-			Exchange: alert.Exchange,
-			Market: alert.Market,
+			Exchange:  alert.Exchange,
+			Market:    alert.Market,
 			Timeframe: alert.Timeframe,
 		}
 		Charts[key] = chart
@@ -64,8 +68,8 @@ func (chart *Chart) InitializeCandles(client dataPb.DataClient) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	res, err := client.GetCandles(ctx, &dataPb.CandlesRequest{
-		Exchange: chart.Exchange,
-		Market: chart.Market,
+		Exchange:  chart.Exchange,
+		Market:    chart.Market,
 		Timeframe: chart.Timeframe,
 	})
 	if err != nil {
@@ -82,8 +86,8 @@ func (chart *Chart) StreamCandles(client dataPb.DataClient) error {
 	log.Println("begin streaming")
 	ctx, cancel := context.WithCancel(context.Background())
 	stream, err := client.StreamCandles(ctx, &dataPb.CandlesRequest{
-		Exchange: chart.Exchange,
-		Market: chart.Market,
+		Exchange:  chart.Exchange,
+		Market:    chart.Market,
 		Timeframe: chart.Timeframe,
 	})
 	if err != nil {
@@ -172,7 +176,97 @@ func (chart Chart) Analyze() {
 	for _, alert := range chart.Alerts {
 		hit := alert.Compare(chart)
 		if hit {
-			alert.Send()
+			go alert.Send()
 		}
 	}
+}
+
+// Compare checks an alerts conditions and returns true if the conditions are met.
+func (alert Alert) Compare(chart Chart) bool {
+	// So we grab the two lines.
+	var lineA Line
+	var lineB Line
+	json.Unmarshal([]byte(alert.LineA.RawMessage), &lineA)
+	json.Unmarshal([]byte(alert.LineB.RawMessage), &lineB)
+	indicatorA, _ := FindIndicatorByName(lineA.Name)
+	indicatorB, _ := FindIndicatorByName(lineB.Name)
+	// Calculate their values.
+	outputA := indicatorA.Fn(lineA.Inputs, chart)
+	outputB := indicatorB.Fn(lineB.Inputs, chart)
+	// Compare based on comparison style
+	//   which will require a little bit of state for a few of them.
+	// Return true if conditions have been met and return false otherwise.
+	az := len(outputA) - 1
+	ay := len(outputA) - 2
+	bz := len(outputB) - 1
+	by := len(outputB) - 2
+	var ai, bi int
+	ai, err := indicatorA.FindIndexOfOutput(lineA.Output)
+	if err != nil {
+		log.Fatalf("lineA.Output %s not found", lineA.Output)
+	}
+	bi, err = indicatorB.FindIndexOfOutput(lineB.Output)
+	if err != nil {
+		log.Fatalf("lineB.Output %s not found", lineB.Output)
+	}
+	switch alert.Condition {
+	case Crossing:
+		if outputA[ay][ai] < outputB[by][bi] {
+			if outputA[az][ai] > outputB[bz][bi] {
+				return true
+			}
+		}
+		if outputA[ay][ai] > outputB[by][bi] {
+			if outputA[az][ai] < outputB[bz][bi] {
+				return true
+			}
+		}
+		return false
+	case CrossingUp:
+		if outputA[ay][ai] < outputB[by][bi] {
+			if outputA[az][ai] > outputB[bz][bi] {
+				return true
+			}
+		}
+		return false
+	case CrossingDown:
+		if outputA[ay][ai] > outputB[by][bi] {
+			if outputA[az][ai] < outputB[bz][bi] {
+				return true
+			}
+		}
+		return false
+	case GreaterThan:
+		return false
+	case LessThan:
+		return false
+	case EnteringChannel:
+		return false
+	case ExitingChannel:
+		return false
+	case InsideChannel:
+		return false
+	case OutsideChannel:
+		return false
+	case MovingUp:
+		return false
+	case MovingDown:
+		return false
+	case MovingUpPercent:
+		return false
+	case MovingDownPercent:
+		return false
+	}
+	return false
+}
+
+// Send an alert which currently means fire a webhook
+func (alert Alert) Send() {
+	// grab the HTTP request description
+	client := &http.Client{}
+	req, err := http.NewRequest(alert.Webhook.Method, alert.Webhook.URL, strings.NewReader(alert.Webhook.Body))
+	if err != nil {
+		log.Println("couldn't creat request")
+	}
+	client.Do(req)
 }
