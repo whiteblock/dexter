@@ -40,15 +40,21 @@ message Webhook {
   string body = 3;
 }
 
+message Line {
+  string name = 1;
+  repeated float inputs = 2;
+  string output = 3;
+}
+
 message Alert {
   uint64 id = 1;
   uint64 external_id = 2;
   string exchange = 3;
   string market = 4;
   string timeframe = 5;
-  string line_a = 6;
+  Line line_a = 6;
   Condition condition = 7;
-  string line_b = 8;
+  Line line_b = 8;
   Frequency frequency = 9;
   string message_body = 10;
   Webhook webhook = 11;
