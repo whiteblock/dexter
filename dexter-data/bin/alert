@@ -29,8 +29,6 @@ program
     console.log(`add alert from file ${alert}`)
     const client = connect(defaultBind)
     const a = require(`${__dirname}/../${alert}`)
-    a.line_a = JSON.stringify(a.line_a)
-    a.line_b = JSON.stringify(a.line_b)
     client.createAlert(a, console.log)
   })
 
