@@ -104,3 +104,25 @@ func FindIndicatorByName(name string) (Indicator, error) {
 	return Indicator{}, fmt.Errorf("indicator '%s' not found", name)
 }
 
+// FindIndexOfOutput lets you know which index of the output array contains the line you're looking for
+func (indicator Indicator) FindIndexOfOutput(name string) (int, error) {
+	if name == "default" {
+		return 0, nil
+	}
+	i := index(indicator.Outputs, name)
+	if i == -1 {
+		return -1, fmt.Errorf("line %s not found", name)
+	}
+	return i, nil
+}
+
+// Index finds the index of a string in an array
+// https://gobyexample.com/collection-functions
+func index(vs []string, t string) int {
+	for i, v := range vs {
+		if v == t {
+			return i
+		}
+	}
+	return -1
+}
