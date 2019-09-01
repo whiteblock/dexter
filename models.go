@@ -58,7 +58,7 @@ type IndicatorFn func(IndicatorInput) IndicatorOutput
 // Line is a line offered by an Indicator for comparison.
 type Line struct {
 	Name string `json:"name"`
-	Inputs [][]float64 `json:"inputs"`
+	Inputs []float64 `json:"inputs"`
 	Output string `json:"output"`
 }
 
@@ -132,7 +132,7 @@ type Alert struct {
 	LineB postgres.Jsonb // Line
 	Frequency NotificationFrequency
 	MessageBody string
-	Webhooks []Webhook
+	Webhook Webhook
 }
 
 // Webhook - a URL to request to when an Alert is triggered.
@@ -142,16 +142,6 @@ type Webhook struct {
 	Method string
 	URL string
 	Body string
-}
-
-// Compare checks an alerts conditions and returns true if the conditions are met.
-func (alert Alert) Compare(chart Chart) bool {
-	return true
-}
-
-// Send an alert which currently means fire a webhook
-func (alert Alert) Send() {
-
 }
 
 /*
