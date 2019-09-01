@@ -1,7 +1,8 @@
 import grpc from 'grpc';
 import * as protoLoader from '@grpc/proto-loader';
 
-const PROTO_PATH = `${__dirname}/../../api/alerts/alerts.proto`;
+//const PROTO_PATH = `${__dirname}/../../api/alerts/alerts.proto`;
+const PROTO_PATH = `../proto/alerts.proto`;
 const packageDefinition = protoLoader.loadSync(
   PROTO_PATH,
   {

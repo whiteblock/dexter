@@ -6,7 +6,8 @@ import pino from 'pino';
 
 const logger = pino();
 
-const PROTO_PATH = `${__dirname}/../../api/data/data.proto`;
+//const PROTO_PATH = `${__dirname}/../../api/data/data.proto`;
+const PROTO_PATH = `../proto/data.proto`;
 const packageDefinition = protoLoader.loadSync(
   PROTO_PATH,
   {

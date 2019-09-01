@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package dexter;
+
+service Alerts {
+  rpc CreateAlert(Alert) returns (Alert) {}
+  rpc ListAlerts(ListAlertsRequest) returns (ListAlertsResponse) {}
+  rpc GetAlert(GetAlertRequest) returns (Alert) {}
+  rpc UpdateAlert(Alert) returns (Alert) {}
+  rpc DeleteAlert(DeleteAlertRequest) returns (DeleteAlertResponse) {}
+  rpc ListIndicators(ListIndicatorsRequest) returns (ListIndicatorsResponse) {}
+}
+
+enum Condition {
+  Crossing = 0;
+  CrossingUp = 1;
+  CrossingDown = 2;
+  GreaterThan = 3;
+  LessThan = 4;
+  EnteringChannel = 5;
+  ExitingChannel = 6;
+  InsideChannel = 7;
+  OutsideChannel = 8;
+  MovingUp = 9;
+  MovingDown = 10;
+  MovingUpPercent = 11;
+  MovingDownPercent = 12;
+}
+
+enum Frequency {
+  OnlyOnce  = 0;
+  OncePerBar = 1;
+  OncePerBarClose = 2;
+  OncePerMinute = 3;
+}
+
+message Webhook {
+  string method = 1;
+  string url = 2;
+  string body = 3;
+}
+
+message Line {
+  string name = 1;
+  repeated float inputs = 2;
+  string output = 3;
+}
+
+message Alert {
+  uint64 id = 1;
+  uint64 external_id = 2;
+  string exchange = 3;
+  string market = 4;
+  string timeframe = 5;
+  Line line_a = 6;
+  Condition condition = 7;
+  Line line_b = 8;
+  Frequency frequency = 9;
+  string message_body = 10;
+  Webhook webhook = 11;
+}
+
+message Indicator {
+  string name = 1;
+  repeated string inputs = 2;
+  repeated string outputs = 3;
+}
+
+message ListAlertsRequest {
+  uint64 external_id = 1;
+}
+
+message ListAlertsResponse {
+  repeated Alert alerts = 1;
+}
+
+message GetAlertRequest {
+  uint64 alert_id = 1;
+}
+
+message DeleteAlertRequest {
+  uint64 alert_id = 1;
+}
+
+message DeleteAlertResponse {
+  uint64 alert_id = 1;
+}
+
+message ListIndicatorsRequest {
+}
+
+message ListIndicatorsResponse {
+  repeated Indicator indicators = 1;
+}
