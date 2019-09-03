@@ -37,11 +37,11 @@ class ChartComponent extends React.Component {
 async function startStream() {
   const c = this.props.dexterDataClient
   const req = new CandlesRequest();
-  req.setExchange('binance')
-  req.setMarket('BTC/USDT')
-  req.setTimeframe('1m')
+  req.setExchange(this.props.exchange)
+  req.setMarket(this.props.market)
+  req.setTimeframe(this.props.timeframe)
   c.getCandles(req).then((candles) => {
-    window.candles = candles
+    window[`candles_${this.props.timeframe}`] = candles
     console.log(typeof(candles.array), candles.array)
     const data = candles.array[0].map(dexterToChartCandle)
     console.log('data', data)
@@ -56,7 +56,7 @@ async function startStream() {
     //deadline.setSeconds(deadline.getSeconds() + 100)
     const stream = c.streamCandles(req, { })
     stream.on('data', (response) => {
-      console.log('data', response);
+      //console.log('data', response);
       const candle = dexterToChartCandle(response.array)
       const data = this.state.data
       const lastCandle = data[data.length - 1]
