@@ -304,7 +304,7 @@ function getPriceEmitter(exchange: string, market: string, updateInterval: numbe
  * @returns A `CandleEmitter` instance
  */
 async function streamCandles(exchange: string, market: string, timeframe: string) {
-  const priceEm = getPriceEmitter(exchange, market, 2000);
+  const priceEm = getPriceEmitter(exchange, market, 10000);
   // TODO need to initialize it with the current candle.
   const candleEmitter = new CandleEmitter({ exchange, market, timeframe, closeOnly: false })
   priceEm.addSubscriber(candleEmitter.input);
