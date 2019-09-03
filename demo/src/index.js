@@ -17,7 +17,7 @@ window.MarketsResponse = MarketsResponse
 window.DataClient = DataClient
 window.DataPromiseClient = DataPromiseClient
 
-window.c = new DataPromiseClient('http://34.94.208.167:8081')
+window.c = new DataPromiseClient('http://localhost:8081')
 
 ReactDOM.render(<App dexterDataClient={window.c} />, document.getElementById('root'));
 
