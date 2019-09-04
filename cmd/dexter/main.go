@@ -9,12 +9,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/whiteblock/dexter"
-	"github.com/spf13/pflag"
-	"google.golang.org/grpc"
-	"github.com/joho/godotenv"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/joho/godotenv"
+	"github.com/spf13/pflag"
+	"github.com/whiteblock/dexter"
+	"google.golang.org/grpc"
 
 	dataPb "github.com/whiteblock/dexter/api/data"
 )
@@ -94,9 +94,13 @@ func main() {
 	maxTries := 5
 	tries := 0
 	connect := os.Getenv("PG_URL")
+	_client := os.Getenv("DEXTER_DATA_ENDPOINT")
+	if _client != "" {
+		client = _client
+	}
 	var wg sync.WaitGroup
 	var db *gorm.DB
-	wg.Add(1)
+	wg.Add(2)
 
 	// Try a few times to connect to the database.
 	func() {
@@ -118,16 +122,30 @@ func main() {
 		}
 	}()
 
+	var conn *grpc.ClientConn
+
+	// Also retry dexter-data connection a few times
+	func() {
+		for {
+			conn, err = grpc.Dial(client, grpc.WithInsecure())
+			if err != nil {
+				log.Println("Could not connect to dexter-data", err)
+				tries = tries + 1
+				if tries >= maxTries {
+					log.Fatalln("Exceeded max tries")
+				}
+				time.Sleep(3 * time.Second)
+				continue
+			} else {
+				//defer db.Close()
+				wg.Done()
+				break
+			}
+		}
+	}()
+
 	wg.Wait()
-
-	// connect to dexter-data gRPC service
-	conn, err := grpc.Dial(client, grpc.WithInsecure())
-	if err != nil {
-		log.Fatalln("Could not connect to client", err)
-	}
-	defer conn.Close()
-
-	//demo(conn)
+	time.Sleep(2 * time.Second)
 
 	// load alerts from database
 	loadAlerts(conn, db)
