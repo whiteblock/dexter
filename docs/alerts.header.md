@@ -1,4 +1,4 @@
 ---
 id: alerts
-title: Dexter Alerts gRPC API
+title: Alerts gRPC API
 ---

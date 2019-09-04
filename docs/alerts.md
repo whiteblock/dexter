@@ -1,6 +1,6 @@
 ---
 id: alerts
-title: Dexter Alerts gRPC API
+title: Alerts gRPC API
 ---
 # Protocol Documentation
 <a name="top"></a>

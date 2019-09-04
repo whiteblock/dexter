@@ -1,6 +1,6 @@
 ---
 id: data
-title: Dexter Data gRPC API
+title: Data gRPC API
 ---
 # Protocol Documentation
 <a name="top"></a>
