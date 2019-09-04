@@ -49,9 +49,9 @@ async function startStream() {
   }).then(() => {
     console.log('try to start a stream next')
     const req = new CandlesRequest();
-    req.setExchange('binance')
-    req.setMarket('BTC/USDT')
-    req.setTimeframe('1m')
+    req.setExchange(this.props.exchange)
+    req.setMarket(this.props.market)
+    req.setTimeframe(this.props.timeframe)
     //const deadline = new Date();
     //deadline.setSeconds(deadline.getSeconds() + 100)
     const stream = c.streamCandles(req, { })
