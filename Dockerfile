@@ -14,6 +14,7 @@ COPY *.go Makefile ./
 COPY api/ api/
 COPY cmd/ cmd/
 COPY demo/ demo/
+COPY docs/ docs/
 
 RUN make
 
