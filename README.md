@@ -1,6 +1,7 @@
 # dexter
 A microservice for market alerts
-.
+
+https://whiteblock.github.io/dexter/
 
 ## Quick Start
 

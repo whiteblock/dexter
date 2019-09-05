@@ -28,7 +28,8 @@ program
   .action((alert) => {
     console.log(`add alert from file ${alert}`)
     const client = connect(defaultBind)
-    const a = require(`${__dirname}/../${alert}`)
+    const p = alert.match(/^\//) ? alert : `${__dirname}/../{alert}`
+    const a = require(p)
     client.createAlert(a, console.log)
   })
 
@@ -37,7 +38,8 @@ program
   .action((alert) => {
     console.log(`update alert from file ${alert}`)
     const client = connect(defaultBind)
-    const a = require(alert)
+    const p = alert.match(/^\//) ? alert : `${__dirname}/../{alert}`
+    const a = require(p)
     client.updateAlert(a, console.log)
   })
 

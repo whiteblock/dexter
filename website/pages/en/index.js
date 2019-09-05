@@ -63,11 +63,6 @@ class HomeSplash extends React.Component {
         <Logo img_src={`${baseUrl}img/undraw_monitor.svg`} />
         <div className="inner">
           <ProjectTitle siteConfig={siteConfig} />
-          <PromoSection>
-            <Button href="#try">Try It Out</Button>
-            <Button href={docUrl('doc1.html')}>Example Link</Button>
-            <Button href={docUrl('doc2.html')}>Example Link 2</Button>
-          </PromoSection>
         </div>
       </SplashContainer>
     );
@@ -96,8 +91,8 @@ class Index extends React.Component {
       <div
         className="productShowcaseSection paddingBottom"
         style={{textAlign: 'center'}}>
-        <h2>Feature Callout</h2>
-        <MarkdownBlock>These are features of this project</MarkdownBlock>
+        <h2>gRPC API</h2>
+        <MarkdownBlock>Two gRPC services combine to create the DEXter system.</MarkdownBlock>
       </div>
     );
 
@@ -149,16 +144,16 @@ class Index extends React.Component {
       <Block layout="fourColumn">
         {[
           {
-            content: 'This is the content of my feature',
-            image: `${baseUrl}img/undraw_react.svg`,
+            content: 'Receive up-to-date price data from exchanges and markets supported by the ccxt library',
+            image: `${baseUrl}img/undraw_Growing_qwt2.svg`,
             imageAlign: 'top',
-            title: 'Feature One',
+            title: 'Streaming Price Data',
           },
           {
-            content: 'The content of my second feature',
-            image: `${baseUrl}img/undraw_operating_system.svg`,
+            content: 'Alerts are delivered via webhooks for maximum flexibility',
+            image: `${baseUrl}img/undraw_happy_birthday_s72n.svg`,
             imageAlign: 'top',
-            title: 'Feature Two',
+            title: 'Realtime Alerts',
           },
         ]}
       </Block>
@@ -199,14 +194,25 @@ class Index extends React.Component {
         <div className="mainContainer">
           <Features />
           <FeatureCallout />
-          <LearnHow />
-          <TryOut />
-          <Description />
-          <Showcase />
         </div>
       </div>
     );
   }
 }
+
+/*
+
+  <div>
+  <HomeSplash siteConfig={siteConfig} language={language} />
+  <div className="mainContainer">
+  <Features />
+  <FeatureCallout />
+  <LearnHow />
+  <TryOut />
+  <Description />
+  <Showcase />
+  </div>
+  </div>
+  */
 
 module.exports = Index;

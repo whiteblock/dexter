@@ -5,6 +5,36 @@
     "previous": "Previous",
     "tagline": "Market Alerts as a Service",
     "docs": {
+      "alert": {
+        "title": "alert"
+      },
+      "alerts.body": {
+        "title": "alerts.body"
+      },
+      "alerts.header": {
+        "title": "alerts.header"
+      },
+      "alerts": {
+        "title": "Alerts gRPC API"
+      },
+      "api": {
+        "title": "APIs"
+      },
+      "data.body": {
+        "title": "data.body"
+      },
+      "data.header": {
+        "title": "data.header"
+      },
+      "data": {
+        "title": "Data gRPC API"
+      },
+      "dexterdata": {
+        "title": "dexter-data"
+      },
+      "dexter": {
+        "title": "dexter"
+      },
       "doc1": {
         "title": "Latin-ish",
         "sidebar_label": "Example Page"
@@ -15,23 +45,33 @@
       "doc3": {
         "title": "This is document number 3"
       },
+      "docker-compose": {
+        "title": "Getting Started With docker-compose"
+      },
       "doc4": {
         "title": "Other Document"
       },
       "doc5": {
         "title": "Fifth Document"
+      },
+      "examples": {
+        "title": "Examples"
+      },
+      "intro": {
+        "title": "Introduction"
+      },
+      "repl": {
+        "title": "repl"
       }
     },
     "links": {
       "Docs": "Docs",
-      "API": "API",
-      "Help": "Help",
-      "Blog": "Blog"
+      "Examples": "Examples"
     },
     "categories": {
-      "Docusaurus": "Docusaurus",
-      "First Category": "First Category",
-      "Second Category": "Second Category"
+      "Getting Started": "Getting Started",
+      "API": "API",
+      "CLI Programs": "CLI Programs"
     }
   },
   "pages-strings": {
