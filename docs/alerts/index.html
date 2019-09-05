@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Alerts gRPC API · DEXter</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="# Protocol Documentation"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Alerts gRPC API · DEXter"/><meta property="og:type" content="website"/><meta property="og:url" content="https://whiteblock.github.io/dexter/"/><meta property="og:description" content="# Protocol Documentation"/><meta property="og:image" content="https://whiteblock.github.io/dexter/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://whiteblock.github.io/dexter/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/dexter/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/dexter/js/scrollSpy.js"></script><link rel="stylesheet" href="/dexter/css/main.css"/><script src="/dexter/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/dexter/"><img class="logo" src="/dexter/img/favicon.ico" alt="DEXter"/><h2 class="headerTitleWithLogo">DEXter</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/dexter/docs/docs" target="_self">Docs</a></li><li class=""><a href="/dexter/docs/examples" target="_self">Examples</a></li><li class=""><a href="/dexter/help" target="_self">Help</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>API</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Intro</h3><ul class=""><li class="navListItem"><a class="navItem" href="/dexter/docs/docs">Introduction</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">API</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/dexter/docs/alerts">Alerts gRPC API</a></li><li class="navListItem"><a class="navItem" href="/dexter/docs/data">Data gRPC API</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">CLI Programs</h3><ul class=""><li class="navListItem"><a class="navItem" href="/dexter/docs/dexterdata">dexter-data</a></li><li class="navListItem"><a class="navItem" href="/dexter/docs/dexter">dexter</a></li><li class="navListItem"><a class="navItem" href="/dexter/docs/alert">alert</a></li><li class="navListItem"><a class="navItem" href="/dexter/docs/repl">repl</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Alerts gRPC API</h1></header><article><div><span><h1><a class="anchor" aria-hidden="true" id="protocol-documentation"></a><a href="#protocol-documentation" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Protocol Documentation</h1>
+<p><a name="top"></a></p>
+<h2><a class="anchor" aria-hidden="true" id="table-of-contents"></a><a href="#table-of-contents" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Table of Contents</h2>
+<ul>
+<li><a href="#alerts.proto">alerts.proto</a>
+<ul>
+<li><p><a href="#dexter.Alert">Alert</a></p></li>
+<li><p><a href="#dexter.DeleteAlertRequest">DeleteAlertRequest</a></p></li>
+<li><p><a href="#dexter.DeleteAlertResponse">DeleteAlertResponse</a></p></li>
+<li><p><a href="#dexter.GetAlertRequest">GetAlertRequest</a></p></li>
+<li><p><a href="#dexter.Indicator">Indicator</a></p></li>
+<li><p><a href="#dexter.Line">Line</a></p></li>
+<li><p><a href="#dexter.ListAlertsRequest">ListAlertsRequest</a></p></li>
+<li><p><a href="#dexter.ListAlertsResponse">ListAlertsResponse</a></p></li>
+<li><p><a href="#dexter.ListIndicatorsRequest">ListIndicatorsRequest</a></p></li>
+<li><p><a href="#dexter.ListIndicatorsResponse">ListIndicatorsResponse</a></p></li>
+<li><p><a href="#dexter.Webhook">Webhook</a></p></li>
+<li><p><a href="#dexter.Condition">Condition</a></p></li>
+<li><p><a href="#dexter.Frequency">Frequency</a></p></li>
+</ul></li>
+</ul>
+<pre><code class="hljs">- [Alerts](#dexter.Alerts)
+</code></pre>
+<ul>
+<li><a href="#scalar-value-types">Scalar Value Types</a></li>
+</ul>
+<p><a name="alerts.proto"></a></p>
+<p align="right"><a href="#top">Top</a></p>
+<h2><a class="anchor" aria-hidden="true" id="alertsproto"></a><a href="#alertsproto" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>alerts.proto</h2>
+<p><a name="dexter.Alert"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="alert"></a><a href="#alert" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Alert</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>id</td><td><a href="#uint64">uint64</a></td><td></td><td></td></tr>
+<tr><td>external_id</td><td><a href="#uint64">uint64</a></td><td></td><td></td></tr>
+<tr><td>exchange</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+<tr><td>market</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+<tr><td>timeframe</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+<tr><td>line_a</td><td><a href="#dexter.Line">Line</a></td><td></td><td></td></tr>
+<tr><td>condition</td><td><a href="#dexter.Condition">Condition</a></td><td></td><td></td></tr>
+<tr><td>line_b</td><td><a href="#dexter.Line">Line</a></td><td></td><td></td></tr>
+<tr><td>frequency</td><td><a href="#dexter.Frequency">Frequency</a></td><td></td><td></td></tr>
+<tr><td>message_body</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+<tr><td>webhook</td><td><a href="#dexter.Webhook">Webhook</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.DeleteAlertRequest"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="deletealertrequest"></a><a href="#deletealertrequest" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>DeleteAlertRequest</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>alert_id</td><td><a href="#uint64">uint64</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.DeleteAlertResponse"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="deletealertresponse"></a><a href="#deletealertresponse" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>DeleteAlertResponse</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>alert_id</td><td><a href="#uint64">uint64</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.GetAlertRequest"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="getalertrequest"></a><a href="#getalertrequest" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>GetAlertRequest</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>alert_id</td><td><a href="#uint64">uint64</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.Indicator"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="indicator"></a><a href="#indicator" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Indicator</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>name</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+<tr><td>inputs</td><td><a href="#string">string</a></td><td>repeated</td><td></td></tr>
+<tr><td>outputs</td><td><a href="#string">string</a></td><td>repeated</td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.Line"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="line"></a><a href="#line" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Line</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>name</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+<tr><td>inputs</td><td><a href="#float">float</a></td><td>repeated</td><td></td></tr>
+<tr><td>output</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.ListAlertsRequest"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="listalertsrequest"></a><a href="#listalertsrequest" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ListAlertsRequest</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>external_id</td><td><a href="#uint64">uint64</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.ListAlertsResponse"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="listalertsresponse"></a><a href="#listalertsresponse" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ListAlertsResponse</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>alerts</td><td><a href="#dexter.Alert">Alert</a></td><td>repeated</td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.ListIndicatorsRequest"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="listindicatorsrequest"></a><a href="#listindicatorsrequest" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ListIndicatorsRequest</h3>
+<p><a name="dexter.ListIndicatorsResponse"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="listindicatorsresponse"></a><a href="#listindicatorsresponse" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ListIndicatorsResponse</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>indicators</td><td><a href="#dexter.Indicator">Indicator</a></td><td>repeated</td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.Webhook"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="webhook"></a><a href="#webhook" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Webhook</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>method</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+<tr><td>url</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+<tr><td>body</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.Condition"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="condition"></a><a href="#condition" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Condition</h3>
+<table>
+<thead>
+<tr><th>Name</th><th>Number</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>Crossing</td><td>0</td><td></td></tr>
+<tr><td>CrossingUp</td><td>1</td><td></td></tr>
+<tr><td>CrossingDown</td><td>2</td><td></td></tr>
+<tr><td>GreaterThan</td><td>3</td><td></td></tr>
+<tr><td>LessThan</td><td>4</td><td></td></tr>
+<tr><td>EnteringChannel</td><td>5</td><td></td></tr>
+<tr><td>ExitingChannel</td><td>6</td><td></td></tr>
+<tr><td>InsideChannel</td><td>7</td><td></td></tr>
+<tr><td>OutsideChannel</td><td>8</td><td></td></tr>
+<tr><td>MovingUp</td><td>9</td><td></td></tr>
+<tr><td>MovingDown</td><td>10</td><td></td></tr>
+<tr><td>MovingUpPercent</td><td>11</td><td></td></tr>
+<tr><td>MovingDownPercent</td><td>12</td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.Frequency"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="frequency"></a><a href="#frequency" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Frequency</h3>
+<table>
+<thead>
+<tr><th>Name</th><th>Number</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>OnlyOnce</td><td>0</td><td></td></tr>
+<tr><td>OncePerBar</td><td>1</td><td></td></tr>
+<tr><td>OncePerBarClose</td><td>2</td><td></td></tr>
+<tr><td>OncePerMinute</td><td>3</td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.Alerts"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="alerts"></a><a href="#alerts" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Alerts</h3>
+<table>
+<thead>
+<tr><th>Method Name</th><th>Request Type</th><th>Response Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>CreateAlert</td><td><a href="#dexter.Alert">Alert</a></td><td><a href="#dexter.Alert">Alert</a></td><td></td></tr>
+<tr><td>ListAlerts</td><td><a href="#dexter.ListAlertsRequest">ListAlertsRequest</a></td><td><a href="#dexter.ListAlertsResponse">ListAlertsResponse</a></td><td></td></tr>
+<tr><td>GetAlert</td><td><a href="#dexter.GetAlertRequest">GetAlertRequest</a></td><td><a href="#dexter.Alert">Alert</a></td><td></td></tr>
+<tr><td>UpdateAlert</td><td><a href="#dexter.Alert">Alert</a></td><td><a href="#dexter.Alert">Alert</a></td><td></td></tr>
+<tr><td>DeleteAlert</td><td><a href="#dexter.DeleteAlertRequest">DeleteAlertRequest</a></td><td><a href="#dexter.DeleteAlertResponse">DeleteAlertResponse</a></td><td></td></tr>
+<tr><td>ListIndicators</td><td><a href="#dexter.ListIndicatorsRequest">ListIndicatorsRequest</a></td><td><a href="#dexter.ListIndicatorsResponse">ListIndicatorsResponse</a></td><td></td></tr>
+</tbody>
+</table>
+<h2><a class="anchor" aria-hidden="true" id="scalar-value-types"></a><a href="#scalar-value-types" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Scalar Value Types</h2>
+<table>
+<thead>
+<tr><th>.proto Type</th><th>Notes</th><th>C++ Type</th><th>Java Type</th><th>Python Type</th></tr>
+</thead>
+<tbody>
+<tr><td><a name="double" /> double</td><td></td><td>double</td><td>double</td><td>float</td></tr>
+<tr><td><a name="float" /> float</td><td></td><td>float</td><td>float</td><td>float</td></tr>
+<tr><td><a name="int32" /> int32</td><td>Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint32 instead.</td><td>int32</td><td>int</td><td>int</td></tr>
+<tr><td><a name="int64" /> int64</td><td>Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint64 instead.</td><td>int64</td><td>long</td><td>int/long</td></tr>
+<tr><td><a name="uint32" /> uint32</td><td>Uses variable-length encoding.</td><td>uint32</td><td>int</td><td>int/long</td></tr>
+<tr><td><a name="uint64" /> uint64</td><td>Uses variable-length encoding.</td><td>uint64</td><td>long</td><td>int/long</td></tr>
+<tr><td><a name="sint32" /> sint32</td><td>Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int32s.</td><td>int32</td><td>int</td><td>int</td></tr>
+<tr><td><a name="sint64" /> sint64</td><td>Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int64s.</td><td>int64</td><td>long</td><td>int/long</td></tr>
+<tr><td><a name="fixed32" /> fixed32</td><td>Always four bytes. More efficient than uint32 if values are often greater than 2^28.</td><td>uint32</td><td>int</td><td>int</td></tr>
+<tr><td><a name="fixed64" /> fixed64</td><td>Always eight bytes. More efficient than uint64 if values are often greater than 2^56.</td><td>uint64</td><td>long</td><td>int/long</td></tr>
+<tr><td><a name="sfixed32" /> sfixed32</td><td>Always four bytes.</td><td>int32</td><td>int</td><td>int</td></tr>
+<tr><td><a name="sfixed64" /> sfixed64</td><td>Always eight bytes.</td><td>int64</td><td>long</td><td>int/long</td></tr>
+<tr><td><a name="bool" /> bool</td><td></td><td>bool</td><td>boolean</td><td>boolean</td></tr>
+<tr><td><a name="string" /> string</td><td>A string must always contain UTF-8 encoded or 7-bit ASCII text.</td><td>string</td><td>String</td><td>str/unicode</td></tr>
+<tr><td><a name="bytes" /> bytes</td><td>May contain any arbitrary sequence of bytes.</td><td>string</td><td>ByteString</td><td>str</td></tr>
+</tbody>
+</table>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/dexter/docs/docs"><span class="arrow-prev">← </span><span>Introduction</span></a><a class="docs-next button" href="/dexter/docs/data"><span class="function-name-prevnext">Data gRPC API</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#alertsproto">alerts.proto</a><ul class="toc-headings"><li><a href="#alert">Alert</a></li><li><a href="#deletealertrequest">DeleteAlertRequest</a></li><li><a href="#deletealertresponse">DeleteAlertResponse</a></li><li><a href="#getalertrequest">GetAlertRequest</a></li><li><a href="#indicator">Indicator</a></li><li><a href="#line">Line</a></li><li><a href="#listalertsrequest">ListAlertsRequest</a></li><li><a href="#listalertsresponse">ListAlertsResponse</a></li><li><a href="#listindicatorsrequest">ListIndicatorsRequest</a></li><li><a href="#listindicatorsresponse">ListIndicatorsResponse</a></li><li><a href="#webhook">Webhook</a></li><li><a href="#condition">Condition</a></li><li><a href="#frequency">Frequency</a></li><li><a href="#alerts">Alerts</a></li></ul></li><li><a href="#scalar-value-types">Scalar Value Types</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/dexter/" class="nav-home"><img src="/dexter/img/favicon.ico" alt="DEXter" width="66" height="58"/></a><div><h5>Docs</h5><a href="/dexter/docs/en/doc1.html">Getting Started (or other categories)</a><a href="/dexter/docs/en/doc2.html">Guides (or other categories)</a><a href="/dexter/docs/en/doc3.html">API Reference (or other categories)</a></div><div><h5>Community</h5><a href="/dexter/en/users.html">User Showcase</a><a href="https://stackoverflow.com/questions/tagged/" target="_blank" rel="noreferrer noopener">Stack Overflow</a><a href="https://discordapp.com/">Project Chat</a><a href="https://twitter.com/" target="_blank" rel="noreferrer noopener">Twitter</a></div><div><h5>More</h5><a href="/dexter/blog">Blog</a><a href="https://github.com/">GitHub</a><a class="github-button" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><a href="https://opensource.facebook.com/" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/dexter/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><section class="copyright">Copyright © 2019 Your Name or Your Company Name</section></footer></div></body></html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Examples · DEXter</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="# Getting Everything Running At Once"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Examples · DEXter"/><meta property="og:type" content="website"/><meta property="og:url" content="https://whiteblock.github.io/dexter/"/><meta property="og:description" content="# Getting Everything Running At Once"/><meta property="og:image" content="https://whiteblock.github.io/dexter/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://whiteblock.github.io/dexter/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/dexter/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/dexter/js/scrollSpy.js"></script><link rel="stylesheet" href="/dexter/css/main.css"/><script src="/dexter/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/dexter/"><img class="logo" src="/dexter/img/favicon.ico" alt="DEXter"/><h2 class="headerTitleWithLogo">DEXter</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/dexter/docs/docs" target="_self">Docs</a></li><li class="siteNavItemActive"><a href="/dexter/docs/examples" target="_self">Examples</a></li><li class=""><a href="/dexter/help" target="_self">Help</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Examples</h1></header><article><div><span><h1><a class="anchor" aria-hidden="true" id="getting-everything-running-at-once"></a><a href="#getting-everything-running-at-once" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Getting Everything Running At Once</h1>
+<p>To make things easier for everyone, a <code>docker-compose.yml</code> has been provided that gets everything running
+in one easy step.</p>
+<pre><code class="hljs css language-sh">docker-compose up 
+</code></pre>
+<p>This gives you the following:</p>
+<ul>
+<li>PostgreSQL running on port 5432</li>
+<li>dexter-data running on port 50051</li>
+<li>grpcwebproxy running on port 8081 as a proxy for dexter-data</li>
+<li>dexter running on port 50052</li>
+<li>grpcwebproxy running on port 8082 as a proxy for dexter</li>
+</ul>
+<p>The first time will take a while to download all the dependencies, but subsequent startup times should be relatively quick.</p>
+<h2><a class="anchor" aria-hidden="true" id="trying-the-streaming-demo"></a><a href="#trying-the-streaming-demo" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Trying the Streaming Demo</h2>
+<pre><code class="hljs css language-sh"><span class="hljs-built_in">cd</span> demo
+yarn
+yarn start
+</code></pre>
+<p>Then visit <a href="http://localhost:3000">http://localhost:3000</a> to see the 1 minute BTC/USDT chart from Binance.</p>
+<h2><a class="anchor" aria-hidden="true" id="setting-alerts-from-the-command-line"></a><a href="#setting-alerts-from-the-command-line" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Setting Alerts from the Command Line</h2>
+<p>Dexter uses webhooks to send alert notifications, so for this demo, we can use the [webhook](<a href="https://github.com/adnanh/webhook**">https://github.com/adnanh/webhook**</a> program
+to provide a webhook server to receive our notifications and perform an action.</p>
+<h3><a class="anchor" aria-hidden="true" id="setup"></a><a href="#setup" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Setup</h3>
+<h4><a class="anchor" aria-hidden="true" id="install-prequisites"></a><a href="#install-prequisites" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Install Prequisites</h4>
+<pre><code class="hljs css language-sh">sudo apt-get install wget webhook alsa-utils
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="download-a-wav-file-"></a><a href="#download-a-wav-file-" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Download a .wav file</h4>
+<pre><code class="hljs css language-sh"><span class="hljs-built_in">cd</span> /tmp
+wget http://www.wavsource.com/snds_2018-06-03_5106726768923853/sfx/boxing_bell_multiple.wav
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="create-a-shell-script-that-will-play-the-wav-file"></a><a href="#create-a-shell-script-that-will-play-the-wav-file" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Create a shell script that will play the wav file</h4>
+<pre><code class="hljs css language-sh"><span class="hljs-meta">#!/bin/sh</span>
+/usr/bin/aplay /tmp/boxing_bell_multiple.wav
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="create-a-tmp-hooksjson"></a><a href="#create-a-tmp-hooksjson" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Create a /tmp/hooks.json</h4>
+<pre><code class="hljs css language-json">[
+  {
+    <span class="hljs-attr">"id"</span>: <span class="hljs-string">"dexter-notification"</span>,
+    <span class="hljs-attr">"execute-command"</span>: <span class="hljs-string">"/tmp/play.sh"</span>,
+    <span class="hljs-attr">"command-working-directory"</span>: <span class="hljs-string">"/tmp"</span>
+  }
+]
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="run-webhook"></a><a href="#run-webhook" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Run webhook</h4>
+<pre><code class="hljs css language-sh">webhook -hooks /tmp/hooks.json -verbose -port 9001
+</code></pre>
+<p>In another terminal, you can test the webhook by running:</p>
+<pre><code class="hljs css language-sh">curl -X POST http://localhost:9001/hooks/dexter-notification
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="setting-up-an-alert"></a><a href="#setting-up-an-alert" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Setting up an Alert</h3>
+<h4><a class="anchor" aria-hidden="true" id="horizontal-line-is-the-simplest-alert"></a><a href="#horizontal-line-is-the-simplest-alert" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Horizontal Line is the simplest alert</h4>
+<p>Suppose you wanted to know when BTC/USDT crossed $10000 from either direction.
+The following is an alert on a <strong>Horizontal Line</strong>.</p>
+<pre><code class="hljs css language-json">{
+  <span class="hljs-attr">"external_id"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">"exchange"</span>: <span class="hljs-string">"binance"</span>,
+  <span class="hljs-attr">"market"</span>: <span class="hljs-string">"BTC/USDT"</span>,
+  <span class="hljs-attr">"timeframe"</span>: <span class="hljs-string">"1m"</span>,
+  <span class="hljs-attr">"line_a"</span>: {
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Horizontal Line"</span>,
+    <span class="hljs-attr">"inputs"</span>: [<span class="hljs-number">10000</span>],
+    <span class="hljs-attr">"output"</span>: <span class="hljs-string">"default"</span>
+  },
+  <span class="hljs-attr">"condition"</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">"line_b"</span>: {
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Price"</span>,
+    <span class="hljs-attr">"inputs"</span>: [],
+    <span class="hljs-attr">"output"</span>: <span class="hljs-string">"default"</span>
+  },
+  <span class="hljs-attr">"frequency"</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">"message_body"</span>: <span class="hljs-string">"crossed 10k"</span>,
+  <span class="hljs-attr">"webhook"</span>: {
+    <span class="hljs-attr">"method"</span>: <span class="hljs-string">"POST"</span>,
+    <span class="hljs-attr">"url"</span>: <span class="hljs-string">"http://localhost:9001/"</span>,
+    <span class="hljs-attr">"body"</span>: <span class="hljs-string">""</span>
+  }
+}
+</code></pre>
+<p>Put this JSON in a file called <code>/tmp/btc10k.json</code> and add the alert by doing:</p>
+<pre><code class="hljs css language-sh"><span class="hljs-built_in">cd</span> dexter-data
+bin/alert add /tmp/btc10k.json
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="moving-average-crosses"></a><a href="#moving-average-crosses" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Moving Average Crosses</h4>
+<p>Alts are tanking hard in the bear market, but that doesn't mean they can't have significant dead cat bounces
+along the way.  One way to detect these situations is to use Moving Average crosses.  In this exapmle, we'll
+look for the 4 hour 50-period <strong>Moving Average</strong> to cross up against the 4 hour 200-period <strong>Moving Average</strong>.
+This is commonly called a 4 hour golden cross.</p>
+<pre><code class="hljs css language-json">{
+  <span class="hljs-attr">"external_id"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">"exchange"</span>: <span class="hljs-string">"binance"</span>,
+  <span class="hljs-attr">"market"</span>: <span class="hljs-string">"ADA/USDT"</span>,
+  <span class="hljs-attr">"timeframe"</span>: <span class="hljs-string">"4h"</span>,
+  <span class="hljs-attr">"line_a"</span>: {
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Moving Average"</span>,
+    <span class="hljs-attr">"inputs"</span>: [<span class="hljs-number">50</span>],
+    <span class="hljs-attr">"output"</span>: <span class="hljs-string">"default"</span>
+  },
+  <span class="hljs-attr">"condition"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">"line_b"</span>: {
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Moving Average"</span>,
+    <span class="hljs-attr">"inputs"</span>: [<span class="hljs-number">200</span>],
+    <span class="hljs-attr">"output"</span>: <span class="hljs-string">"default"</span>
+  },
+  <span class="hljs-attr">"frequency"</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">"message_body"</span>: <span class="hljs-string">"golden cross"</span>,
+  <span class="hljs-attr">"webhook"</span>: {
+    <span class="hljs-attr">"method"</span>: <span class="hljs-string">"POST"</span>,
+    <span class="hljs-attr">"url"</span>: <span class="hljs-string">"http://localhost:9001/hooks/dexter-notification"</span>,
+    <span class="hljs-attr">"body"</span>: <span class="hljs-string">""</span>
+  }
+}
+</code></pre>
+<p>In this json <code>line_a</code> describes a 50 MA and <code>line_b</code> describes a 200 MA.  <code>condition: 1</code> means it's looking
+for <code>line_a</code> to cross up <code>line_b</code> and it comes from the <code>Conditions</code> enum defined in alerts.proto.</p>
+<p>Put this in a file called <code>/tmp/golden-cross.json</code> and add the alert by doing:</p>
+<pre><code class="hljs css language-sh">bin/alert add /tmp/golden-cross.json
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#trying-the-streaming-demo">Trying the Streaming Demo</a></li><li><a href="#setting-alerts-from-the-command-line">Setting Alerts from the Command Line</a><ul class="toc-headings"><li><a href="#setup">Setup</a></li><li><a href="#setting-up-an-alert">Setting up an Alert</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/dexter/" class="nav-home"><img src="/dexter/img/favicon.ico" alt="DEXter" width="66" height="58"/></a><div><h5>Docs</h5><a href="/dexter/docs/en/doc1.html">Getting Started (or other categories)</a><a href="/dexter/docs/en/doc2.html">Guides (or other categories)</a><a href="/dexter/docs/en/doc3.html">API Reference (or other categories)</a></div><div><h5>Community</h5><a href="/dexter/en/users.html">User Showcase</a><a href="https://stackoverflow.com/questions/tagged/" target="_blank" rel="noreferrer noopener">Stack Overflow</a><a href="https://discordapp.com/">Project Chat</a><a href="https://twitter.com/" target="_blank" rel="noreferrer noopener">Twitter</a></div><div><h5>More</h5><a href="/dexter/blog">Blog</a><a href="https://github.com/">GitHub</a><a class="github-button" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><a href="https://opensource.facebook.com/" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/dexter/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><section class="copyright">Copyright © 2019 Your Name or Your Company Name</section></footer></div></body></html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>data.body · DEXter</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="# Protocol Documentation"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="data.body · DEXter"/><meta property="og:type" content="website"/><meta property="og:url" content="https://whiteblock.github.io/dexter/"/><meta property="og:description" content="# Protocol Documentation"/><meta property="og:image" content="https://whiteblock.github.io/dexter/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://whiteblock.github.io/dexter/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/dexter/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/dexter/js/scrollSpy.js"></script><link rel="stylesheet" href="/dexter/css/main.css"/><script src="/dexter/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/dexter/"><img class="logo" src="/dexter/img/favicon.ico" alt="DEXter"/><h2 class="headerTitleWithLogo">DEXter</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/dexter/docs/docs" target="_self">Docs</a></li><li class=""><a href="/dexter/docs/examples" target="_self">Examples</a></li><li class=""><a href="/dexter/help" target="_self">Help</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">data.body</h1></header><article><div><span><h1><a class="anchor" aria-hidden="true" id="protocol-documentation"></a><a href="#protocol-documentation" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Protocol Documentation</h1>
+<p><a name="top"></a></p>
+<h2><a class="anchor" aria-hidden="true" id="table-of-contents"></a><a href="#table-of-contents" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Table of Contents</h2>
+<ul>
+<li><a href="#data.proto">data.proto</a>
+<ul>
+<li><a href="#dexter.Candle">Candle</a></li>
+<li><a href="#dexter.CandlesRequest">CandlesRequest</a></li>
+<li><a href="#dexter.CandlesResponse">CandlesResponse</a></li>
+<li><a href="#dexter.ExchangesRequest">ExchangesRequest</a></li>
+<li><a href="#dexter.ExchangesResponse">ExchangesResponse</a></li>
+<li><a href="#dexter.MarketsRequest">MarketsRequest</a></li>
+<li><a href="#dexter.MarketsResponse">MarketsResponse</a></li>
+<li><a href="#dexter.TestRequest">TestRequest</a></li>
+<li><a href="#dexter.TestResponse">TestResponse</a></li>
+</ul></li>
+</ul>
+<pre><code class="hljs">- [Data](#dexter.Data)
+</code></pre>
+<ul>
+<li><a href="#scalar-value-types">Scalar Value Types</a></li>
+</ul>
+<p><a name="data.proto"></a></p>
+<p align="right"><a href="#top">Top</a></p>
+<h2><a class="anchor" aria-hidden="true" id="dataproto"></a><a href="#dataproto" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>data.proto</h2>
+<p><a name="dexter.Candle"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="candle"></a><a href="#candle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Candle</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>timestamp</td><td><a href="#uint64">uint64</a></td><td></td><td></td></tr>
+<tr><td>o</td><td><a href="#double">double</a></td><td></td><td></td></tr>
+<tr><td>h</td><td><a href="#double">double</a></td><td></td><td></td></tr>
+<tr><td>l</td><td><a href="#double">double</a></td><td></td><td></td></tr>
+<tr><td>c</td><td><a href="#double">double</a></td><td></td><td></td></tr>
+<tr><td>v</td><td><a href="#double">double</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.CandlesRequest"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="candlesrequest"></a><a href="#candlesrequest" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CandlesRequest</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>exchange</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+<tr><td>market</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+<tr><td>timeframe</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+<tr><td>since</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+<tr><td>limit</td><td><a href="#uint64">uint64</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.CandlesResponse"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="candlesresponse"></a><a href="#candlesresponse" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CandlesResponse</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>candles</td><td><a href="#dexter.Candle">Candle</a></td><td>repeated</td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.ExchangesRequest"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="exchangesrequest"></a><a href="#exchangesrequest" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ExchangesRequest</h3>
+<p><a name="dexter.ExchangesResponse"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="exchangesresponse"></a><a href="#exchangesresponse" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ExchangesResponse</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>exchanges</td><td><a href="#string">string</a></td><td>repeated</td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.MarketsRequest"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="marketsrequest"></a><a href="#marketsrequest" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>MarketsRequest</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>exchange</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.MarketsResponse"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="marketsresponse"></a><a href="#marketsresponse" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>MarketsResponse</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>markets</td><td><a href="#string">string</a></td><td>repeated</td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.TestRequest"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="testrequest"></a><a href="#testrequest" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>TestRequest</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>a</td><td><a href="#string">string</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.TestResponse"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="testresponse"></a><a href="#testresponse" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>TestResponse</h3>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Label</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>a</td><td><a href="#int64">int64</a></td><td></td><td></td></tr>
+<tr><td>b</td><td><a href="#int64">int64</a></td><td></td><td></td></tr>
+</tbody>
+</table>
+<p><a name="dexter.Data"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="data"></a><a href="#data" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Data</h3>
+<table>
+<thead>
+<tr><th>Method Name</th><th>Request Type</th><th>Response Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>SupportedExchanges</td><td><a href="#dexter.ExchangesRequest">ExchangesRequest</a></td><td><a href="#dexter.ExchangesResponse">ExchangesResponse</a></td><td></td></tr>
+<tr><td>SupportedMarkets</td><td><a href="#dexter.MarketsRequest">MarketsRequest</a></td><td><a href="#dexter.MarketsResponse">MarketsResponse</a></td><td></td></tr>
+<tr><td>GetCandles</td><td><a href="#dexter.CandlesRequest">CandlesRequest</a></td><td><a href="#dexter.CandlesResponse">CandlesResponse</a></td><td></td></tr>
+<tr><td>StreamCandles</td><td><a href="#dexter.CandlesRequest">CandlesRequest</a></td><td><a href="#dexter.Candle">Candle</a> stream</td><td></td></tr>
+</tbody>
+</table>
+<h2><a class="anchor" aria-hidden="true" id="scalar-value-types"></a><a href="#scalar-value-types" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Scalar Value Types</h2>
+<table>
+<thead>
+<tr><th>.proto Type</th><th>Notes</th><th>C++ Type</th><th>Java Type</th><th>Python Type</th></tr>
+</thead>
+<tbody>
+<tr><td><a name="double" /> double</td><td></td><td>double</td><td>double</td><td>float</td></tr>
+<tr><td><a name="float" /> float</td><td></td><td>float</td><td>float</td><td>float</td></tr>
+<tr><td><a name="int32" /> int32</td><td>Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint32 instead.</td><td>int32</td><td>int</td><td>int</td></tr>
+<tr><td><a name="int64" /> int64</td><td>Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint64 instead.</td><td>int64</td><td>long</td><td>int/long</td></tr>
+<tr><td><a name="uint32" /> uint32</td><td>Uses variable-length encoding.</td><td>uint32</td><td>int</td><td>int/long</td></tr>
+<tr><td><a name="uint64" /> uint64</td><td>Uses variable-length encoding.</td><td>uint64</td><td>long</td><td>int/long</td></tr>
+<tr><td><a name="sint32" /> sint32</td><td>Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int32s.</td><td>int32</td><td>int</td><td>int</td></tr>
+<tr><td><a name="sint64" /> sint64</td><td>Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int64s.</td><td>int64</td><td>long</td><td>int/long</td></tr>
+<tr><td><a name="fixed32" /> fixed32</td><td>Always four bytes. More efficient than uint32 if values are often greater than 2^28.</td><td>uint32</td><td>int</td><td>int</td></tr>
+<tr><td><a name="fixed64" /> fixed64</td><td>Always eight bytes. More efficient than uint64 if values are often greater than 2^56.</td><td>uint64</td><td>long</td><td>int/long</td></tr>
+<tr><td><a name="sfixed32" /> sfixed32</td><td>Always four bytes.</td><td>int32</td><td>int</td><td>int</td></tr>
+<tr><td><a name="sfixed64" /> sfixed64</td><td>Always eight bytes.</td><td>int64</td><td>long</td><td>int/long</td></tr>
+<tr><td><a name="bool" /> bool</td><td></td><td>bool</td><td>boolean</td><td>boolean</td></tr>
+<tr><td><a name="string" /> string</td><td>A string must always contain UTF-8 encoded or 7-bit ASCII text.</td><td>string</td><td>String</td><td>str/unicode</td></tr>
+<tr><td><a name="bytes" /> bytes</td><td>May contain any arbitrary sequence of bytes.</td><td>string</td><td>ByteString</td><td>str</td></tr>
+</tbody>
+</table>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#dataproto">data.proto</a><ul class="toc-headings"><li><a href="#candle">Candle</a></li><li><a href="#candlesrequest">CandlesRequest</a></li><li><a href="#candlesresponse">CandlesResponse</a></li><li><a href="#exchangesrequest">ExchangesRequest</a></li><li><a href="#exchangesresponse">ExchangesResponse</a></li><li><a href="#marketsrequest">MarketsRequest</a></li><li><a href="#marketsresponse">MarketsResponse</a></li><li><a href="#testrequest">TestRequest</a></li><li><a href="#testresponse">TestResponse</a></li><li><a href="#data">Data</a></li></ul></li><li><a href="#scalar-value-types">Scalar Value Types</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/dexter/" class="nav-home"><img src="/dexter/img/favicon.ico" alt="DEXter" width="66" height="58"/></a><div><h5>Docs</h5><a href="/dexter/docs/en/doc1.html">Getting Started (or other categories)</a><a href="/dexter/docs/en/doc2.html">Guides (or other categories)</a><a href="/dexter/docs/en/doc3.html">API Reference (or other categories)</a></div><div><h5>Community</h5><a href="/dexter/en/users.html">User Showcase</a><a href="https://stackoverflow.com/questions/tagged/" target="_blank" rel="noreferrer noopener">Stack Overflow</a><a href="https://discordapp.com/">Project Chat</a><a href="https://twitter.com/" target="_blank" rel="noreferrer noopener">Twitter</a></div><div><h5>More</h5><a href="/dexter/blog">Blog</a><a href="https://github.com/">GitHub</a><a class="github-button" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><a href="https://opensource.facebook.com/" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/dexter/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><section class="copyright">Copyright © 2019 Your Name or Your Company Name</section></footer></div></body></html>
