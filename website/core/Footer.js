@@ -37,13 +37,13 @@ class Footer extends React.Component {
           </a>
           <div>
             <h5>Docs</h5>
-            <a href={this.docUrl('examples.html', this.props.language)}>
+            <a href={this.docUrl('examples.html')}>
               Examples
             </a>
-            <a href={this.docUrl('data.html', this.props.language)}>
+            <a href={this.docUrl('data.html')}>
               Data API Reference
             </a>
-            <a href={this.docUrl('alerts.html', this.props.language)}>
+            <a href={this.docUrl('alerts.html')}>
               Alerts API Reference
             </a>
           </div>
