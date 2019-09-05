@@ -10,6 +10,14 @@ function connect(bind) {
   return alerts.getClient(bind)
 }
 
+function printResult(err, res) {
+  if (err) {
+    console.error(err)
+  } else {
+    console.log(JSON.stringify(res, null, 2))
+  }
+}
+
 program
   .version(pkg.version)
   .option('-v, --verbose', 'Be verbose')
@@ -17,54 +25,49 @@ program
   .action((id) => {
     const client = connect(defaultBind)
     if (id) {
-      client.listAlerts({ external_id: id }, console.log)
+      client.listAlerts({ external_id: id }, printResult)
     } else {
-      client.listAlerts({}, console.log)
+      client.listAlerts({}, printResult)
     }
   })
 
 program
   .command('add <alert>')
   .action((alert) => {
-    console.log(`add alert from file ${alert}`)
     const client = connect(defaultBind)
     const p = alert.match(/^\//) ? alert : `${__dirname}/../{alert}`
     const a = require(p)
-    client.createAlert(a, console.log)
+    client.createAlert(a, printResult)
   })
 
 program
   .command('update <alert>')
   .action((alert) => {
-    console.log(`update alert from file ${alert}`)
     const client = connect(defaultBind)
     const p = alert.match(/^\//) ? alert : `${__dirname}/../{alert}`
     const a = require(p)
-    client.updateAlert(a, console.log)
+    client.updateAlert(a, printResult)
   })
 
 program
   .command('get <id>')
   .action((id) => {
-    console.log(`get alert id ${id}`)
     const client = connect(defaultBind)
-    client.getAlert({ alert_id: id }, console.log)
+    client.getAlert({ alert_id: id }, printResult)
   })
 
 program
   .command('rm <id>')
   .action((id) => {
-    console.log(`remove alert id ${id}`)
     const client = connect(defaultBind)
-    client.deleteAlert({ alert_id: id }, console.log)
+    client.deleteAlert({ alert_id: id }, printResult)
   })
 
 program
   .command('i')
   .action((id) => {
-    console.log(`list indicators`)
     const client = connect(defaultBind)
-    client.listIndicators({ }, console.log)
+    client.listIndicators({ }, printResult)
   })
 
 program
