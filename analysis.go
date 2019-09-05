@@ -59,6 +59,7 @@ func SetupChart(alert Alert, client dataPb.DataClient) Chart {
 		chart.InitializeCandles(client)
 		go chart.StreamCandles(client)
 	}
+	chart.Alerts = append(chart.Alerts, alert)
 	return chart
 }
 

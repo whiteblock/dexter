@@ -69,6 +69,7 @@ func loadAlerts(conn *grpc.ClientConn, db *gorm.DB) {
 	// for every alert create a chart if needed
 	db.Find(&alerts)
 	for _, alert := range alerts {
+		log.Println(alert.ID)
 		dexter.SetupChart(alert, client)
 	}
 }
