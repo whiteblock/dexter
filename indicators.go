@@ -62,7 +62,8 @@ var Indicators = []Indicator{
 			series := SeriesFromChart(chart)
 			closePrices := techan.NewClosePriceIndicator(series)
 			movingAverage := techan.NewSimpleMovingAverage(closePrices, period)
-			for i := 0; i < len(chart.Candles); i++ {
+			log.Println(len(chart.Candles))
+			for i := 0; i < len(chart.Candles) - 1; i++ {
 				ma := movingAverage.Calculate(i)
 				maf := ma.Float()
 				//log.Println(maf)

@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
+	//"github.com/davecgh/go-spew/spew"
 
 	dataPb "github.com/whiteblock/dexter/api/data"
 )
@@ -165,6 +165,7 @@ func (chart *Chart) RemoveAlert(alert Alert) error {
 func (chart *Chart) UpdateCandle(candle *dataPb.Candle) error {
 	last := len(chart.Candles) - 1
 	lastCandle := chart.Candles[last]
+	//log.Printf("last %d current %d", lastCandle.Timestamp, candle.Timestamp)
 	if lastCandle.Timestamp == candle.Timestamp {
 		chart.Candles[last] = Candle{candle.Timestamp, candle.O, candle.H, candle.L, candle.C, candle.V}
 	} else {
@@ -175,7 +176,7 @@ func (chart *Chart) UpdateCandle(candle *dataPb.Candle) error {
 
 // Analyze - Go through every alert set for the chart and check to see if any conditions have been met
 func (chart Chart) Analyze() {
-	spew.Dump(chart.Alerts)
+	//spew.Dump(chart.Alerts)
 	for _, alert := range chart.Alerts {
 		hit := alert.Compare(chart)
 		if hit {
