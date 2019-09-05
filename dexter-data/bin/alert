@@ -35,7 +35,7 @@ program
   .command('add <alert>')
   .action((alert) => {
     const client = connect(defaultBind)
-    const p = alert.match(/^\//) ? alert : `${__dirname}/../{alert}`
+    const p = alert.match(/^\//) ? alert : `${__dirname}/../${alert}`
     const a = require(p)
     client.createAlert(a, printResult)
   })
@@ -44,7 +44,7 @@ program
   .command('update <alert>')
   .action((alert) => {
     const client = connect(defaultBind)
-    const p = alert.match(/^\//) ? alert : `${__dirname}/../{alert}`
+    const p = alert.match(/^\//) ? alert : `${__dirname}/../${alert}`
     const a = require(p)
     client.updateAlert(a, printResult)
   })
