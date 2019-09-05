@@ -20,3 +20,7 @@ migrate
 
 # Postgres Data (Docker)
 pgdata
+
+# Other
+.vscode
+website/build
