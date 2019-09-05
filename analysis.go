@@ -172,7 +172,6 @@ func (chart *Chart) UpdateCandle(candle *dataPb.Candle) error {
 
 // Analyze - Go through every alert set for the chart and check to see if any conditions have been met
 func (chart Chart) Analyze() {
-	fmt.Println("analyzing")
 	for _, alert := range chart.Alerts {
 		hit := alert.Compare(chart)
 		if hit {
@@ -190,6 +189,7 @@ func (alert Alert) Compare(chart Chart) bool {
 	json.Unmarshal([]byte(alert.LineB.RawMessage), &lineB)
 	indicatorA, _ := FindIndicatorByName(lineA.Name)
 	indicatorB, _ := FindIndicatorByName(lineB.Name)
+	log.Printf("Comparing %s to %s", indicatorA.Name, indicatorB.Name)
 	// Calculate their values.
 	outputA := indicatorA.Fn(lineA.Inputs, chart)
 	outputB := indicatorB.Fn(lineB.Inputs, chart)
