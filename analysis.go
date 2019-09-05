@@ -11,6 +11,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/davecgh/go-spew/spew"
+
 	dataPb "github.com/whiteblock/dexter/api/data"
 )
 
@@ -172,6 +174,7 @@ func (chart *Chart) UpdateCandle(candle *dataPb.Candle) error {
 
 // Analyze - Go through every alert set for the chart and check to see if any conditions have been met
 func (chart Chart) Analyze() {
+	spew.Dump(chart.Alerts)
 	for _, alert := range chart.Alerts {
 		hit := alert.Compare(chart)
 		if hit {
