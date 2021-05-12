@@ -10,7 +10,7 @@
     "dotenv": "^8.0.0",
     "ethereumjs-abi": "^0.6.7",
     "ethereumjs-util": "^6.1.0",
-    "grpc": "^1.21.1",
+    "grpc": "^1.24.9",
     "grpc-boom": "^1.0.22",
     "grpc-promise": "^1.4.0",
     "influx": "^5.1.0",
